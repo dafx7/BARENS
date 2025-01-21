@@ -1,0 +1,289 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Hero Section - Barat Residence{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-[#F3ECDC]">
+    <!-- Background Image -->
+    <div class="relative w-full h-[400px] md:h-[500px] lg:h-[600px] bg-cover bg-center"
+           style="background-image:  url('{% static 'main/images/Tampak-depan.jpg' %}');">
+        <!-- Overlay -->
+        <div class="absolute inset-0"
+            style="background: linear-gradient(90deg, rgba(52, 78, 65, 0.93) 32%, rgba(18, 27, 18, 0.00) 100%);">
+        </div>
+
+        <!-- Content -->
+        <div
+            class="absolute inset-0 flex flex-col justify-center px-6 md:px-10 lg:px-20 space-y-4 text-center lg:text-left">
+            <p class="text-sm md:text-base lg:text-lg text-white font-semibold tracking-[2.25px] uppercase">
+                Tempatnya sewa kos-kosan terbaik Di Medan
+            </p>
+            <h1 class="text-2xl md:text-4xl lg:text-5xl text-white font-semibold">
+                Selamat Datang di
+            </h1>
+            <h2 class="text-3xl md:text-5xl lg:text-[55px] text-[#A3B18A] font-semibold">
+                Barat Residence
+            </h2>
+            <p class="text-sm md:text-lg lg:text-xl text-white">
+                Tempat Tinggal Nyaman Dan Strategis Di Dekat Kampus USU
+            </p>
+            <div
+                class="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 justify-center lg:justify-start">
+                <!-- Tombol Lihat Kamar -->
+                <a href="#"
+                    class="flex items-center justify-center px-6 md:px-10 py-4 md:py-5 rounded-[30px] bg-[#588157] text-[#F3ECDC] text-sm md:text-base font-semibold uppercase tracking-[2.25px] hover:bg-[#6A965F] hover:cursor-pointer transition">
+                    Lihat Kamar
+                </a>
+
+                <!-- Tombol Pesan Sekarang -->
+                <a href="#"
+                    class="flex items-center justify-center px-6 md:px-10 py-4 md:py-5 rounded-[30px] bg-[#F3ECDC] text-[#588157] text-sm md:text-base font-semibold uppercase tracking-[2.25px] hover:bg-[#E5D9C7] hover:cursor-pointer transition">
+                    Pesan Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-[#F3ECDC] py-16">
+        <div
+            class="container mx-auto px-6 lg:px-20 flex flex-col lg:flex-row items-start lg:items-center gap-12 lg:gap-16">
+            <!-- Keterangan Fasilitas -->
+            <div class="flex-1 order-1 lg:order-1">
+                <!-- Subjudul -->
+                <h3 class="text-[#588157] text-sm font-semibold uppercase tracking-wider mb-4">Fasilitas Umum</h3>
+                <!-- Judul -->
+                <h2 class="text-[#2D2D2D] font-semibold text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] uppercase leading-relaxed max-w-full lg:max-w-[579px] mb-6"
+                    style="font-family: 'Open Sans', sans-serif;">
+                    Beragam Fasilitas Lengkap untuk Mendukung Kenyamanan dan Kebutuhan Anda di Barat Residence
+                </h2>
+
+                <!-- Daftar Fasilitas -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8 text-[#2D2D2D] font-semibold text-[16px] md:text-[18px] lg:text-[20px] leading-[24px] lg:leading-[29px]"
+                    style="font-family: 'Open Sans', sans-serif;">
+                    <!-- Fasilitas Kolom -->
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-parking text-[#588157] text-xl"></i>
+                        Tempat Parkir
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-users text-[#588157] text-xl"></i>
+                        Ruang Bersama
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-utensils text-[#588157] text-xl"></i>
+                        Dapur Umum
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-video text-[#588157] text-xl"></i>
+                        CCTV
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-wifi text-[#588157] text-xl"></i>
+                        Wi-Fi
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-bed text-[#588157] text-xl"></i>
+                        Sprei 1x (Di Awal Masuk)
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-user-shield text-[#588157] text-xl"></i>
+                        Penjaga Kos 24 Jam
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-tshirt text-[#588157] text-xl"></i>
+                        Jemuran
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gambar -->
+            <div x-data="{ activeSlide: 0 }"
+                class="relative flex-1 max-w-full lg:max-w-[800px] h-[300px] md:h-[400px] lg:h-[450px] bg-[#F3ECDC] border-[10px] border-[#F3ECDC] rounded-[30px] shadow-lg overflow-hidden order-2 lg:order-2">
+                <!-- Slides -->
+                <div class="flex transition-transform duration-500"
+                    :style="`transform: translateX(-${activeSlide * 100}%);`">
+                    <div class="w-full flex-shrink-0">
+                        <img src="{% static 'main/images/Lobby.jpg' %}" alt="Fasilitas 1" class="object-cover w-full h-full">
+                    </div>
+                    <div class="w-full flex-shrink-0">
+                        <img src="{% static 'main/images/Parkiran mobil.jpg' %}" alt="Fasilitas 2" class="object-cover w-full h-full">
+                    </div>
+                    <div class="w-full flex-shrink-0">
+                        <img src="{% static 'main/images/Tampak depan .jpg' %}" alt="Fasilitas 3" class="object-cover w-full h-full">
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <button @click="activeSlide = (activeSlide === 0) ? 2 : activeSlide - 1"
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#588157] text-white p-2 md:p-3 rounded-full shadow-lg">
+                    &#8592;
+                </button>
+                <button @click="activeSlide = (activeSlide === 2) ? 0 : activeSlide + 1"
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#588157] text-white p-2 md:p-3 rounded-full shadow-lg">
+                    &#8594;
+                </button>
+
+                <!-- Indicators -->
+                <div
+                    class="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3">
+                    <template x-for="i in 3" :key="i">
+                        <div @click="activeSlide = i - 1"
+                            :class="activeSlide === i - 1 ? 'bg-[#588157]' : 'bg-gray-400'"
+                            class="w-3 h-3 md:w-4 md:h-4 rounded-full cursor-pointer"></div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#F3ECDC] py-12 px-5">
+        <div class="text-center mb-10">
+            <h3 class="text-[#588157] text-sm font-semibold uppercase tracking-wide">
+                Keunggulan Yang Kami Berikan
+            </h3>
+            <h2 class="text-[#2D2D2D] text-2xl md:text-3xl font-bold">
+                Keunggulan Barat Residence
+            </h2>
+        </div>
+        <div class="flex flex-wrap justify-center gap-5">
+            <!-- Card 1 -->
+            <div
+                class="flex flex-col items-center w-full md:w-[393px] p-6 md:py-24 md:px-7 rounded-[30px] border-[10px] border-[#F3ECDC] bg-[#344E41] shadow-lg">
+                <div class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] rounded-full border-[8px] md:border-[10px] border-[#F3ECDC] bg-cover bg-center mb-5 shadow-lg"
+                    style="background-image: url('{% static 'main/images/location.jpg' %}');">
+                </div>
+                <h3 class="text-[#F3ECDC] text-lg md:text-xl font-semibold mb-4">
+                    Lokasi Strategis
+                </h3>
+                <p class="text-[rgba(255,255,255,0.75)] text-sm md:text-base text-center leading-relaxed">
+                    Terletak di pusat kota yang mudah diakses, dekat dengan kampus dan fasilitas umum lainnya.
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div
+                class="flex flex-col items-center w-full md:w-[393px] p-6 md:py-24 md:px-7 rounded-[30px] border-[10px] border-[#F3ECDC] bg-[#344E41] shadow-lg">
+                <div class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] rounded-full border-[8px] md:border-[10px] border-[#F3ECDC] bg-cover bg-center mb-5 shadow-lg"
+                    style="background-image: url('{% static 'main/images/money.png' %}');">
+                </div>
+                <h3 class="text-[#F3ECDC] text-lg md:text-xl font-semibold mb-4">
+                    Harga Terjangkau
+                </h3>
+                <p class="text-[rgba(255,255,255,0.75)] text-sm md:text-base text-center leading-relaxed">
+                    Menawarkan hunian berkualitas dengan harga yang pas di kantong, cocok untuk mahasiswa dan pekerja.
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div
+                class="flex flex-col items-center w-full md:w-[393px] p-6 md:py-24 md:px-7 rounded-[30px] border-[10px] border-[#F3ECDC] bg-[#344E41] shadow-lg">
+                <div class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] rounded-full border-[8px] md:border-[10px] border-[#F3ECDC] bg-cover bg-center mb-5 shadow-lg"
+                    style="background-image: url('{% static 'main/images/facility-icon.png' %}');">
+                </div>
+                <h3 class="text-[#F3ECDC] text-lg md:text-xl font-semibold mb-4">
+                    Fasilitas Lengkap
+                </h3>
+                <p class="text-[rgba(255,255,255,0.75)] text-sm md:text-base text-center leading-relaxed">
+                    Dilengkapi dengan berbagai fasilitas modern untuk memenuhi kebutuhan harian Anda dengan mudah.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[#344E41] py-16 relative" x-data="{ current: 0, testimonials: [
+        {
+            name: 'Patrick Kluivert',
+            role: 'Mahasiswa ABCD',
+            text: '“ Tinggal di Barat Residence benar-benar pengalaman yang luar biasa. Lokasinya sangat strategis, memudahkan saya untuk beraktivitas sehari-hari. Fasilitasnya lengkap dan semuanya dalam kondisi baik. Selain itu, suasananya sangat nyaman dan tenang, cocok untuk saya yang membutuhkan tempat istirahat yang berkualitas. Harga yang ditawarkan juga sangat terjangkau dibandingkan dengan tempat lain. Saya merasa seperti di rumah sendiri! “',
+            image: '{% static 'main/images/testimony-1.png' %}'
+        },
+        {
+            name: 'Sarah Doe',
+            role: 'Karyawan XYZ',
+            text: '“ Kos ini sangat nyaman dan bersih. Fasilitasnya sangat lengkap, mulai dari dapur umum hingga Wi-Fi yang stabil. Saya juga suka lokasinya yang dekat dengan kantor saya, jadi sangat menghemat waktu perjalanan. Highly recommended! “',
+            image: '{% static 'main/images/testimony-2.png' %}'
+        },
+        {
+            name: 'John Smith',
+            role: 'Mahasiswa DEF',
+            text: '“ Suasana yang tenang dan lingkungan yang bersih membuat saya merasa betah di Barat Residence. Stafnya juga sangat ramah dan responsif terhadap kebutuhan penghuni. Jika mencari tempat tinggal strategis dan nyaman, ini pilihan yang tepat! “',
+            image: '{% static 'main/images/testimony-3.png' %}'
+        }
+    ] }">
+        <div class="container mx-auto px-6 lg:px-20 flex flex-col gap-10">
+            <!-- Judul Section -->
+            <div class="text-center lg:text-left">
+                <h3 class="text-[#A3B18A] text-sm font-semibold uppercase tracking-widest">
+                    Fasilitas Umum
+                </h3>
+                <h2 class="text-[#F3ECDC] text-2xl md:text-3xl lg:text-4xl font-semibold uppercase mt-2">
+                    Testimoni Penghuni Kos-Kosan Barat Residence
+                </h2>
+            </div>
+
+            <!-- Konten Testimoni -->
+            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+                <!-- Foto Testimoni -->
+                <div
+                    class="w-[90%] md:w-[358px] h-[300px] md:h-[393px] flex-shrink-0 rounded-[24px] bg-[#D9D9D9] overflow-hidden mx-auto lg:mx-0">
+                    <img :src="testimonials[current].image" alt="Photo" class="w-full h-full object-cover bg-center">
+                </div>
+
+                <!-- Teks Testimoni -->
+                <div class="flex flex-col gap-4 text-center lg:text-left">
+                    <h3 class="text-white text-2xl md:text-3xl font-semibold capitalize"
+                        x-text="testimonials[current].name">
+                    </h3>
+                    <p class="text-white text-sm md:text-base font-normal capitalize"
+                        x-text="testimonials[current].role">
+                    </p>
+                    <p class="text-white text-sm md:text-base italic font-light leading-relaxed"
+                        x-text="testimonials[current].text">
+                    </p>
+
+                    <!-- Navigasi -->
+                    <div class="mt-6 flex gap-4 justify-center lg:justify-start">
+                        <!-- Tombol Kiri -->
+                        <button
+                            class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
+                            @click="current = (current === 0) ? testimonials.length - 1 : current - 1">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <!-- Tombol Kanan -->
+                        <button
+                            class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
+                            @click="current = (current === testimonials.length - 1) ? 0 : current + 1">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-[#F3ECDC]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-20">
+            <div class="relative flex items-center justify-center h-[300px] sm:h-[350px] md:h-[400px] rounded-[30px] overflow-hidden bg-cover bg-center"
+                style="background-image: linear-gradient(90deg, rgba(52, 78, 65, 1) 0%, rgba(0, 0, 0, 0.11) 100%), url('{% static 'main/images/bg-cta-image.png' %}');">
+                <!-- Content -->
+                <div class="text-center px-4 md:px-8 lg:px-12 max-w-[872px] mx-auto">
+                    <!-- Judul -->
+                    <h1
+                        class="text-[#F3ECDC] text-[20px] sm:text-[32px] md:text-[32px] lg:text-[40px] font-semibold uppercase leading-normal font-['Open_Sans'] mb-4">
+                        Tempati Kos-Kosan Terbaik Sesuai Impian Anda di Barat Residence
+                    </h1>
+                    <!-- Subjudul -->
+                    <p class="text-[#F3ECDC] text-sm md:text-base font-light mb-8">
+                        Tersedia banyak sekali kos-kosan terbaik yang siap Anda tempati
+                    </p>
+                    <!-- Tombol -->
+                    <a href="#"
+                        class="inline-flex items-center justify-center px-8 py-3 md:px-10 md:py-4 rounded-[30px] text-sm md:text-base font-semibold uppercase tracking-wider bg-[#588157] text-[#F3ECDC] hover:bg-[#6A965F] transition">
+                        Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

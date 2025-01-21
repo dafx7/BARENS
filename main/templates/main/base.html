@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hero Section - Barat Residence{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            --Secondary: #A3B18A;
+        }
+
+        .hero-heading-1 {
+            color: #F3ECDC;
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .hero-heading-2 {
+            color: #A3B18A;
+            font-size: 55px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .hero-subheading {
+            color: var(--Secondary, #A3B18A);
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            letter-spacing: 2.25px;
+            text-transform: uppercase;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(90deg, rgba(47, 79, 79, 0.8) 0%, rgba(47, 79, 79, 0.6) 100%);
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F3ECDC]">
+    <!-- Navbar -->
+    <nav class="bg-[#F3ECDC] shadow-lg fixed w-full z-50">
+        <div class="container mx-auto px-4 lg:px-8 py-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="{% static 'main/images/Logo.png' %}" alt="Logo" class="w-10 h-10">
+                <div class="text-[#344E41] text-lg md:text-xl lg:text-xl font-semibold leading-normal"
+                    style="font-family: 'Lato', sans-serif;">
+                    BARENS
+                </div>
+            </div>
+
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-[#344E41] focus:outline-none focus:ring-2 focus:ring-[#588157]">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <ul id="menu"
+                class="hidden md:flex space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
+                style="font-family: 'Open Sans', sans-serif;">
+                <li><a href="#" class="hover:text-green-600">Beranda</a></li>
+                <li><a href="#" class="hover:text-green-600">Tipe Kamar</a></li>
+                <li><a href="#" class="hover:text-green-600">Sewa Lapangan</a></li>
+                <li><a href="#" class="hover:text-green-600">Lokasi</a></li>
+                <li><a href="#" class="hover:text-green-600">FAQ</a></li>
+                <li><a href="#" class="hover:text-green-600">Hubungi Kami</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+<footer class="flex flex-col items-start gap-10 bg-[#344E41] px-6 md:px-[50px] lg:px-[100px] py-[100px] pb-[30px]">
+        <!-- Kontainer Footer -->
+        <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Logo dan Deskripsi -->
+            <div class="flex flex-col gap-4 text-left md:text-left">
+                <!-- Logo dan Nama -->
+                <div class="flex items-center justify-start md:justify-start gap-3 pb-2">
+                    <!-- Logo -->
+                    <img src="{% static 'main/images/Logo (1).png' %}" alt="Logo BARENS" class="w-[42px] h-[38px]" />
+                    <!-- Nama -->
+                    <h1 class="text-[#F3ECDC] font-lato text-[24px] font-semibold leading-none">
+                        BARENS
+                    </h1>
+                </div>
+                <!-- Deskripsi -->
+                <p
+                    class="text-[rgba(255,255,255,0.75)] font-opensans text-[16px] md:text-[18px] font-normal leading-[26px] md:leading-[29px]">
+                    Kos-Kosan Nyaman dengan Lokasi Strategis dan Fasilitas Lengkap untuk Hunian Ideal Anda
+                </p>
+            </div>
+
+            <!-- Site Links -->
+            <div class="flex flex-col gap-4 lg:pl-16 text-left md:text-left">
+                <!-- Judul -->
+                <h3 class="text-[#F3ECDC] font-lato text-[24px] font-semibold leading-none pb-2">
+                    Site Links
+                </h3>
+                <!-- Link -->
+                <ul
+                    class="text-[rgba(255,255,255,0.75)] font-opensans text-[16px] md:text-[18px] font-normal leading-[26px] md:leading-[29px]">
+                    <li>
+                        <a href="#" class="hover:underline">
+                            <i class="fas fa-caret-right p-2"></i> Syarat dan ketentuan
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tetap Bersama Kami -->
+            <div class="flex flex-col gap-4 text-left md:text-left">
+                <!-- Judul -->
+                <h3 class="text-[#F3ECDC] font-lato text-[24px] font-semibold leading-none">
+                    Tetap Bersama Kami
+                </h3>
+                <!-- Informasi Kontak -->
+                <ul
+                    class="text-[rgba(255,255,255,0.75)] font-opensans text-[16px] md:text-[18px] font-normal leading-[26px] md:leading-[29px] space-y-2">
+                    <li>
+                        <i class="fas fa-map-marker-alt p-2"></i> Medan, Indonesia
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope p-2"></i> BARENS@gmail.com
+                    </li>
+                    <li>
+                        <i class="fas fa-phone-alt p-2"></i> (+62) 123 456 789
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Garis Pemisah -->
+        <div class="w-full flex flex-col items-center border-t border-[rgba(255,255,255,0.30)] pt-[30px]">
+            <!-- Copyright -->
+            <p class="text-[#F3ECDC] text-center text-sm uppercase font-semibold tracking-[2.25px]">
+                © 2025 Barat Residence. Semua Hak Dilindungi
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
