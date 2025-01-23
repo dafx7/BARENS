@@ -11,6 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+    <!-- from node_modules -->
+    <script src="node_modules/@material-tailwind/html@latest/scripts/dialog.js"></script>
+
+    <!-- from cdn -->
+    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/dialog.js"></script>
 
     <style>
         body {
@@ -74,8 +79,8 @@
             <ul id="menu"
                 class="hidden md:flex space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
-                <li><a href="#" class="hover:text-green-600">Beranda</a></li>
-                <li><a href="#" class="hover:text-green-600">Tipe Kamar</a></li>
+                <li><a href="{% url 'index' %}" class="hover:text-green-600">Beranda</a></li>
+                <li><a href="{% url 'tipe_kamar' %}" class="hover:text-green-600">Tipe Kamar</a></li>
                 <li><a href="#" class="hover:text-green-600">Sewa Lapangan</a></li>
                 <li><a href="#" class="hover:text-green-600">Lokasi</a></li>
                 <li><a href="#" class="hover:text-green-600">FAQ</a></li>
