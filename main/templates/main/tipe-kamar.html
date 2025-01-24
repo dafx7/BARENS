@@ -25,123 +25,113 @@
 </section>
 
 <!-- Dropdown Filter Section -->
-<div
-    class="relative z-20 -mt-[40px] mx-auto w-full max-w-[1200px] bg-[#FFFBF2] shadow-md rounded-t-[30px] border border-[#EDE8DA] p-6 lg:p-0">
-    <!-- Large Screen Layout -->
-    <div
-        class="hidden lg:flex justify-between items-center w-full h-[78px] px-8">
+<div class="relative z-20 -mt-[40px] mx-auto w-full max-w-[1200px] bg-[#FFFBF2] shadow-md rounded-t-[30px] border border-[#EDE8DA] p-6 lg:p-0">
+    <form method="GET" action="" class="hidden lg:flex justify-between items-center w-full h-[78px] px-8">
+        <!-- Hidden Inputs to Preserve Existing Filters -->
+        {% for key, value in request.GET.items %}
+            {% if key != 'harga' and key != 'orang' and key != 'token' %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+
         <!-- Dropdown Harga -->
         <div class="flex items-center gap-4">
             <i class="fas fa-dollar-sign text-[#A3B18A] text-lg"></i>
-            <select
-                class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
+            <select name="harga" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
                 <option value="">Pilih harga yang sesuai</option>
-                <option value="1">0 - 1 juta</option>
-                <option value="2">1 juta - 2 juta</option>
-                <option value="3">2 juta - 3 juta</option>
-                <option value="4">3 juta - 4 juta</option>
-                <option value="5">4 juta ke atas</option>
+                <option value="1" {% if request.GET.harga == '1' %}selected{% endif %}>0 - 1 juta</option>
+                <option value="2" {% if request.GET.harga == '2' %}selected{% endif %}>1 juta - 2 juta</option>
+                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %}>2 juta ke atas</option>
             </select>
         </div>
 
         <!-- Separator -->
         <div class="w-px h-[40px] bg-[#EDE8DA]"></div>
 
-        <!-- Dropdown Luas Kamar -->
+        <!-- Dropdown Token/Non-Token -->
         <div class="flex items-center gap-4">
-            <i class="fas fa-bed text-[#A3B18A] text-lg"></i>
-            <select
-                class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
-                <option value="">Pilih luas kamar yang sesuai</option>
-                <option value="1">10 m² - 15 m²</option>
-                <option value="2">16 m² - 20 m²</option>
-                <option value="3">21 m² - 25 m²</option>
-                <option value="4">26 m² ke atas</option>
+            <i class="fas fa-lightbulb text-[#A3B18A] text-lg"></i>
+            <select name="token" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
+                <option value="">Pilih jenis kos</option>
+                <option value="token" {% if request.GET.token == 'token' %}selected{% endif %}>Token</option>
+                <option value="non-token" {% if request.GET.token == 'non-token' %}selected{% endif %}>Non-Token</option>
             </select>
         </div>
 
         <!-- Separator -->
         <div class="w-px h-[40px] bg-[#EDE8DA]"></div>
 
-        <!-- Orang Counter -->
+        <!-- Dropdown Max Orang -->
         <div class="flex items-center gap-4">
             <i class="fas fa-user-friends text-[#A3B18A] text-lg"></i>
-            <span class="text-[#4D4D4D] text-sm font-normal">Orang</span>
-            <div class="flex items-center gap-2">
-                <button
-                    class="w-[28px] h-[28px] bg-[#F3ECDC] rounded-full flex items-center justify-center text-[#588157] font-semibold hover:bg-[#EDE8DA]">
-                    −
-                </button>
-                <span class="text-[#4D4D4D] text-sm font-semibold">2</span>
-                <button
-                    class="w-[28px] h-[28px] bg-[#F3ECDC] rounded-full flex items-center justify-center text-[#588157] font-semibold hover:bg-[#EDE8DA]">
-                    +
-                </button>
-            </div>
+            <select name="orang" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
+                <option value="">Pilih jumlah penghuni</option>
+                <option value="1" {% if request.GET.orang == '1' %}selected{% endif %}>1 Orang</option>
+                <option value="2" {% if request.GET.orang == '2' %}selected{% endif %}>2 Orang</option>
+                <option value="3" {% if request.GET.orang == '3' %}selected{% endif %}>3 Orang</option>
+            </select>
         </div>
 
         <!-- Button Cari -->
-        <button
-            class="bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
+        <button type="submit" class="bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
             Cari
         </button>
-    </div>
+    </form>
 
-    <!-- Small and Medium Screen Layout -->
     <div class="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <form method="GET" action="" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Hidden Inputs to Preserve Existing Filters -->
+        {% for key, value in request.GET.items %}
+            {% if key != 'harga' and key != 'orang' and key != 'token' %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+
         <!-- Dropdown Harga -->
         <div class="flex items-center gap-4">
             <i class="fas fa-dollar-sign text-[#588157] text-lg"></i>
-            <select
-                class="w-full bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none border-b border-[#EDE8DA]">
+            <select name="harga" class="w-full bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none border-b border-[#EDE8DA]">
                 <option value="">Pilih harga yang sesuai</option>
-                <option value="1">0 - 1 juta</option>
-                <option value="2">1 juta - 2 juta</option>
-                <option value="3">2 juta - 3 juta</option>
-                <option value="4">3 juta - 4 juta</option>
-                <option value="5">4 juta ke atas</option>
+                <option value="1" {% if request.GET.harga == '1' %}selected{% endif %}>0 - 1 juta</option>
+                <option value="2" {% if request.GET.harga == '2' %}selected{% endif %}>1 juta - 2 juta</option>
+                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %}>2 juta - 3 juta</option>
+                <option value="4" {% if request.GET.harga == '4' %}selected{% endif %}>3 juta - 4 juta</option>
+                <option value="5" {% if request.GET.harga == '5' %}selected{% endif %}>4 juta ke atas</option>
             </select>
         </div>
 
-        <!-- Dropdown Luas Kamar -->
+        <!-- Dropdown Token/Non-Token -->
         <div class="flex items-center gap-4">
             <i class="fas fa-bed text-[#588157] text-lg"></i>
-            <select
-                class="w-full bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none border-b border-[#EDE8DA]">
-                <option value="">Pilih luas kamar yang sesuai</option>
-                <option value="1">10 m² - 15 m²</option>
-                <option value="2">16 m² - 20 m²</option>
-                <option value="3">21 m² - 25 m²</option>
-                <option value="4">26 m² ke atas</option>
+            <select name="token" class="w-full bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none border-b border-[#EDE8DA]">
+                <option value="">Pilih jenis kos</option>
+                <option value="token" {% if request.GET.token == 'token' %}selected{% endif %}>Token</option>
+                <option value="non-token" {% if request.GET.token == 'non-token' %}selected{% endif %}>Non-Token</option>
             </select>
         </div>
 
         <!-- Orang Counter -->
-        <div class="flex items-center justify-between sm:justify-start gap-4">
+        <div class="flex items-center gap-4">
             <i class="fas fa-user-friends text-[#588157] text-lg"></i>
-            <span class="text-[#4D4D4D] text-sm font-normal">Orang</span>
-            <div class="flex items-center gap-2">
-                <button
-                    class="w-[28px] h-[28px] bg-[#F3ECDC] rounded-full flex items-center justify-center text-[#588157] font-semibold hover:bg-[#EDE8DA]">
-                    −
-                </button>
-                <span class="text-[#4D4D4D] text-sm font-semibold">2</span>
-                <button
-                    class="w-[28px] h-[28px] bg-[#F3ECDC] rounded-full flex items-center justify-center text-[#588157] font-semibold hover:bg-[#EDE8DA]">
-                    +
-                </button>
-            </div>
+            <select name="orang" class="w-full bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none border-b border-[#EDE8DA]">
+                <option value="">Pilih jumlah penghuni</option>
+                <option value="1" {% if request.GET.orang == '1' %}selected{% endif %}>1 Orang</option>
+                <option value="2" {% if request.GET.orang == '2' %}selected{% endif %}>2 Orang</option>
+                <option value="3" {% if request.GET.orang == '3' %}selected{% endif %}>3 Orang</option>
+            </select>
         </div>
 
         <!-- Button Cari -->
-        <div class="flex justify-center sm:justify-end">
-            <button
-                class="w-full sm:w-auto bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
+        <div class="flex justify-center sm:justify-end col-span-1 sm:col-span-2">
+            <button type="submit" class="w-full sm:w-auto bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
                 Cari
             </button>
         </div>
-    </div>
+    </form>
 </div>
+
+</div>
+
 
 
 <!-- Kamar Section -->
@@ -149,76 +139,76 @@
    <div class="container mx-auto px-6 lg:px-20">
         <!-- Card Kamar -->
         {% for kamar in tipe_kamars %}
-<div class="mb-12 flex flex-col lg:flex-row w-full max-w-[1230px] mx-auto p-6 items-center gap-8 bg-white rounded-[20px] shadow-md">
-    <!-- Gambar Kamar -->
-    <div class="w-full lg:w-[511px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
-        {% for image in kamar.images.all %}
-        <img src="{{ image.image.url }}" alt="{{ kamar.nama }}" class="w-full h-full object-cover mb-4"
-             data-modal-image data-kamar-id="{{ kamar.id }}" onclick="openModal({{ kamar.id }}, {{ forloop.counter0 }})">
-        {% endfor %}
-    </div>
+            <div class="mb-12 flex flex-col lg:flex-row w-full max-w-[1230px] mx-auto p-6 items-center gap-8 bg-white rounded-[20px] shadow-md">
+                <!-- Gambar Kamar -->
+                <div class="w-full lg:w-[511px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
+                    {% for image in kamar.images.all %}
+                    <img src="{{ image.image.url }}" alt="{{ kamar.nama }}" class="w-full h-full object-cover mb-4"
+                         data-modal-image data-kamar-id="{{ kamar.id }}" onclick="openModal({{ kamar.id }}, {{ forloop.counter0 }})">
+                    {% endfor %}
+                </div>
 
-    <!-- Konten Kamar -->
-    <div class="flex flex-col gap-4 w-full">
-        <h3 class="text-[#073937] font-opensans text-lg lg:text-[24px] font-semibold uppercase leading-[27.9px]">
-            {{ kamar.nama }}
-        </h3>
-        <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
-            {{ kamar.deskripsi }}
-        </p>
-        <div class="flex flex-col gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
-            <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Fasilitas Kamar</h4>
-            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
-                {{ kamar.fasilitas }}
-            </p>
-        </div>
-        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
-            <div>
-                <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Harga</h4>
+                <!-- Konten Kamar -->
+                <div class="flex flex-col gap-4 w-full">
+                    <h3 class="text-[#073937] font-opensans text-lg lg:text-[24px] font-semibold uppercase leading-[27.9px]">
+                        {{ kamar.nama }}
+                    </h3>
+                    <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
+                        {{ kamar.deskripsi }}
+                    </p>
+                    <div class="flex flex-col gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
+                        <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Fasilitas Kamar</h4>
+                        <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
+                            {{ kamar.fasilitas }}
+                        </p>
+                    </div>
+                    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
+                        <div>
+                            <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Harga</h4>
 
-                <!-- Harga 1 Orang -->
-                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                    <span>1 Orang (Token)</span>
-                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_1_orang|floatformat:0 }}</span>
-                </p>
+                            <!-- Harga 1 Orang -->
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>1 Orang (Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_1_orang|floatformat:0 }}</span>
+                            </p>
 
-                {% if kamar.harga_non_token_1_orang %}
-                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                    <span>1 Orang (Non-Token)</span>
-                    <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_1_orang|floatformat:0 }}</span>
-                </p>
-                {% endif %}
+                            {% if kamar.harga_non_token_1_orang %}
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>1 Orang (Non-Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_1_orang|floatformat:0 }}</span>
+                            </p>
+                            {% endif %}
 
-                <!-- Harga 2 Orang -->
-                {% if kamar.max_penghuni > 1 %}
-                <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                    <span>2 Orang  (Token)</span>
-                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
-                </p>
-                {% endif %}
-                {% if kamar.harga_non_token_2_orang %}
-                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                    <span>2 Orang (Non-Token)</span>
-                    <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_2_orang|floatformat:0 }}</span>
-                </p>
-                {% endif %}
-                <!-- Harga 3 Orang -->
-                {% if kamar.max_penghuni > 2 %}
-                <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                    <span>3 Orang  (Token)</span>
-                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_3_orang|floatformat:0 }}</span>
-                </p>
-                {% endif %}
+                            <!-- Harga 2 Orang -->
+                            {% if kamar.max_penghuni > 1 %}
+                            <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>2 Orang  (Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
+                            </p>
+                            {% endif %}
+                            {% if kamar.harga_non_token_2_orang %}
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>2 Orang (Non-Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_2_orang|floatformat:0 }}</span>
+                            </p>
+                            {% endif %}
+                            <!-- Harga 3 Orang -->
+                            {% if kamar.max_penghuni > 2 %}
+                            <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>3 Orang  (Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_3_orang|floatformat:0 }}</span>
+                            </p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <button class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
+                                Pesan Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
-                    Pesan Sekarang
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
+            {% endfor %}
 
     </div>
 
@@ -287,9 +277,5 @@
         document.getElementById("carousel-image").src = imageArray[currentImageIndex].src;
     }
 </script>
-
-
-
-
 
 {% endblock %}
