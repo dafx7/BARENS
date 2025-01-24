@@ -1,67 +1,37 @@
 import os
 import django
 
-# Set the default Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'barens.settings')  # Ganti 'barens' dengan nama project Anda
 django.setup()
 
 from main.models import TipeKamar
 
-# Template deskripsi yang akan digunakan
-description_template = """
-Kamar nyaman dengan {fasilitas_deskripsi}. Desain yang fungsional dan modern, ideal untuk {orang}.
-"""
+# Update atau buat ulang data untuk Suite Double
+suite_double_data = {
+    "nama": "Suite Double",
+    "deskripsi": "Kamar nyaman dengan tempat tidur double, tersedia pilihan token dan non-token dengan harga yang sesuai.",
+    "fasilitas": "1 bed (6 kaki), toilet duduk, shower + water heater, lemari rak, AC, kamar token dan non-token, TV, meja dan kursi belajar",
+    "harga_per_bulan_1_orang": 1800000,  # Harga token
+    "harga_non_token": 2000000,  # Harga non-token
+    "harga_per_bulan_2_orang": 2000000,
+    "jumlah_kamar": 2,
+    "max_penghuni": 2
+}
 
-# Data untuk memperbarui deskripsi
-update_data = [
-    {
-        "nama": "Standard Double",
-        "fasilitas_deskripsi": "tempat tidur double (6 kaki), AC, meja kerja, kamar mandi pribadi dengan shower + water heater",
-        "orang": "dua orang yang menginginkan kenyamanan dengan harga terjangkau",
-    },
-    {
-        "nama": "Suite Triple",
-        "fasilitas_deskripsi": "dua tempat tidur (6 kaki dan 3 kaki), AC, meja kerja, kamar mandi pribadi dengan shower + water heater",
-        "orang": "tiga orang yang menginginkan ruang lebih luas dan kenyamanan maksimal",
-    },
-    {
-        "nama": "Standard Single",
-        "fasilitas_deskripsi": "tempat tidur single (3 kaki), AC, meja kerja, kamar mandi pribadi dengan shower + water heater",
-        "orang": "satu orang yang mencari kenyamanan dengan harga terjangkau",
-    },
-    {
-        "nama": "Suite Double",
-        "fasilitas_deskripsi": "tempat tidur double (6 kaki), AC, meja kerja, kamar mandi pribadi dengan shower + water heater",
-        "orang": "dua orang yang menginginkan ruang lebih luas dan kenyamanan maksimal",
-    },
-    {
-        "nama": "Standard Twin",
-        "fasilitas_deskripsi": "dua tempat tidur single (3 kaki), AC, meja kerja, kamar mandi pribadi dengan shower + water heater",
-        "orang": "dua orang yang ingin berbagi ruang dengan kenyamanan",
-    },
-    {
-        "nama": "Standard A",
-        "fasilitas_deskripsi": "tempat tidur single (3 kaki), AC, meja kerja, kamar mandi pribadi dengan ember dan gayung",
-        "orang": "satu orang yang mencari opsi hemat dengan fasilitas dasar",
-    },
-    {
-        "nama": "Standard B",
-        "fasilitas_deskripsi": "tempat tidur kecil (2,5 kaki), kipas angin, meja kerja, dan lemari kayu",
-        "orang": "satu orang dengan kebutuhan minimalis",
-    },
-]
+tipe_kamar, created = TipeKamar.objects.update_or_create(
+    nama=suite_double_data['nama'],  # Gunakan nama sebagai kriteria unik
+    defaults={
+        "deskripsi": suite_double_data['deskripsi'],
+        "fasilitas": suite_double_data['fasilitas'],
+        "harga_per_bulan_1_orang": suite_double_data['harga_per_bulan_1_orang'],
+        "harga_non_token": suite_double_data['harga_non_token'],
+        "harga_per_bulan_2_orang": suite_double_data['harga_per_bulan_2_orang'],
+        "jumlah_kamar": suite_double_data['jumlah_kamar'],
+        "max_penghuni": suite_double_data['max_penghuni']
+    }
+)
 
-# Update deskripsi berdasarkan data
-for data in update_data:
-    try:
-        kamar = TipeKamar.objects.get(nama=data["nama"])
-        kamar.deskripsi = description_template.format(
-            fasilitas_deskripsi=data["fasilitas_deskripsi"],
-            orang=data["orang"]
-        )
-        kamar.save()
-        print(f"Deskripsi untuk '{kamar.nama}' berhasil diperbarui.")
-    except TipeKamar.DoesNotExist:
-        print(f"Kamar dengan nama '{data['nama']}' tidak ditemukan di database.")
-
-print("Update deskripsi selesai!")
+if created:
+    print("Tipe kamar 'Suite Double' berhasil dibuat.")
+else:
+    print("Tipe kamar 'Suite Double' berhasil diperbarui.")

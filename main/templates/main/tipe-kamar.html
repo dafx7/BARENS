@@ -149,50 +149,77 @@
    <div class="container mx-auto px-6 lg:px-20">
         <!-- Card Kamar -->
         {% for kamar in tipe_kamars %}
-        <div class="mb-12 flex flex-col lg:flex-row w-full max-w-[1230px] mx-auto p-6 items-center gap-8 bg-white rounded-[20px] shadow-md">
-            <!-- Gambar Kamar -->
-            <div class="w-full lg:w-[511px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
-                {% for image in kamar.images.all %}
-                <img src="{{ image.image.url }}" alt="{{ kamar.nama }}" class="w-full h-full object-cover mb-4"
-                     data-modal-image data-kamar-id="{{ kamar.id }}" onclick="openModal({{ kamar.id }}, {{ forloop.counter0 }})">
-                {% endfor %}
-            </div>
+<div class="mb-12 flex flex-col lg:flex-row w-full max-w-[1230px] mx-auto p-6 items-center gap-8 bg-white rounded-[20px] shadow-md">
+    <!-- Gambar Kamar -->
+    <div class="w-full lg:w-[511px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
+        {% for image in kamar.images.all %}
+        <img src="{{ image.image.url }}" alt="{{ kamar.nama }}" class="w-full h-full object-cover mb-4"
+             data-modal-image data-kamar-id="{{ kamar.id }}" onclick="openModal({{ kamar.id }}, {{ forloop.counter0 }})">
+        {% endfor %}
+    </div>
 
-            <!-- Konten Kamar -->
-            <div class="flex flex-col gap-4 w-full">
-                <h3 class="text-[#073937] font-opensans text-lg lg:text-[24px] font-semibold uppercase leading-[27.9px]">
-                    {{ kamar.nama }}
-                </h3>
-                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
-                    {{ kamar.deskripsi }}
+    <!-- Konten Kamar -->
+    <div class="flex flex-col gap-4 w-full">
+        <h3 class="text-[#073937] font-opensans text-lg lg:text-[24px] font-semibold uppercase leading-[27.9px]">
+            {{ kamar.nama }}
+        </h3>
+        <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
+            {{ kamar.deskripsi }}
+        </p>
+        <div class="flex flex-col gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
+            <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Fasilitas Kamar</h4>
+            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
+                {{ kamar.fasilitas }}
+            </p>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
+            <div>
+                <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Harga</h4>
+
+                <!-- Harga 1 Orang -->
+                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                    <span>1 Orang (Token)</span>
+                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_1_orang|floatformat:0 }}</span>
                 </p>
-                <div class="flex flex-col gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
-                    <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Fasilitas Kamar</h4>
-                    <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
-                        {{ kamar.fasilitas }}
-                    </p>
-                </div>
-                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
-                    <div>
-                        <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Harga</h4>
-                        <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                            <span>1 Orang</span>
-                            <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_1_orang|floatformat:0 }}</span>
-                        </p>
-                        <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                            <span>2 Orang</span>
-                            <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
-                        </p>
-                    </div>
-                    <div>
-                        <button class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
-                            Pesan Sekarang
-                        </button>
-                    </div>
-                </div>
+
+                {% if kamar.harga_non_token_1_orang %}
+                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                    <span>1 Orang (Non-Token)</span>
+                    <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_1_orang|floatformat:0 }}</span>
+                </p>
+                {% endif %}
+
+                <!-- Harga 2 Orang -->
+                {% if kamar.max_penghuni > 1 %}
+                <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                    <span>2 Orang  (Token)</span>
+                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
+                </p>
+                {% endif %}
+                {% if kamar.harga_non_token_2_orang %}
+                <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                    <span>2 Orang (Non-Token)</span>
+                    <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_2_orang|floatformat:0 }}</span>
+                </p>
+                {% endif %}
+                <!-- Harga 3 Orang -->
+                {% if kamar.max_penghuni > 2 %}
+                <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                    <span>3 Orang  (Token)</span>
+                    <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_3_orang|floatformat:0 }}</span>
+                </p>
+                {% endif %}
+            </div>
+            <div>
+                <button class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
+                    Pesan Sekarang
+                </button>
             </div>
         </div>
-        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
     </div>
 
     <!-- Modal -->
