@@ -1,0 +1,103 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative w-full h-[439px] bg-cover bg-center" style="background-image: url('{% static 'main/images/pesan-kamar.png' %}');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#344E41CC] to-[#344E4180]"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 container mx-auto px-4 lg:px-20 flex flex-col justify-center h-full text-white">
+        <!-- Breadcrumb -->
+        <p class="text-sm font-semibold tracking-wider uppercase text-[#A3B18A]">
+            Daftar Tipe Kamar > Pesan Kamar
+        </p>
+        <!-- Title -->
+        <h1 class="mt-2 text-3xl md:text-4xl lg:text-5xl font-bold">
+            Pesan Kamar Sekarang
+        </h1>
+        <!-- Subtitle -->
+        <p class="mt-4 text-base md:text-lg text-[#F3ECDC]">
+            Segera pesan kamar sesuai pilihan anda.
+        </p>
+    </div>
+</section>
+
+<!-- Form Section -->
+<section class="py-16 bg-[#FFFBF2]">
+    <div class="container mx-auto px-6 lg:px-20">
+        <div class="bg-white p-8 rounded-lg shadow-md border border-[#EDE8DA] max-w-[800px] mx-auto">
+            <form action="{% url 'form_pemesanan' %}" method="POST" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Nama -->
+                <div>
+                    <label for="nama" class="block text-sm font-semibold text-[#073937]">Nama</label>
+                    <input type="text" id="nama" name="nama" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukan nama lengkap" required>
+                </div>
+
+                <!-- Nomor Telp/Email -->
+                <div>
+                    <label for="kontak" class="block text-sm font-semibold text-[#073937]">Nomor Telp/Email</label>
+                    <input type="text" id="kontak" name="kontak" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukan Nomor Telp/Email" required>
+                </div>
+
+                <!-- Pilih Tipe Kamar -->
+                <div>
+                    <label for="tipe_kamar" class="block text-sm font-semibold text-[#073937]">Pilih Tipe Kamar</label>
+                    <select id="tipe_kamar" name="tipe_kamar" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
+                        {% if tipe_kamar %}
+                        <option value="{{ tipe_kamar.id }}" selected>{{ tipe_kamar.nama }}</option>
+                        {% endif %}
+                        {% for kamar in tipe_kamars %}
+                        <option value="{{ kamar.id }}">{{ kamar.nama }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Durasi Sewa -->
+                <div class="flex gap-4">
+                    <div class="w-1/2">
+                        <label for="durasi" class="block text-sm font-semibold text-[#073937]">Durasi Sewa</label>
+                        <select id="durasi" name="durasi" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
+                            <option value="bulanan">Bulanan</option>
+                            <option value="tahunan">Tahunan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Jumlah Penghuni -->
+                <div>
+                    <label class="block text-sm font-semibold text-[#073937]">Jumlah Penghuni</label>
+                    <div class="flex gap-4 mt-2">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="jumlah_penghuni" value="1" class="text-[#588157] focus:ring-[#A3B18A]" required>
+                            <span>1 Orang</span>
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="jumlah_penghuni" value="2" class="text-[#588157] focus:ring-[#A3B18A]" required>
+                            <span>2 Orang</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tanggal Mulai Sewa -->
+                <div>
+                    <label for="tanggal_mulai" class="block text-sm font-semibold text-[#073937]">Tanggal Mulai Sewa</label>
+                    <input type="date" id="tanggal_mulai" name="tanggal_mulai" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-between mt-6">
+                    <button type="submit" class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F]">
+                        Kirim
+                    </button>
+                    <button type="reset" class="px-6 py-3 border border-[#588157] text-[#588157] font-semibold rounded-lg hover:bg-[#EDE8DA]">
+                        Batalkan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

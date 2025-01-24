@@ -72,7 +72,7 @@
             </select>
         </div>
 
-        <!-- Button Cari -->
+        <!-- Buptton Cari -->
         <button type="submit" class="bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
             Cari
         </button>
@@ -201,9 +201,10 @@
                             {% endif %}
                         </div>
                         <div>
-                            <button class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
+                            <a href="{% url 'form_pemesanan' %}?tipe_kamar={{ kamar.id }}" class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
                                 Pesan Sekarang
-                            </button>
+                            </a>
+
                         </div>
                     </div>
                 </div>

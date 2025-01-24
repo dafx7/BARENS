@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from .models import TipeKamar
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import TipeKamar, Pemesanan
 
 
 # Create your views here.
@@ -55,3 +56,46 @@ def tipe_kamar(request):
 
     return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
 
+
+class PemesananView(View):
+    def get(self, request):
+        # Ambil parameter tipe_kamar dari query string
+        tipe_kamar_id = request.GET.get('tipe_kamar')
+        tipe_kamar = TipeKamar.objects.filter(id=tipe_kamar_id).first()  # Validasi jika tipe kamar tidak ditemukan
+
+        return render(request, 'main/form_pemesanan.html', {
+            'tipe_kamar': tipe_kamar,  # Kirim tipe kamar ke template
+            'tipe_kamars': TipeKamar.objects.all()  # Jika ada dropdown untuk pilihan
+        })
+
+    def post(self, request):
+        nama = request.POST.get('nama')
+        kontak = request.POST.get('kontak')
+        tipe_kamar_id = request.POST.get('tipe_kamar')
+        durasi = request.POST.get('durasi')
+        jumlah_penghuni = request.POST.get('jumlah_penghuni')
+        tanggal_mulai = request.POST.get('tanggal_mulai')
+
+        # Validasi dan simpan data
+        try:
+            tipe_kamar = TipeKamar.objects.get(id=tipe_kamar_id)
+            Pemesanan.objects.create(
+                nama=nama,
+                kontak=kontak,
+                tipe_kamar=tipe_kamar,
+                durasi=durasi,
+                jumlah_penghuni=int(jumlah_penghuni),
+                tanggal_mulai=tanggal_mulai
+            )
+            return redirect('success_page')  # Redirect ke halaman sukses (buat route jika belum ada)
+        except TipeKamar.DoesNotExist:
+            return render(request, 'main/form_pemesanan.html', {
+                'error': 'Tipe kamar tidak ditemukan',
+                'tipe_kamars': TipeKamar.objects.all()
+            })
+
+
+
+class SuccessView(View):
+    def get(self, request):
+        return render(request, 'main/success.html', {})

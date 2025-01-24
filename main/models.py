@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 
 class TipeKamar(models.Model):
@@ -42,3 +43,16 @@ class KamarImage(models.Model):
 
     def __str__(self):
         return f"Gambar untuk {self.tipe_kamar.nama}"
+
+
+class Pemesanan(models.Model):
+    nama = models.CharField(max_length=255)
+    kontak = models.CharField(max_length=255)
+    tipe_kamar = models.ForeignKey('TipeKamar', on_delete=models.CASCADE, related_name='pemesanan')
+    durasi = models.CharField(max_length=50, choices=[('bulanan', 'Bulanan'), ('tahunan', 'Tahunan')])
+    jumlah_penghuni = models.PositiveIntegerField()
+    tanggal_mulai = models.DateField()
+    tanggal_pemesanan = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return f"Pemesanan oleh {self.nama} untuk {self.tipe_kamar.nama}"

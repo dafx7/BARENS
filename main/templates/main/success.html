@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<section class="py-16 bg-[#FFFBF2] text-center">
+    <h1 class="text-4xl font-bold text-[#588157]">Terima Kasih!</h1>
+    <p class="mt-4 text-lg text-[#4D4D4D]">Pemesanan Anda telah berhasil diproses. Kami akan segera menghubungi Anda.</p>
+    <a href="{% url 'index' %}" class="mt-6 inline-block px-6 py-3 bg-[#588157] text-white rounded-lg hover:bg-[#6A965F]">
+        Kembali ke Beranda
+    </a>
+</section>
+{% endblock %}
