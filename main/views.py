@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import TipeKamar
 
 
 # Create your views here.
@@ -7,5 +8,7 @@ def index(request):
 
 
 def tipe_kamar(request):
-    return render(request, 'main/tipe-kamar.html')
+    tipe_kamars = TipeKamar.objects.all()
+    return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
+
 
