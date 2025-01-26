@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative w-full h-[439px] bg-cover bg-center" style="background-image: url('{% static 'main/images/lokasi-hero.png' %}');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#344E41CC] to-[#344E4180]"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 container mx-auto px-4 lg:px-20 flex flex-col justify-center h-full text-white">
+        <!-- Breadcrumb -->
+        <p class="text-sm font-semibold tracking-wider uppercase text-[#A3B18A]">
+            Beranda > Lokasi
+        </p>
+        <!-- Title -->
+        <h1 class="mt-2 text-3xl md:text-4xl lg:text-5xl font-bold">
+            Lokasi Barat Residence
+        </h1>
+        <!-- Subtitle -->
+        <p class="mt-4 text-base md:text-lg text-[#F3ECDC]">
+            Temukan lokasi strategis dengan akses mudah ke berbagai tempat penting
+        </p>
+    </div>
+</section>
+
+<!-- Lokasi -->
+<section class="bg-[#F3ECDC] py-16">
+    <div class="container mx-auto px-4 md:px-6 lg:px-20">
+        <!-- Header -->
+        <h2 class="text-[#073937] text-2xl md:text-3xl font-semibold text-left md:pl-8 lg:pl-12">LOKASI DAN LINGKUNGAN SEKITAR</h2>
+        <p class="mt-2 text-[#588157] text-sm md:text-lg text-left md:pl-8 lg:pl-12 flex items-center gap-2">
+            <i class="fas fa-map-marker-alt text-[#588157] text-base md:text-lg"></i>
+            Jl. Abdul Hakim, Padang Bulan Selayang I, Kec. Medan Selayang, Kota Medan, Sumatera Utara 20155
+        </p>
+
+        <!-- Frame Map dan Landmark -->
+        <div class="mt-8 mx-auto flex justify-center">
+            <div class="w-full max-w-[1230px] h-auto flex-shrink-0 bg-white rounded-[20px] shadow-md overflow-hidden flex flex-col items-center p-4 md:p-6 lg:p-8">
+                <!-- Google Map -->
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127487.11909431886!2d98.62587866928588!3d3.592202142913277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312f20e05222a5%3A0x902808e4ca566912!2sBarat%20Residence%2C%20Jl.%20Abdul%20Hakim%2C%20Padang%20Bulan%20Selayang%20I%2C%20Medan%20Selayang%2C%20Medan%20City%2C%20North%20Sumatra%2020155!5e0!3m2!1sen!2sid!4v1697628365674!5m2!1sen!2sid"
+                    class="w-full md:w-[90%] h-[200px] md:h-[300px] lg:h-[350px] rounded-lg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <a href="https://www.google.com/maps?q=Barat+Residence,+Jl.+Abdul+Hakim,+Padang+Bulan+Selayang+I,+Medan+Selayang,+Medan+City,+North+Sumatra+20155&ftid=0x30312f20e05222a5:0x902808e4ca566912&entry=gps"
+                    target="_blank"
+                    class="mt-4 flex w-full max-w-[280px] py-[12px] md:py-[16px] lg:py-[18px] px-[16px] md:px-[20px] lg:px-[26px] justify-center items-center gap-3 rounded-[30px] bg-white text-[#588157] text-sm md:text-base font-semibold shadow-md hover:shadow-lg border border-[#EDE8DA]">
+                    Lihat di Google Maps
+                </a>
+
+                <!-- Landmark -->
+                <div class="mt-12 w-full">
+                    <h3 class="text-[#073937] text-xl md:text-2xl font-semibold text-center">TEMPAT TERDEKAT</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mt-6">
+                        <!-- Landmark 1 -->
+                        <div
+                            class="flex flex-col justify-center items-center gap-2 rounded-[20px] bg-[#F3F3F3] py-4 px-4 md:px-6 shadow-md text-center">
+                            <i class="fas fa-map-marker-alt text-[#588157] text-lg md:text-2xl"></i>
+                            <p class="text-[#073937] font-semibold text-sm md:text-lg">Kampus ABC</p>
+                            <p class="text-[#4D4D4D] text-xs md:text-sm">1,5 km</p>
+                        </div>
+                        <!-- Landmark 2 -->
+                        <div
+                            class="flex flex-col justify-center items-center gap-2 rounded-[20px] bg-[#F3F3F3] py-4 px-4 md:px-6 shadow-md text-center">
+                            <i class="fas fa-map-marker-alt text-[#588157] text-lg md:text-2xl"></i>
+                            <p class="text-[#073937] font-semibold text-sm md:text-lg">Setia Budi</p>
+                            <p class="text-[#4D4D4D] text-xs md:text-sm">2,0 km</p>
+                        </div>
+                        <!-- Landmark 3 -->
+                        <div
+                            class="flex flex-col justify-center items-center gap-2 rounded-[20px] bg-[#F3F3F3] py-4 px-4 md:px-6 shadow-md text-center">
+                            <i class="fas fa-map-marker-alt text-[#588157] text-lg md:text-2xl"></i>
+                            <p class="text-[#073937] font-semibold text-sm md:text-lg">RS Umum ABCD</p>
+                            <p class="text-[#4D4D4D] text-xs md:text-sm">2,5 km</p>
+                        </div>
+                        <!-- Landmark 4 -->
+                        <div
+                            class="flex flex-col justify-center items-center gap-2 rounded-[20px] bg-[#F3F3F3] py-4 px-4 md:px-6 shadow-md text-center">
+                            <i class="fas fa-map-marker-alt text-[#588157] text-lg md:text-2xl"></i>
+                            <p class="text-[#073937] font-semibold text-sm md:text-lg">Mall XYZ</p>
+                            <p class="text-[#4D4D4D] text-xs md:text-sm">3,2 km</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+{% endblock %}

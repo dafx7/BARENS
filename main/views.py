@@ -99,3 +99,8 @@ class PemesananView(View):
 class SuccessView(View):
     def get(self, request):
         return render(request, 'main/success.html', {})
+
+
+def lokasi(request):
+    return render(request, 'main/lokasi.html')
+
