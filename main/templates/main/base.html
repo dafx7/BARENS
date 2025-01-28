@@ -61,21 +61,26 @@
 <body class="bg-[#F3ECDC]">
     <!-- Navbar -->
     <nav class="bg-[#F3ECDC] shadow-lg fixed w-full z-50">
-        <div class="container mx-auto px-4 lg:px-8 py-6 flex justify-between items-center">
+    <div class="container mx-auto px-4 lg:px-8 py-6 flex justify-between items-center">
+            <!-- Logo & Brand Name -->
+            <a href="{% url 'index' %}" class="flex items-center"> <!-- Menambahkan link ke halaman Beranda -->
             <div class="flex items-center space-x-3">
-                <img src="{% static 'main/images/Logo.png' %}" alt="Logo" class="w-10 h-10">
-                <div class="text-[#344E41] text-lg md:text-xl lg:text-xl font-semibold leading-normal"
-                    style="font-family: 'Lato', sans-serif;">
-                    BARENS
-                </div>
+                    <img src="{% static 'main/images/Logo.png' %}" alt="Logo" class="w-10 h-10">
+                    <div class="text-[#344E41] text-lg md:text-xl lg:text-xl font-semibold leading-normal"
+                        style="font-family: 'Lato', sans-serif;">
+                        BARENS
+                    </div>
             </div>
+            </a>
 
+            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="menu-toggle" class="text-[#344E41] focus:outline-none focus:ring-2 focus:ring-[#588157]">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
 
+            <!-- Desktop Menu -->
             <ul id="menu"
                 class="hidden md:flex space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
@@ -87,7 +92,29 @@
                 <li><a href="#" class="hover:text-green-600">Hubungi Kami</a></li>
             </ul>
         </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#F3ECDC] shadow-lg absolute w-full">
+            <ul class="flex flex-col space-y-4 p-4 text-black font-semibold text-sm leading-normal"
+                style="font-family: 'Open Sans', sans-serif;">
+                <li><a href="{% url 'index' %}" class="hover:text-green-600 block">Beranda</a></li>
+                <li><a href="{% url 'tipe_kamar' %}" class="hover:text-green-600 block">Tipe Kamar</a></li>
+                <li><a href="#" class="hover:text-green-600 block">Sewa Lapangan</a></li>
+                <li><a href="{% url 'lokasi' %}" class="hover:text-green-600 block">Lokasi</a></li>
+                <li><a href="{% url 'faq' %}" class="hover:text-green-600 block">FAQ</a></li>
+                <li><a href="#" class="hover:text-green-600 block">Hubungi Kami</a></li>
+            </ul>
+        </div>
     </nav>
+
+    <!-- JavaScript untuk Mobile Menu -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function() {
+            const mobileMenu = document.getElementById("mobile-menu");
+            mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+
 
     <!-- Main Content -->
     <main class="pt-20">
@@ -95,7 +122,7 @@
     </main>
 
     <!-- Footer -->
-<footer class="flex flex-col items-start gap-10 bg-[#344E41] px-6 md:px-[50px] lg:px-[100px] py-[100px] pb-[30px]">
+    <footer class="flex flex-col items-start gap-10 bg-[#344E41] px-6 md:px-[50px] lg:px-[100px] py-[100px] pb-[30px]">
         <!-- Kontainer Footer -->
         <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-10">
             <!-- Logo dan Deskripsi -->
