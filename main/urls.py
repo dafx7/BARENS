@@ -8,4 +8,5 @@ urlpatterns = [
     path('success/', views.SuccessView.as_view(), name='success_page'),
     path('lokasi/', views.lokasi, name='lokasi'),
     path('faq/', views.faq, name='faq'),
+    path('hubungi-kami/', views.hubungi_kami, name='hubungi_kami'),
 ]

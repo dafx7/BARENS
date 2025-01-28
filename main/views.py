@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import TipeKamar, Pemesanan
+from django.core.mail import send_mail
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -107,3 +110,23 @@ def lokasi(request):
 
 def faq(request):
     return render(request, 'main/faq.html')
+
+
+def hubungi_kami(request):
+    if request.method == 'POST':
+        nama = request.POST.get('nama')
+        email = request.POST.get("email")
+        pesan = request.POST.get('pesan')
+
+        # send_mail(
+        #     f"Pesan dari {nama}",
+        #     pesan,
+        #     email,
+        #     ["aminuddindaffa@email.com"],
+        #     fail_silently=False,
+        # )
+
+        messages.success(request, 'Pesan Anda telah dikirim. Kami akan segera menghubungi Anda!')
+        return redirect('hubungi_kami')
+
+    return render(request, 'main/hubungi_kami.html')
