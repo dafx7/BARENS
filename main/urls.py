@@ -7,4 +7,5 @@ urlpatterns = [
     path('form-pemesanan/', views.PemesananView.as_view(), name='form_pemesanan'),
     path('success/', views.SuccessView.as_view(), name='success_page'),
     path('lokasi/', views.lokasi, name='lokasi'),
+    path('faq/', views.faq, name='faq'),
 ]

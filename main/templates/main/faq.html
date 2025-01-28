@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative w-full h-[439px] bg-cover bg-center"
+    style="background-image: url('{% static "main/images/faq-hero.png" %}');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#344E41CC] to-[#344E4180]"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 container mx-auto px-4 lg:px-20 flex flex-col justify-center h-full text-white">
+        <p class="text-sm font-semibold tracking-wider uppercase text-[#A3B18A]">Beranda > FAQ</p>
+        <h1 class="mt-2 text-3xl md:text-4xl lg:text-5xl font-bold">Pertanyaan Umum</h1>
+        <p class="mt-4 text-base md:text-lg text-[#F3ECDC]">
+            Temukan jawaban dari pertanyaan yang sering diajukan terkait kos-kosan kami.
+        </p>
+    </div>
+</section>
+
+<section class="py-16 px-4 sm:px-6 lg:px-20">
+    <div class="max-w-5xl mx-auto">
+        <!-- Judul -->
+        <h2 class="text-[#2D2D2D] text-center font-opensans text-[15px] sm:text-[18px] md:text-[20px] font-semibold leading-[38px]">
+            PERTANYAAN YANG SERING DITANYAKAN
+        </h2>
+
+        <p class="text-[#588157] text-center font-opensans text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-[48px] sm:leading-[58px] mt-4">
+            ADA PERTANYAAN?<br>KAMI PUNYA JAWABAN!
+        </p>
+
+        <!-- FAQ List -->
+        <div class="mt-12 space-y-4">
+            <!-- FAQ Item -->
+            <div class="bg-[#588157] rounded-[12px]">
+                <button type="button"
+                    class="w-full flex justify-between items-center px-4 sm:px-6 py-4 text-white font-semibold focus:outline-none"
+                    onclick="toggleFAQ(this)">
+                    <span class="text-[14px] sm:text-[16px]">Bagaimana cara memesan kamar di Barat Residence?</span>
+                    <div class="w-[32px] sm:w-[38px] h-[32px] sm:h-[38px] flex items-center justify-center bg-[#A3B18A] rounded-full">
+                        <i class="fas fa-chevron-down text-white"></i>
+                    </div>
+                </button>
+                <div class="hidden px-4 sm:px-6 py-4 bg-white text-[#4D4D4D] rounded-b-[12px]">
+                    Anda dapat memesan kamar melalui halaman
+                    <a href="{% url 'tipe_kamar' %}" class="text-[#588157] font-semibold hover:underline">
+                        <strong>Tipe Kamar</strong>
+                    </a>, memilih kamar yang diinginkan, dan mengisi formulir pemesanan yang tersedia.
+                </div>
+            </div>
+
+            <!-- FAQ Item -->
+            <div class="bg-[#588157] rounded-[12px]">
+                <button type="button"
+                    class="w-full flex justify-between items-center px-4 sm:px-6 py-4 text-white font-semibold focus:outline-none"
+                    onclick="toggleFAQ(this)">
+                    <span class="text-[14px] sm:text-[16px]">Bagaimana kebijakan pembayaran pada Barat Residence?</span>
+                    <div class="w-[32px] sm:w-[38px] h-[32px] sm:h-[38px] flex items-center justify-center bg-[#A3B18A] rounded-full">
+                        <i class="fas fa-chevron-down text-white"></i>
+                    </div>
+                </button>
+                <div class="hidden px-4 sm:px-6 py-4 bg-white text-[#4D4D4D] rounded-b-[12px]">
+                    Pembayaran dilakukan setiap awal bulan melalui transfer bank atau langsung di tempat.
+                </div>
+            </div>
+
+            <!-- FAQ Item -->
+            <div class="bg-[#588157] rounded-[12px]">
+                <button type="button"
+                    class="w-full flex justify-between items-center px-4 sm:px-6 py-4 text-white font-semibold focus:outline-none"
+                    onclick="toggleFAQ(this)">
+                    <span class="text-[14px] sm:text-[16px]">Bagaimana aturan yang ada di kosan Barat Residence?</span>
+                    <div class="w-[32px] sm:w-[38px] h-[32px] sm:h-[38px] flex items-center justify-center bg-[#A3B18A] rounded-full">
+                        <i class="fas fa-chevron-down text-white"></i>
+                    </div>
+                </button>
+                <div class="hidden px-4 sm:px-6 py-4 bg-white text-[#4D4D4D] rounded-b-[12px]">
+                    Aturan meliputi tidak merokok di dalam kamar, menjaga kebersihan, dan tidak membuat keributan.
+                </div>
+            </div>
+        </div>
+
+        <!-- Hubungi Kami -->
+        <p class="pt-4 text-[#2D2D2D] text-center font-opensans text-[18px] sm:text-[20px] md:text-[22px] font-normal leading-[34px] sm:leading-[38px] mt-8">
+            Tidak menemukan jawaban? Jangan ragu untuk menghubungi kami langsung untuk informasi lebih lanjut.
+        </p>
+
+        <div class="text-center mt-4 flex justify-center">
+            <a href="#"
+               class="justify-center inline-flex w-[220px] sm:w-[260px] md:w-[280px] py-[14px] sm:py-[16px] md:py-[18px] px-[20px] sm:px-[24px] md:px-[26px]
+                      bg-[#588157] text-white font-semibold rounded-[30px] hover:bg-[#6A965F]">
+                Hubungi Kami
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function toggleFAQ(button) {
+        const content = button.nextElementSibling;
+        content.classList.toggle('hidden');
+
+        // Toggle ikon panah atas/bawah
+        const icon = button.querySelector("i");
+        icon.classList.toggle("fa-chevron-down");
+        icon.classList.toggle("fa-chevron-up");
+    }
+</script>
+
+
+{% endblock %}
+
+
