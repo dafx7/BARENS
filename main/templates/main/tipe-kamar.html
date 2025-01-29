@@ -5,7 +5,7 @@
 <section class="relative w-full h-[439px] bg-cover bg-center"
     style="background-image: url('{% static 'main/images/standard-a-1.png' %}');">
     <!-- Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[#344E41CC] to-[#344E4180]"></div>
+    <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(52, 78, 65, 0.93) 32%, rgba(18, 27, 18, 0.00) 100%);"></div>
 
     <!-- Hero Content -->
     <div class="relative z-10 container mx-auto px-4 lg:px-20 flex flex-col justify-center h-full text-white">
@@ -35,42 +35,76 @@
         {% endfor %}
 
         <!-- Dropdown Harga -->
-        <div class="flex items-center gap-4">
+       <div class="relative flex items-center gap-4 w-[250px]">
             <i class="fas fa-dollar-sign text-[#A3B18A] text-lg"></i>
-            <select name="harga" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
-                <option value="">Pilih harga yang sesuai</option>
-                <option value="1" {% if request.GET.harga == '1' %}selected{% endif %}>0 - 1 juta</option>
-                <option value="2" {% if request.GET.harga == '2' %}selected{% endif %}>1 juta - 2 juta</option>
-                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %}>2 juta ke atas</option>
+            <select name="harga"
+                class="block w-full px-4 py-3 text-[#4D4D4D] bg-white border border-[#EDE8DA] rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#A3B18A] appearance-none cursor-pointer">
+                <option value="" class="text-gray-400">Pilih harga yang sesuai</option>
+                <option value="1" {% if request.GET.harga == '1' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    0 - 1 juta
+                </option>
+                <option value="2" {% if request.GET.harga == '2' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    1 juta - 2 juta
+                </option>
+                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    2 juta ke atas
+                </option>
             </select>
+            <!-- Ikon Dropdown -->
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <i class="fas fa-chevron-down text-[#A3B18A]"></i>
+            </div>
         </div>
+
 
         <!-- Separator -->
         <div class="w-px h-[40px] bg-[#EDE8DA]"></div>
 
         <!-- Dropdown Token/Non-Token -->
-        <div class="flex items-center gap-4">
+        <div class="relative flex items-center gap-4 w-[250px]">
             <i class="fas fa-lightbulb text-[#A3B18A] text-lg"></i>
-            <select name="token" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
-                <option value="">Pilih jenis kos</option>
-                <option value="token" {% if request.GET.token == 'token' %}selected{% endif %}>Token</option>
-                <option value="non-token" {% if request.GET.token == 'non-token' %}selected{% endif %}>Non-Token</option>
+            <select name="token"
+                class="block w-full px-4 py-3 text-[#4D4D4D] bg-white border border-[#EDE8DA] rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#A3B18A] appearance-none cursor-pointer">
+                <option value="" class="text-gray-400">Pilih jenis kos</option>
+                <option value="token" {% if request.GET.token == 'token' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    Token
+                </option>
+                <option value="non-token" {% if request.GET.token == 'non-token' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    Non-Token
+                </option>
             </select>
+            <!-- Ikon Dropdown -->
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <i class="fas fa-chevron-down text-[#A3B18A]"></i>
+            </div>
         </div>
+
 
         <!-- Separator -->
         <div class="w-px h-[40px] bg-[#EDE8DA]"></div>
 
         <!-- Dropdown Max Orang -->
-        <div class="flex items-center gap-4">
+        <div class="relative flex items-center gap-4 w-[250px]">
             <i class="fas fa-user-friends text-[#A3B18A] text-lg"></i>
-            <select name="orang" class="bg-transparent text-[#4D4D4D] text-sm font-normal focus:outline-none appearance-none">
-                <option value="">Pilih jumlah penghuni</option>
-                <option value="1" {% if request.GET.orang == '1' %}selected{% endif %}>1 Orang</option>
-                <option value="2" {% if request.GET.orang == '2' %}selected{% endif %}>2 Orang</option>
-                <option value="3" {% if request.GET.orang == '3' %}selected{% endif %}>3 Orang</option>
+            <select name="orang"
+                class="block w-full px-4 py-3 text-[#4D4D4D] bg-white border border-[#EDE8DA] rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-[#A3B18A] appearance-none cursor-pointer">
+                <option value="" class="text-gray-400">Pilih jumlah penghuni</option>
+                <option value="1" {% if request.GET.orang == '1' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    1 Orang
+                </option>
+                <option value="2" {% if request.GET.orang == '2' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    2 Orang
+                </option>
+                <option value="3" {% if request.GET.orang == '3' %}selected{% endif %} class="hover:bg-[#F3ECDC]">
+                    3 Orang
+                </option>
             </select>
+            <!-- Ikon Dropdown -->
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <i class="fas fa-chevron-down text-[#A3B18A]"></i>
+            </div>
         </div>
+
 
         <!-- Buptton Cari -->
         <button type="submit" class="bg-[#588157] text-white px-8 py-2 rounded-full text-sm font-semibold hover:bg-[#6A965F]">
@@ -94,9 +128,7 @@
                 <option value="">Pilih harga yang sesuai</option>
                 <option value="1" {% if request.GET.harga == '1' %}selected{% endif %}>0 - 1 juta</option>
                 <option value="2" {% if request.GET.harga == '2' %}selected{% endif %}>1 juta - 2 juta</option>
-                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %}>2 juta - 3 juta</option>
-                <option value="4" {% if request.GET.harga == '4' %}selected{% endif %}>3 juta - 4 juta</option>
-                <option value="5" {% if request.GET.harga == '5' %}selected{% endif %}>4 juta ke atas</option>
+                <option value="3" {% if request.GET.harga == '3' %}selected{% endif %}>2 juta ke atas</option>
             </select>
         </div>
 
