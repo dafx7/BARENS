@@ -1,0 +1,26 @@
+# Ignore environment variable files (SECURITY)
+.env
+
+# Ignore Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Ignore Django secret key file
+*.secret
+
+# Ignore logs
+*.log
+
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore PyCharm settings
+.idea/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore node_modules (if using JavaScript)
+node_modules/

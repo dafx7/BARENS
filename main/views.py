@@ -113,20 +113,20 @@ def faq(request):
 
 
 def hubungi_kami(request):
-    if request.method == 'POST':
-        nama = request.POST.get('nama')
+    if request.method == "POST":
+        nama = request.POST.get("nama")
         email = request.POST.get("email")
-        pesan = request.POST.get('pesan')
+        pesan = request.POST.get("pesan")
 
-        # send_mail(
-        #     f"Pesan dari {nama}",
-        #     pesan,
-        #     email,
-        #     ["aminuddindaffa@email.com"],
-        #     fail_silently=False,
-        # )
+        subject = f"Pesan Baru dari {nama}"
+        body = f"Nama: {nama}\nEmail: {email}\n\nPesan:\n{pesan}"
 
-        messages.success(request, 'Pesan Anda telah dikirim. Kami akan segera menghubungi Anda!')
-        return redirect('hubungi_kami')
+        try:
+            send_mail(subject, body, email, ["residencebarat@gmail.com"])
+            messages.success(request, "Pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.")
+        except Exception as e:
+            messages.error(request, f"Error saat mengirim email: {e}")
 
-    return render(request, 'main/hubungi_kami.html')
+        return redirect("hubungi_kami")  # Redirect back to contact page
+
+    return render(request, "main/hubungi_kami.html")

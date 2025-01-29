@@ -24,6 +24,17 @@
     <!-- Formulir Hubungi Kami -->
     <div class="lg:col-span-2">
         <h2 class="text-[#2D2D2D] text-2xl font-semibold mb-6">HUBUNGI KAMI</h2>
+        <!-- Notification Messages -->
+        {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                    <p class="{% if message.tags == 'success' %}text-green-600 bg-green-100 border-l-4 border-green-500 p-4{% else %}text-red-600 bg-red-100 border-l-4 border-red-500 p-4{% endif %}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <form action="{% url 'hubungi_kami' %}" method="POST" class="space-y-6">
             {% csrf_token %}
             <div>
