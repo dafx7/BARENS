@@ -59,13 +59,12 @@ class Pemesanan(models.Model):
         return f"Pemesanan oleh {self.nama} untuk {self.tipe_kamar.nama}"
 
 
-
 class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
+    email = models.EmailField(unique=True)  # Gunakan email sebagai identifier utama
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
 
-    # Tambahkan related_name agar tidak bentrok dengan default auth.User
-    groups = models.ManyToManyField(Group, related_name="customuser_set", blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name="customuser_set", blank=True)
+    USERNAME_FIELD = "username"  # Kembali pakai username untuk login
+    REQUIRED_FIELDS = ["email", "phone_number", "first_name"]  # Nama lengkap tetap wajib
 
     def __str__(self):
-        return self.username
+        return self.username  # Tampilkan username sebagai identifier utama

@@ -148,3 +148,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Authentication Settings
 LOGIN_REDIRECT_URL = "index"  # Redirect to homepage after login
 LOGOUT_REDIRECT_URL = "index"  # Redirect to homepage after logout
+
+AUTH_USER_MODEL = 'main.CustomUser'
