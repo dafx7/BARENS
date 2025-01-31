@@ -82,7 +82,7 @@
 
             <!-- Desktop Menu -->
             <ul id="menu"
-                class="hidden md:flex space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
+                class="hidden md:flex items-center space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
                 <li><a href="{% url 'index' %}" class="hover:text-green-600">Beranda</a></li>
                 <li><a href="{% url 'tipe_kamar' %}" class="hover:text-green-600">Tipe Kamar</a></li>
@@ -90,11 +90,22 @@
                 <li><a href="{% url 'lokasi' %}" class="hover:text-green-600">Lokasi</a></li>
                 <li><a href="{% url 'faq' %}" class="hover:text-green-600">FAQ</a></li>
                 <li><a href="{% url 'hubungi_kami' %}" class="hover:text-green-600">Hubungi Kami</a></li>
+                <li class="flex items-center">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
+                        Logout
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
+                        Login
+                    </a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#F3ECDC] shadow-lg absolute w-full">
+        <div id="mobile-menu" class="hidden sm:hidden bg-[#F3ECDC] shadow-lg absolute w-full">
             <ul class="flex flex-col space-y-4 p-4 text-black font-semibold text-sm leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
                 <li><a href="{% url 'index' %}" class="hover:text-green-600 block">Beranda</a></li>
@@ -103,6 +114,11 @@
                 <li><a href="{% url 'lokasi' %}" class="hover:text-green-600 block">Lokasi</a></li>
                 <li><a href="{% url 'faq' %}" class="hover:text-green-600 block">FAQ</a></li>
                 <li><a href="{% url 'hubungi_kami' %}" class="hover:text-green-600 block">Hubungi Kami</a></li>
+                <li class="flex items-center">
+                    <a href="#" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
+                        Masuk
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

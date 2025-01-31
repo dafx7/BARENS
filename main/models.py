@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class TipeKamar(models.Model):
@@ -56,3 +57,15 @@ class Pemesanan(models.Model):
 
     def __str__(self):
         return f"Pemesanan oleh {self.nama} untuk {self.tipe_kamar.nama}"
+
+
+
+class CustomUser(AbstractUser):
+    phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
+
+    # Tambahkan related_name agar tidak bentrok dengan default auth.User
+    groups = models.ManyToManyField(Group, related_name="customuser_set", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="customuser_set", blank=True)
+
+    def __str__(self):
+        return self.username

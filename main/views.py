@@ -3,15 +3,15 @@ from django.views import View
 from .models import TipeKamar, Pemesanan
 from django.core.mail import send_mail
 from django.contrib import messages
-
+from django.db.models import Q
+from django.contrib.auth import logout
+from .forms import RegistrationForm
 
 
 # Create your views here.
 def index(request):
     return render(request, 'main/index.html')
 
-
-from django.db.models import Q
 
 def tipe_kamar(request):
     # Ambil semua tipe kamar
@@ -130,3 +130,25 @@ def hubungi_kami(request):
         return redirect("hubungi_kami")  # Redirect back to contact page
 
     return render(request, "main/hubungi_kami.html")
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect("index")  # Redirect ke halaman utama setelah logout
+
+
+def register(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = form.cleaned_data["email"]  # Gunakan email sebagai username
+            user.phone_number = form.cleaned_data["phone_number"]  # Simpan nomor HP
+            user.set_password(form.cleaned_data["password"])  # Hash password
+            user.save()
+            messages.success(request, "Registrasi berhasil! Silakan login.")
+            return redirect("login")
+    else:
+        form = RegistrationForm()
+
+    return render(request, "main/registrasi.html", {"form": form})

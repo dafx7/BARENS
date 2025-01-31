@@ -145,3 +145,6 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")  # Get email from .env
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")  # Get password from .env
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# Authentication Settings
+LOGIN_REDIRECT_URL = "index"  # Redirect to homepage after login
+LOGOUT_REDIRECT_URL = "index"  # Redirect to homepage after logout
