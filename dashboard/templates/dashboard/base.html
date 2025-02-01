@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Barat Residence</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Font Poppins dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Load FontAwesome untuk ikon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#F8F5EE]">
+
+    <!-- Container Utama -->
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar (default: hidden on small screens) -->
+        <aside id="sidebar" class="w-[240px] h-screen bg-[#222D32] flex flex-col font-[Poppins] transition-transform transform -translate-x-full lg:translate-x-0 fixed lg:relative z-50">
+            <!-- Logo -->
+            <div class="bg-[#344E41] flex items-center justify-center h-[100px] shadow-md">
+                <img src="{% static 'main/images/Logo (1).png' %}" alt="Logo BARENS" class="w-[42px] h-[38px]">
+                <h1 class="text-[#F3ECDC] font-semibold text-[24px] leading-none ml-3">BARENS</h1>
+            </div>
+
+            <!-- MAIN DASHBOARD -->
+            <div class="flex items-center w-[240px] h-[60px] px-[23px] bg-[#192428] text-white font-medium text-[16px] leading-[20px]">
+                MAIN DASHBOARD
+            </div>
+
+            <!-- Navigasi Sidebar -->
+            <nav class="flex-1 flex flex-col justify-start mt-2 px-4">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="{% url 'status_pembayaran' %}" class="flex items-center gap-3 text-white px-4 py-3 bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-wallet"></i> Status Pembayaran
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-list"></i> Riwayat Transaksi
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-upload"></i> Upload Bukti
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-comments"></i> Kritik dan Saran
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'index' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-red-600 rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Header -->
+            <header class="bg-[#344E41] w-full h-[100px] flex items-center px-8 shadow-md relative">
+                <!-- Toggle Button (hanya tampil di small screen) -->
+                <button id="menu-toggle" class="lg:hidden absolute left-4 text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="flex items-center ml-12 lg:ml-0">
+                    <div>
+                        <p class="text-white text-[16px] font-bold leading-[20px]">Selamat Datang, {{ request.user.first_name }}</p>
+                        <p class="text-[#B0B0B0] text-[16px] leading-[20px]">Berikut informasi terkait pembayaran dan layanan kos Anda</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Konten Dashboard -->
+            <div class="max-w-[1200px] mx-auto p-8">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+
+    </div>
+
+    <!-- JavaScript untuk Toggle Sidebar -->
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const sidebar = document.getElementById("sidebar");
+
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("-translate-x-full");
+        });
+    </script>
+
+</body>
+</html>

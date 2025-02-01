@@ -61,28 +61,29 @@
 <body class="bg-[#F3ECDC]">
     <!-- Navbar -->
     <nav class="bg-[#F3ECDC] shadow-lg fixed w-full z-50">
-    <div class="container mx-auto px-4 lg:px-8 py-6 flex justify-between items-center">
+        <div class="container mx-auto px-4 lg:px-8 py-6 flex justify-between items-center">
+
             <!-- Logo & Brand Name -->
-            <a href="{% url 'index' %}" class="flex items-center"> <!-- Menambahkan link ke halaman Beranda -->
-            <div class="flex items-center space-x-3">
+            <a href="{% url 'index' %}" class="flex items-center">
+                <div class="flex items-center space-x-3">
                     <img src="{% static 'main/images/Logo.png' %}" alt="Logo" class="w-10 h-10">
                     <div class="text-[#344E41] text-lg md:text-xl lg:text-xl font-semibold leading-normal"
                         style="font-family: 'Lato', sans-serif;">
                         BARENS
                     </div>
-            </div>
+                </div>
             </a>
 
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
+            <!-- Mobile Menu Button (Visible on lg & md & sm, Hidden on xl) -->
+            <div class="block xl:hidden">
                 <button id="menu-toggle" class="text-[#344E41] focus:outline-none focus:ring-2 focus:ring-[#588157]">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
 
-            <!-- Desktop Menu -->
-            <ul id="menu"
-                class="hidden md:flex items-center space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
+            <!-- Desktop Menu (Hidden on lg, visible on xl) -->
+            <ul id="desktop-menu"
+                class="hidden xl:flex items-center space-x-6 lg:space-x-8 font-semibold text-black text-sm md:text-base lg:text-base leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
                 <li><a href="{% url 'index' %}" class="hover:text-green-600">Beranda</a></li>
                 <li><a href="{% url 'tipe_kamar' %}" class="hover:text-green-600">Tipe Kamar</a></li>
@@ -90,11 +91,21 @@
                 <li><a href="{% url 'lokasi' %}" class="hover:text-green-600">Lokasi</a></li>
                 <li><a href="{% url 'faq' %}" class="hover:text-green-600">FAQ</a></li>
                 <li><a href="{% url 'hubungi_kami' %}" class="hover:text-green-600">Hubungi Kami</a></li>
+
+                <!-- User Authentication -->
                 <li class="flex items-center">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
-                        Logout
-                    </a>
+                    <div class="flex space-x-4">
+                        <!-- Tombol Dashboard -->
+                        <a href="{% url 'status_pembayaran' %}"
+                           class="px-4 py-2 rounded-lg bg-[#A3B18A] text-white font-semibold text-sm shadow-md hover:bg-[#8B9E78] transition-all duration-300 flex items-center gap-2">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <!-- Tombol Logout -->
+                        <a href="{% url 'logout' %}" class="px-4 py-2 rounded-lg bg-[#588157] text-white font-semibold text-sm shadow-md hover:bg-[#6A965F] transition-all duration-300">
+                            Logout
+                        </a>
+                    </div>
                     {% else %}
                     <a href="{% url 'login' %}" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
                         Login
@@ -104,8 +115,8 @@
             </ul>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden sm:hidden bg-[#F3ECDC] shadow-lg absolute w-full">
+        <!-- Mobile Menu (Visible on lg & md & sm, Hidden on xl) -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-[#F3ECDC] shadow-lg absolute w-full top-[80px] left-0 z-50 transition-all duration-300">
             <ul class="flex flex-col space-y-4 p-4 text-black font-semibold text-sm leading-normal"
                 style="font-family: 'Open Sans', sans-serif;">
                 <li><a href="{% url 'index' %}" class="hover:text-green-600 block">Beranda</a></li>
@@ -114,22 +125,44 @@
                 <li><a href="{% url 'lokasi' %}" class="hover:text-green-600 block">Lokasi</a></li>
                 <li><a href="{% url 'faq' %}" class="hover:text-green-600 block">FAQ</a></li>
                 <li><a href="{% url 'hubungi_kami' %}" class="hover:text-green-600 block">Hubungi Kami</a></li>
-                <li class="flex items-center">
-                    <a href="#" class="flex w-24 px-1 py-2 justify-center items-center gap-1 rounded bg-[#588157] text-white">
-                        Masuk
-                    </a>
-                </li>
+
+                {% if user.is_authenticated %}
+                <!-- Jika Sudah Login, Tampilkan Dashboard & Logout -->
+                <li><a href="{% url 'status_pembayaran' %}" class="block px-4 py-2 bg-[#A3B18A] text-white rounded-lg text-center shadow-md hover:bg-[#8B9E78]">Dashboard</a></li>
+                <li><a href="{% url 'logout' %}" class="block px-4 py-2 bg-red-600 text-white rounded-lg text-center shadow-md hover:bg-red-700">Logout</a></li>
+                {% else %}
+                <!-- Jika Belum Login, Tampilkan Tombol Login -->
+                <li><a href="{% url 'login' %}" class="block px-4 py-2 bg-[#588157] text-white rounded-lg text-center shadow-md hover:bg-[#6A965F]">Masuk</a></li>
+                {% endif %}
             </ul>
         </div>
+
     </nav>
 
-    <!-- JavaScript untuk Mobile Menu -->
+    <!-- JavaScript for Menu Toggle -->
     <script>
-        document.getElementById("menu-toggle").addEventListener("click", function() {
-            const mobileMenu = document.getElementById("mobile-menu");
-            mobileMenu.classList.toggle("hidden");
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.getElementById("menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuToggle.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden"); // Toggle class hidden
         });
+
+        // Tutup menu jika klik di luar menu (opsional)
+        document.addEventListener("click", function (event) {
+            const isClickInsideMenu = mobileMenu.contains(event.target);
+            const isClickOnButton = menuToggle.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnButton) {
+                mobileMenu.classList.add("hidden");
+            }
+        });
+    });
     </script>
+
+
+
 
 
     <!-- Main Content -->

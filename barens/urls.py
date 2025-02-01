@@ -22,6 +22,7 @@ from django.urls import path, include  # Tambahkan include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),  # Hubungkan dengan urls.py di aplikasi main
+    path('dashboard/', include('dashboard.urls')),
 ]
 
 

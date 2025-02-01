@@ -1,0 +1,49 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="max-w-[1120px] h-auto bg-white shadow-lg rounded-[12px] p-6 sm:p-8 mx-auto">
+    <!-- Judul -->
+    <h2 class="mt-6 text-[14px] sm:text-[16px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px]">
+        PEMBAYARAN TERAKHIR
+    </h2>
+
+    {% if pembayaran %}
+    <div class="mt-4 space-y-4">
+        <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">PEMBAYARAN TERAKHIR</p>
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] sm:w-1/2 text-left">: {{ pembayaran.tanggal_pembayaran|date:"d F Y" }}</p>
+        </div>
+
+        <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">JUMLAH PEMBAYARAN</p>
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] sm:w-1/2 text-left">: Rp {{ pembayaran.jumlah_pembayaran }}</p>
+        </div>
+
+        <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">STATUS PEMBAYARAN</p>
+            <p class="sm:w-1/2 text-left font-bold text-[14px] sm:text-[16px]
+                {% if pembayaran.status == 'LUNAS' %} text-green-500 {% else %} text-red-500 {% endif %}">
+                : {% if pembayaran.status == 'LUNAS' %} {{ pembayaran.status }} {% else %} BELUM LUNAS {% endif %}
+            </p>
+        </div>
+
+        <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">JATUH TEMPO BERIKUTNYA</p>
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] sm:w-1/2 text-left">: {{ pembayaran.jatuh_tempo_berikutnya|date:"d F Y" }}</p>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-red-500 text-center text-lg font-semibold mt-4">Belum ada pembayaran yang tercatat.</p>
+    {% endif %}
+
+    <!-- Peringatan Pembayaran -->
+    <p class="mt-6 text-[14px] sm:text-[16px] leading-[20px] text-[#6B6B6B] text-center font-normal">
+        Jangan lupa melakukan pembayaran sebelum
+        <strong class="text-gray-900">{{ pembayaran.jatuh_tempo_berikutnya|date:"d F Y" }}</strong>
+        untuk menghindari denda keterlambatan. <span class="text-red-500">*</span>
+    </p>
+</div>
+
+{% endblock %}
