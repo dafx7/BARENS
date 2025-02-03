@@ -42,12 +42,16 @@
             <nav class="flex-1 flex flex-col justify-start mt-2 px-4">
                 <ul class="space-y-4">
                     <li>
-                        <a href="{% url 'status_pembayaran' %}" class="flex items-center gap-3 text-white px-4 py-3 bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'status_pembayaran' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/dashboard/status-pembayaran/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
                             <i class="fas fa-wallet"></i> Status Pembayaran
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'riwayat_transaksi' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'riwayat_transaksi' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/dashboard/riwayat-transaksi/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
                             <i class="fas fa-list"></i> Riwayat Transaksi
                         </a>
                     </li>
@@ -62,12 +66,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'index' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-red-600 rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'index' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 hover:bg-red-600 rounded-md text-[16px] font-normal leading-[20px]">
                             <i class="fas fa-sign-out-alt"></i> Keluar
                         </a>
                     </li>
                 </ul>
             </nav>
+
         </aside>
 
         <!-- Main Content -->
