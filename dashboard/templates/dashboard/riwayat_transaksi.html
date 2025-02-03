@@ -1,0 +1,94 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="max-w-[1120px] w-full h-auto bg-white shadow-lg rounded-[12px] p-8 mx-auto">
+    <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px]">
+        RIWAYAT TRANSAKSI
+    </h2>
+
+    <div class="overflow-x-auto mt-6">
+        <table class="w-full border-collapse border border-gray-300 text-left text-[14px]">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2">No</th>
+                    <th class="border border-gray-300 px-4 py-2">BULAN</th>
+                    <th class="border border-gray-300 px-4 py-2">NOMINAL</th>
+                    <th class="border border-gray-300 px-4 py-2">METODE</th>
+                    <th class="border border-gray-300 px-4 py-2">STATUS</th>
+                    <th class="border border-gray-300 px-4 py-2 text-center">BUKTI TRANSFER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in transaksi %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
+                    <td class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ t.bulan }}</td>
+                    <td class="border border-gray-300 px-4 py-2">Rp {{ t.nominal }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        {% if t.metode_pembayaran == 'bank_transfer' %}
+                            Transfer Bank
+                        {% else %}
+                            E-Wallet
+                        {% endif %}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2 font-bold text-center
+                               {% if t.status|lower == 'lunas' %} text-[#588157] {% else %} text-[#C63636] {% endif %}">
+                        {% if t.status|lower == 'lunas' %}
+                            Lunas
+                        {% else %}
+                            Belum Lunas
+                        {% endif %}
+                    </td>
+
+                    <!-- Redirect to new page for proof of payment -->
+                    <td class="border border-gray-300 px-4 py-2 text-center">
+                        {% if t.bukti_transfer %}
+                            <a href="{% url 'bukti_transfer' t.id %}" target="_blank"
+                                class="flex mx-auto w-[110px] h-[30px] px-4 justify-center items-center gap-2 rounded-[6px] bg-[#588157] text-white text-[15px] font-weight-bold leading-[20px]">
+                                Lihat
+                            </a>
+                        {% else %}
+                            <span class="text-gray-500">-</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="border border-gray-300 px-4 py-2 text-center text-gray-500">
+                        Belum ada transaksi
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination (5 rows per page) -->
+    {% if transaksi.paginator.num_pages > 1 %}
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+        <span class="text-gray-500 text-sm mb-2 md:mb-0">
+            Menampilkan {{ transaksi.start_index }} - {{ transaksi.end_index }} dari {{ transaksi.paginator.count }} transaksi
+        </span>
+        <div class="flex space-x-2">
+            {% if transaksi.has_previous %}
+            <a href="?page={{ transaksi.previous_page_number }}"
+                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ transaksi.number }}</span>
+
+            {% if transaksi.has_next %}
+            <a href="?page={{ transaksi.next_page_number }}"
+                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                Next
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

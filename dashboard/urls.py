@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import status_pembayaran
+from .views import status_pembayaran, riwayat_transaksi, bukti_transfer
 
 urlpatterns = [
     path("status-pembayaran/", status_pembayaran, name="status_pembayaran"),
+    path("riwayat-transaksi/", riwayat_transaksi, name="riwayat_transaksi"),
+    path('bukti-transfer/<int:transaksi_id>/', bukti_transfer, name='bukti_transfer'),
 ]

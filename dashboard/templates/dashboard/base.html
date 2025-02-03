@@ -15,6 +15,10 @@
 
     <!-- Load FontAwesome untuk ikon -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Load Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body class="bg-[#F8F5EE]">
 
@@ -43,7 +47,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'riwayat_transaksi' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
                             <i class="fas fa-list"></i> Riwayat Transaksi
                         </a>
                     </li>

@@ -1,37 +1,57 @@
 import os
 import django
+import random
+from datetime import timedelta
+from django.utils.timezone import now
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'barens.settings')  # Ganti 'barens' dengan nama project Anda
+# Set up Django environment
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'barens.settings')  # Change 'barens' to your project name
 django.setup()
 
-from main.models import TipeKamar
+from dashboard.models import Transaksi
+from django.contrib.auth import get_user_model
 
-# Update atau buat ulang data untuk Suite Double
-suite_double_data = {
-    "nama": "Suite Double",
-    "deskripsi": "Kamar nyaman dengan tempat tidur double, tersedia pilihan token dan non-token dengan harga yang sesuai.",
-    "fasilitas": "1 bed (6 kaki), toilet duduk, shower + water heater, lemari rak, AC, kamar token dan non-token, TV, meja dan kursi belajar",
-    "harga_per_bulan_1_orang": 1800000,  # Harga token
-    "harga_non_token": 2000000,  # Harga non-token
-    "harga_per_bulan_2_orang": 2000000,
-    "jumlah_kamar": 2,
-    "max_penghuni": 2
-}
+User = get_user_model()
 
-tipe_kamar, created = TipeKamar.objects.update_or_create(
-    nama=suite_double_data['nama'],  # Gunakan nama sebagai kriteria unik
-    defaults={
-        "deskripsi": suite_double_data['deskripsi'],
-        "fasilitas": suite_double_data['fasilitas'],
-        "harga_per_bulan_1_orang": suite_double_data['harga_per_bulan_1_orang'],
-        "harga_non_token": suite_double_data['harga_non_token'],
-        "harga_per_bulan_2_orang": suite_double_data['harga_per_bulan_2_orang'],
-        "jumlah_kamar": suite_double_data['jumlah_kamar'],
-        "max_penghuni": suite_double_data['max_penghuni']
-    }
-)
 
-if created:
-    print("Tipe kamar 'Suite Double' berhasil dibuat.")
-else:
-    print("Tipe kamar 'Suite Double' berhasil diperbarui.")
+def create_transactions():
+    """Create 10 sample transactions for the first user."""
+
+    user = User.objects.first()  # Get first user in database
+
+    if not user:
+        print("❌ No users found. Please create a user first!")
+        return
+
+    # Sample transaction data
+    months = [
+        "JANUARI 2024", "FEBRUARI 2024", "MARET 2024",
+        "APRIL 2024", "MEI 2024", "JUNI 2024",
+        "JULI 2024", "AGUSTUS 2024", "SEPTEMBER 2024",
+        "OKTOBER 2024"
+    ]
+    payment_methods = ["bank_transfer", "e_wallet"]
+    statuses = ["lunas", "belum_lunas"]
+
+    transactions = []
+
+    for i in range(10):
+        transaksi = Transaksi(
+            user=user,
+            bulan=months[i],  # Assign month sequentially
+            nominal=random.randint(800000, 3000000),  # Random nominal between 800k - 3M
+            metode_pembayaran=random.choice(payment_methods),
+            status=random.choice(statuses),
+            bukti_transfer=None,  # Change if you want to add real images
+            tanggal_transaksi=now() - timedelta(days=random.randint(1, 365))  # Random past date
+        )
+        transactions.append(transaksi)
+
+    # Bulk create for efficiency
+    Transaksi.objects.bulk_create(transactions)
+
+    print("✅ 10 transactions successfully added!")
+
+
+if __name__ == "__main__":
+    create_transactions()

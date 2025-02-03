@@ -1,0 +1,21 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="max-w-[700px] w-full h-auto bg-white shadow-lg rounded-[12px] p-8 mx-auto text-center">
+    <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px]">
+        BUKTI TRANSFER
+    </h2>
+
+    <div class="mt-6">
+        <img src="{{ transaksi.bukti_transfer.url }}" alt="Bukti Transfer" class="w-full rounded-lg shadow-md">
+    </div>
+
+    <div class="mt-6">
+        <a href="{% url 'riwayat_transaksi' %}"
+            class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F] transition">
+            Kembali ke Riwayat Transaksi
+        </a>
+    </div>
+</div>
+
+{% endblock %}
