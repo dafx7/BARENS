@@ -3,15 +3,18 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 # Status Pembayaran Enum
 class StatusPembayaran(models.TextChoices):
     LUNAS = "LUNAS", "Lunas"
     BELUM_LUNAS = "BELUM", "Belum Lunas"
 
+
 # Metode Pembayaran Enum
 class MetodePembayaran(models.TextChoices):
     BANK_TRANSFER = "bank_transfer", "Transfer Bank"
     E_WALLET = "e_wallet", "E-Wallet"
+
 
 class Pembayaran(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pembayaran")

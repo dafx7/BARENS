@@ -56,7 +56,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'upload_bukti' %}"
+                           class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                  {% if request.path == '/dashboard/upload-bukti/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
                             <i class="fas fa-upload"></i> Upload Bukti
                         </a>
                     </li>

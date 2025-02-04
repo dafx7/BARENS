@@ -1,0 +1,74 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="max-w-[800px] w-full bg-white shadow-lg rounded-[12px] p-8 mx-auto">
+    <!-- Title -->
+    <h2 class="text-[16px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px] mb-6">
+        UPLOAD BUKTI PEMBAYARAN
+    </h2>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Bulan -->
+        <div>
+            <label for="bulan" class="block text-[#073937] font-semibold text-[14px]">Bulan Pembayaran</label>
+            <select name="bulan" id="bulan" required
+                class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]">
+                <option value="">Pilih Bulan</option>
+                <option value="JANUARI">Januari</option>
+                <option value="FEBRUARI">Februari</option>
+                <option value="MARET">Maret</option>
+                <option value="APRIL">April</option>
+                <option value="MEI">Mei</option>
+                <option value="JUNI">Juni</option>
+                <option value="JULI">Juli</option>
+                <option value="AGUSTUS">Agustus</option>
+                <option value="SEPTEMBER">September</option>
+                <option value="OKTOBER">Oktober</option>
+                <option value="NOVEMBER">November</option>
+                <option value="DESEMBER">Desember</option>
+            </select>
+        </div>
+
+        <!-- Nominal -->
+        <div>
+            <label for="nominal" class="block text-[#073937] font-semibold text-[14px]">Jumlah Pembayaran</label>
+            <input type="number" name="nominal" id="nominal" required placeholder="Masukkan jumlah pembayaran"
+                class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]">
+        </div>
+
+        <!-- Metode Pembayaran -->
+        <div>
+            <label class="block text-[#073937] font-semibold text-[14px]">Metode Pembayaran</label>
+            <div class="flex gap-4 mt-2">
+                <label class="flex items-center gap-2">
+                    <input type="radio" name="metode_pembayaran" value="bank_transfer" required>
+                    <span>Transfer Bank</span>
+                </label>
+                <label class="flex items-center gap-2">
+                    <input type="radio" name="metode_pembayaran" value="e_wallet" required>
+                    <span>E-Wallet</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Upload Bukti -->
+        <div>
+            <label for="bukti_transfer" class="block text-[#073937] font-semibold text-[14px]">Upload Bukti Transfer</label>
+            <input type="file" name="bukti_transfer" id="bukti_transfer" required
+                class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+            class="w-full px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F] transition">
+            Upload Bukti
+        </button>
+    </form>
+</div>
+
+{% endblock %}
