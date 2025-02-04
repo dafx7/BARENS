@@ -63,7 +63,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-[#A3B18A] rounded-md text-[16px] font-normal leading-[20px]">
+                        <a href="{% url 'kritik_saran' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3
+                            {% if request.path == '/dashboard/kritik-saran/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %} rounded-md text-[16px] font-normal leading-[20px]">
                             <i class="fas fa-comments"></i> Kritik dan Saran
                         </a>
                     </li>
@@ -81,7 +83,7 @@
         <!-- Main Content -->
         <main class="flex-1">
             <!-- Header -->
-            <header class="bg-[#344E41] w-full h-[100px] flex items-center px-8 shadow-md relative">
+            <header class="bg-[#345947] w-full h-[100px] flex items-center px-8 shadow-md relative">
                 <!-- Toggle Button (hanya tampil di small screen) -->
                 <button id="menu-toggle" class="lg:hidden absolute left-4 text-white text-2xl focus:outline-none">
                     <i class="fas fa-bars"></i>

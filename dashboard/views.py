@@ -3,8 +3,8 @@ from django.http import FileResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Pembayaran, Transaksi
-from datetime import datetime  # ✅ Correct import for using datetime.now()
+from .models import Pembayaran, Transaksi, KritikSaran
+from datetime import datetime
 
 
 @login_required
@@ -62,3 +62,15 @@ def upload_bukti(request):
         return redirect("riwayat_transaksi")
 
     return render(request, "dashboard/upload_bukti.html")
+
+
+@login_required
+def kritik_saran(request):
+    if request.method == "POST":
+        pesan = request.POST.get("pesan")
+        if pesan:
+            KritikSaran.objects.create(user=request.user, pesan=pesan)
+            messages.success(request, "Kritik dan saran anda telah dikirim!")
+            return redirect("kritik_saran")
+
+    return render(request, "dashboard/kritik_saran.html")

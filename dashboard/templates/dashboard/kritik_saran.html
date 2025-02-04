@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="max-w-[960px] w-full bg-white shadow-md rounded-lg p-6 md:p-10 mx-auto">
+
+    <!-- SUCCESS MESSAGE -->
+    {% if messages %}
+    <div x-data="{ show: true }" x-show="show"
+        class="mb-4 p-3 rounded-lg bg-green-100 border border-green-400 text-green-800 relative text-center">
+        <p>
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </p>
+        <button @click="show = false" class="absolute top-2 right-3 text-green-800 hover:text-green-900">✖</button>
+    </div>
+    {% endif %}
+
+    <!-- Title -->
+    <h2 class="text-[20px] md:text-[22px] font-semibold text-gray-800 uppercase text-center font-['Open Sans']">
+        Kritik dan Saran
+    </h2>
+
+    <!-- Description -->
+    <p class="text-center text-[15px] md:text-[16px] text-gray-600 font-normal font-['Open Sans'] mt-2 leading-relaxed">
+        Kami sangat menghargai masukan Anda untuk meningkatkan kualitas layanan. <br>
+        Silakan tuliskan kritik dan saran Anda pada form di bawah ini.
+    </p>
+
+    <!-- Form -->
+    <form method="POST" action="{% url 'kritik_saran' %}" class="mt-6 flex flex-col items-center">
+        {% csrf_token %}
+
+        <!-- Label -->
+        <label for="pesan" class="text-[15px] font-semibold text-gray-700 font-['Open Sans'] block w-full max-w-[720px] mb-2">
+            Tuliskan kritik dan saran Anda di sini
+        </label>
+
+        <!-- Input Box -->
+        <textarea name="pesan" id="pesan" rows="5" required
+            class="w-full max-w-[720px] h-[140px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] font-['Open Sans'] text-[14px] md:text-[15px]">
+        </textarea>
+
+        <!-- Submit Button -->
+        <button type="submit"
+            class="mt-6 w-[200px] md:w-[240px] py-[14px] px-[24px] rounded-[24px] bg-[#588157] text-white font-semibold text-[15px] md:text-[16px] font-['Open Sans'] hover:bg-[#6A965F] transition-all">
+            Kirim
+        </button>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pembayaran, Transaksi
+from .models import Pembayaran, Transaksi, KritikSaran
 
 @admin.register(Pembayaran)
 class PembayaranAdmin(admin.ModelAdmin):
@@ -12,3 +12,6 @@ class TransaksiAdmin(admin.ModelAdmin):
     list_display = ('user', 'bulan', 'nominal', 'metode_pembayaran', 'status', 'tanggal_transaksi')
     list_filter = ('status', 'metode_pembayaran')
     search_fields = ('user__username', 'bulan')
+
+
+admin.site.register(KritikSaran)

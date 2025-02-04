@@ -65,3 +65,12 @@ class Transaksi(models.Model):
 
     def __str__(self):
         return f"{self.bulan} - {self.user.username}"
+
+
+class KritikSaran(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="kritik_saran")
+    pesan = models.TextField()
+    tanggal_dikirim = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Kritik dari {self.user.username} - {self.tanggal_dikirim.strftime('%d %B %Y')}"
