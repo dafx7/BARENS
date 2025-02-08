@@ -22,7 +22,7 @@
                 {% for t in transaksi %}
                 <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
                     <td class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ t.bulan }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ t.tanggal_pembayaran }}</td>
                     <td class="border border-gray-300 px-4 py-2">Rp {{ t.nominal }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         {% if t.metode_pembayaran == 'bank_transfer' %}
