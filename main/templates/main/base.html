@@ -97,7 +97,7 @@
                     {% if user.is_authenticated %}
                     <div class="flex space-x-4">
                         <!-- Tombol Dashboard -->
-                        <a href="{% url 'status_pembayaran' %}"
+                        <a href="{% if request.user.is_staff %}{% url 'kelola_penghuni' %}{% else %}{% url 'status_pembayaran' %}{% endif %}"
                            class="px-4 py-2 rounded-lg bg-[#A3B18A] text-white font-semibold text-sm shadow-md hover:bg-[#8B9E78] transition-all duration-300 flex items-center gap-2">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>

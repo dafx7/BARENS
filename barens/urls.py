@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),  # Hubungkan dengan urls.py di aplikasi main
     path('dashboard/', include('dashboard.urls')),
+    path('admin-dashboard/', include('admin_dashboard.urls')),
 ]
 
 

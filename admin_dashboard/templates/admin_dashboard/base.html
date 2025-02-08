@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Barat Residence</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Font Poppins dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Load FontAwesome untuk ikon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Load Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-[#F8F5EE]">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Admin -->
+        <aside id="sidebar" class="w-[240px] h-screen bg-[#222D32] flex flex-col font-[Poppins] transition-transform transform -translate-x-full lg:translate-x-0 fixed lg:relative z-50">
+            <div class="bg-[#344E41] flex items-center justify-center h-[100px] shadow-md">
+                <img src="{% static 'main/images/Logo (1).png' %}" alt="Logo BARENS" class="w-[42px] h-[38px]">
+                <h1 class="text-[#F3ECDC] font-semibold text-[24px] leading-none ml-3">BARENS</h1>
+            </div>
+
+            <div class="flex items-center w-[240px] h-[60px] px-[23px] bg-[#192428] text-white font-medium text-[16px] leading-[20px]">
+                ADMIN DASHBOARD
+            </div>
+
+            <nav class="flex-1 flex flex-col justify-start mt-2 px-4">
+                <ul class="space-y-4">
+                    <li>
+                        <a href="{% url 'kelola_penghuni' %}" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                            <i class="fas fa-users"></i> Pengelolaan Akun
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                            <i class="fas fa-bed"></i> Pemesanan Kamar
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                            <i class="fas fa-money-bill-wave"></i> Pembayaran
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                            <i class="fas fa-futbol"></i> Sewa Lapangan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                            <i class="fas fa-chart-line"></i> Statistik
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'index' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-red-600 rounded-md text-[16px] font-normal leading-[20px]">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="flex-1">
+            <header class="bg-[#345947] w-full h-[100px] flex items-center px-8 shadow-md">
+                <div class="flex items-center">
+                    <p class="text-white text-[16px] font-bold">Dashboard Admin</p>
+                </div>
+            </header>
+
+            <div class="max-w-[1200px] mx-auto p-8">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

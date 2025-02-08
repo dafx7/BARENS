@@ -1,4 +1,5 @@
-# Ignore environment variable files (SECURITY)
+# Ignore database and environment files
+db.sqlite3
 .env
 
 # Ignore Python bytecode and cache
@@ -24,3 +25,6 @@ venv/
 
 # Ignore node_modules (if using JavaScript)
 node_modules/
+
+# Ignore media uploads
+media/

@@ -1,0 +1,34 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block content %}
+    <h2 class="text-xl font-semibold mb-4">Pengelolaan Akun</h2>
+
+    <table class="w-full border">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="p-2 border">No</th>
+                <th class="p-2 border">Nama Penghuni</th>
+                <th class="p-2 border">Email</th>
+                <th class="p-2 border">No Handphone</th>
+                <th class="p-2 border">Status</th>
+                <th class="p-2 border">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in penghuni %}
+            <tr>
+                <td class="p-2 border">{{ forloop.counter }}</td>
+                <td class="p-2 border">{{ user.username }}</td>
+                <td class="p-2 border">{{ user.email }}</td>
+                <td class="p-2 border">{{ user.phone_number }}</td>
+                <td class="p-2 border {% if user.is_active %}text-green-600{% else %}text-red-600{% endif %}">
+                    {% if user.is_active %} Aktif {% else %} Tidak Aktif {% endif %}
+                </td>
+                <td class="p-2 border">
+                    <a href="{% url 'toggle_status_penghuni' user.id %}" class="px-4 py-2 bg-yellow-500 text-white rounded">Toggle Status</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
