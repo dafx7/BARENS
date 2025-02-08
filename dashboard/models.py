@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from datetime import date
+from datetime import timedelta, date
+import calendar
 
 User = get_user_model()
 
@@ -9,10 +10,12 @@ class StatusPembayaran(models.TextChoices):
     LUNAS = "LUNAS", "Lunas"
     BELUM_LUNAS = "BELUM", "Belum Lunas"
 
+
 # Metode Pembayaran Enum
 class MetodePembayaran(models.TextChoices):
     BANK_TRANSFER = "bank_transfer", "Transfer Bank"
     E_WALLET = "e_wallet", "E-Wallet"
+
 
 class Pembayaran(models.Model):
     """ Track user's next due date based on last payment. """
@@ -21,29 +24,37 @@ class Pembayaran(models.Model):
 
     def update_jatuh_tempo(self, tanggal_pembayaran, durasi_bayar, jenis_durasi):
         """
-        Update the due date every time a transaction is made.
+        Update `jatuh_tempo` based on the latest transaction.
+        Ensures correct calculation of due date.
         """
-        if isinstance(tanggal_pembayaran, date):
-            tanggal_pembayaran = tanggal_pembayaran
+
+        # ✅ Step 1: Determine the Correct Base Date
+        if self.jatuh_tempo and self.jatuh_tempo > tanggal_pembayaran:
+            base_date = self.jatuh_tempo  # Use the previous due date
         else:
-            tanggal_pembayaran = tanggal_pembayaran.date()  # Convert datetime to date
-
-        # If jatuh_tempo is None or past, set it to transaction date
-        if not self.jatuh_tempo or self.jatuh_tempo < tanggal_pembayaran:
-            self.jatuh_tempo = tanggal_pembayaran
-
-        # Handle per month and per year manually
+            base_date = tanggal_pembayaran  # Use the new payment date
+        print(base_date)
+        # ✅ Step 2: Add Duration Based on Type (Month or Year)
         if jenis_durasi == "per_bulan":
-            for _ in range(durasi_bayar):
-                if self.jatuh_tempo.month == 12:
-                    self.jatuh_tempo = date(self.jatuh_tempo.year + 1, 1, self.jatuh_tempo.day)
-                else:
-                    self.jatuh_tempo = date(self.jatuh_tempo.year, self.jatuh_tempo.month + 1, self.jatuh_tempo.day)
+            new_month = (base_date.month - 1 + durasi_bayar) % 12 + 1  # Correct month calculation
+            new_year = base_date.year + (base_date.month - 1 + durasi_bayar) // 12
+
+            # Adjust for last day of month
+            last_day = calendar.monthrange(new_year, new_month)[1]
+            new_day = min(base_date.day, last_day)
+
+            self.jatuh_tempo = date(new_year, new_month, new_day)
 
         elif jenis_durasi == "per_tahun":
-            self.jatuh_tempo = date(self.jatuh_tempo.year + durasi_bayar, self.jatuh_tempo.month, self.jatuh_tempo.day)
-
+            try:
+                self.jatuh_tempo = base_date.replace(year=base_date.year + durasi_bayar)
+            except ValueError:
+                # Handle leap year issues
+                self.jatuh_tempo = base_date.replace(year=base_date.year + durasi_bayar, day=28)
+            print("New due date: ", self.jatuh_tempo)
+        # ✅ Step 3: Save the Updated Due Date
         self.save()
+
 
 
 class Transaksi(models.Model):
@@ -96,8 +107,6 @@ class Transaksi(models.Model):
 
         # ✅ Pass `jenis_durasi` explicitly
         pembayaran.update_jatuh_tempo(self.tanggal_pembayaran, self.durasi_bayar, self.jenis_durasi)
-
-
 
 
 class KritikSaran(models.Model):

@@ -7,6 +7,8 @@ from .models import Pembayaran, Transaksi, KritikSaran
 from django.utils.timezone import now
 from datetime import datetime
 from .forms import UploadBuktiForm
+from decimal import Decimal, InvalidOperation
+
 
 
 @login_required
@@ -46,43 +48,52 @@ def bukti_transfer(request, transaksi_id):
 @login_required
 def upload_bukti(request):
     if request.method == "POST":
-        # Get form data
-        tanggal_pembayaran = request.POST.get("tanggal_pembayaran")
-        nominal = request.POST.get("nominal")
-        metode_pembayaran = request.POST.get("metode_pembayaran")
-        jenis_pembayaran = request.POST.get("jenis_pembayaran")  # 🔄 Fix this field name
-        durasi_bayar = int(request.POST.get("durasi_bayar", 1))  # Default to 1 month
+        # ✅ Get form data correctly
+        tanggal_pembayaran = request.POST.get("tanggal_pembayaran", "").strip()
+        nominal = request.POST.get("nominal", "").strip()
+        metode_pembayaran = request.POST.get("metode_pembayaran", "").strip()
+        jenis_pembayaran = request.POST.get("jenis_pembayaran", "").strip()  # ✅ Match form field
         bukti_transfer = request.FILES.get("bukti_transfer")
 
-        # Ensure required fields are filled
-        if not tanggal_pembayaran or not nominal or not metode_pembayaran or not jenis_pembayaran:
+        # ✅ Convert `durasi_bayar` to integer
+        try:
+            durasi_bayar = int(request.POST.get("durasi_bayar", 1))
+        except ValueError:
+            messages.error(request, "Durasi pembayaran harus berupa angka!")
+            return redirect("upload_bukti")
+
+        # ✅ Ensure all required fields are filled
+        if not all([tanggal_pembayaran, nominal, metode_pembayaran, jenis_pembayaran, durasi_bayar, bukti_transfer]):
             messages.error(request, "Semua kolom harus diisi!")
             return redirect("upload_bukti")
 
-        # Parse tanggal_pembayaran
-        from datetime import datetime
+        # ✅ Parse `tanggal_pembayaran`
         try:
             tanggal_pembayaran_obj = datetime.strptime(tanggal_pembayaran, "%Y-%m-%d").date()
         except ValueError:
             messages.error(request, "Format tanggal tidak valid!")
             return redirect("upload_bukti")
 
-        # Save transaction with jenis_pembayaran
+        # ✅ Convert `nominal` to Decimal (avoid InvalidOperation error)
+        from decimal import Decimal, InvalidOperation
+        try:
+            nominal = Decimal(nominal)
+        except InvalidOperation:
+            messages.error(request, "Nominal pembayaran tidak valid!")
+            return redirect("upload_bukti")
+
+        # ✅ Save transaction
         transaksi = Transaksi.objects.create(
             user=request.user,
             tanggal_pembayaran=tanggal_pembayaran_obj,
             nominal=nominal,
             metode_pembayaran=metode_pembayaran,
-            jenis_durasi=jenis_pembayaran,  # 🔄 Fixed field name
+            jenis_durasi=jenis_pembayaran,  # ✅ Match form field
             durasi_bayar=durasi_bayar,
             status="BELUM" if not bukti_transfer else "LUNAS",
             bukti_transfer=bukti_transfer,
             tanggal_transaksi=now()
         )
-
-        # Update the due date in Pembayaran model
-        pembayaran, created = Pembayaran.objects.get_or_create(user=request.user)
-        pembayaran.update_jatuh_tempo(tanggal_pembayaran_obj, durasi_bayar, jenis_pembayaran)  # 🔄 Fixed field name
 
         messages.success(request, "Bukti pembayaran berhasil diupload!")
         return redirect("upload_bukti")
