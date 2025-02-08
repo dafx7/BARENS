@@ -1,34 +1,109 @@
 {% extends 'admin_dashboard/base.html' %}
 
 {% block content %}
-    <h2 class="text-xl font-semibold mb-4">Pengelolaan Akun</h2>
+    <div class="p-6 bg-[#F8F5EE] rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-4">
+            <!-- Tombol Tambah Akun Baru -->
+            <button id="openModal" class="bg-[#527853] text-white px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
+                <i class="fas fa-plus-circle"></i> Tambah Akun Baru
+            </button>
 
-    <table class="w-full border">
-        <thead>
-            <tr class="bg-gray-200">
-                <th class="p-2 border">No</th>
-                <th class="p-2 border">Nama Penghuni</th>
-                <th class="p-2 border">Email</th>
-                <th class="p-2 border">No Handphone</th>
-                <th class="p-2 border">Status</th>
-                <th class="p-2 border">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in penghuni %}
-            <tr>
-                <td class="p-2 border">{{ forloop.counter }}</td>
-                <td class="p-2 border">{{ user.username }}</td>
-                <td class="p-2 border">{{ user.email }}</td>
-                <td class="p-2 border">{{ user.phone_number }}</td>
-                <td class="p-2 border {% if user.is_active %}text-green-600{% else %}text-red-600{% endif %}">
-                    {% if user.is_active %} Aktif {% else %} Tidak Aktif {% endif %}
-                </td>
-                <td class="p-2 border">
-                    <a href="{% url 'toggle_status_penghuni' user.id %}" class="px-4 py-2 bg-yellow-500 text-white rounded">Toggle Status</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <!-- Pencarian -->
+            <input type="text" id="searchInput" class="px-3 py-2 border rounded-lg" placeholder="Search...">
+        </div>
+
+        <!-- Tabel Pengelolaan Akun -->
+        <table class="w-full border-collapse border">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-3 border">No</th>
+                    <th class="p-3 border">Nama Penghuni</th>
+                    <th class="p-3 border">Email</th>
+                    <th class="p-3 border">No Handphone</th>
+                    <th class="p-3 border">Status Penghuni</th>
+                    <th class="p-3 border">Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                {% for user in penghuni %}
+                <tr class="bg-white hover:bg-gray-100 transition">
+                    <td class="p-3 border text-center">{{ forloop.counter }}</td>
+                    <td class="p-3 border">{{ user.username }}</td>
+                    <td class="p-3 border">{{ user.email }}</td>
+                    <td class="p-3 border">{{ user.phone_number }}</td>
+                    <td class="p-3 border {% if user.is_active %}text-green-600{% else %}text-red-600{% endif %}">
+                        {% if user.is_active %} Aktif {% else %} Tidak Aktif {% endif %}
+                    </td>
+                    <td class="p-3 border text-center">
+                        <a href="{% url 'edit_penghuni' user.id %}" class="text-yellow-500 text-xl"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'hapus_penghuni' user.id %}" class="text-red-500 text-xl ml-2" onclick="return confirm('Hapus akun ini?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="flex justify-between items-center mt-4">
+            <button class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md" id="prevPage">Previous</button>
+            <span class="text-lg font-semibold">1</span> <!-- Placeholder for page number -->
+            <button class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md" id="nextPage">Next</button>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Akun -->
+    <div id="modalTambahAkun" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-[400px]">
+            <h2 class="text-xl font-semibold mb-4">Tambah Akun Baru</h2>
+            <form method="POST" action="{% url 'tambah_penghuni' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="block">Nama *</label>
+                    <input type="text" name="nama" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-3">
+                    <label class="block">Email *</label>
+                    <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-3">
+                    <label class="block">No Handphone *</label>
+                    <input type="text" name="phone_number" required class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="mb-3">
+                    <label class="block">Status Penghuni *</label>
+                    <select name="status" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="aktif">Aktif</option>
+                        <option value="tidak_aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" id="closeModal" class="px-4 py-2 bg-gray-400 text-white rounded-lg">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Modal & Pencarian -->
+    <script>
+        document.getElementById("openModal").addEventListener("click", function() {
+            document.getElementById("modalTambahAkun").classList.remove("hidden");
+        });
+
+        document.getElementById("closeModal").addEventListener("click", function() {
+            document.getElementById("modalTambahAkun").classList.add("hidden");
+        });
+
+        document.getElementById("searchInput").addEventListener("input", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#userTable tr");
+            rows.forEach(row => {
+                let name = row.children[1].textContent.toLowerCase();
+                let email = row.children[2].textContent.toLowerCase();
+                row.style.display = name.includes(filter) || email.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
 {% endblock %}

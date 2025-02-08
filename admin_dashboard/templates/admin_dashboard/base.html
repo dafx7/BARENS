@@ -37,7 +37,9 @@
             <nav class="flex-1 flex flex-col justify-start mt-2 px-4">
                 <ul class="space-y-4">
                     <li>
-                        <a href="{% url 'kelola_penghuni' %}" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                        <a href="{% url 'kelola_penghuni' %}"
+                             class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/admin-dashboard/pengelolaan-akun/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
                             <i class="fas fa-users"></i> Pengelolaan Akun
                         </a>
                     </li>
@@ -49,11 +51,6 @@
                     <li>
                         <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
                             <i class="fas fa-money-bill-wave"></i> Pembayaran
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
-                            <i class="fas fa-futbol"></i> Sewa Lapangan
                         </a>
                     </li>
                     <li>
@@ -70,17 +67,37 @@
             </nav>
         </aside>
 
+         <!-- Main Content -->
         <main class="flex-1">
-            <header class="bg-[#345947] w-full h-[100px] flex items-center px-8 shadow-md">
-                <div class="flex items-center">
-                    <p class="text-white text-[16px] font-bold">Dashboard Admin</p>
+            <!-- Header -->
+            <header class="bg-[#345947] w-full h-[100px] flex items-center px-8 shadow-md relative">
+                <!-- Toggle Button (hanya tampil di small screen) -->
+                <button id="menu-toggle" class="lg:hidden absolute left-4 text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="flex items-center ml-12 lg:ml-0">
+                    <div>
+                        <p class="text-white text-[16px] font-bold leading-[20px]">Dashboard Admin</p>
+                        <p class="text-[#B0B0B0] text-[16px] leading-[20px]">Kelola data penghuni, pemesanan kamar, pembayaran, dan statistik dengan mudah.</p>
+                    </div>
                 </div>
             </header>
 
+            <!-- Konten Dashboard -->
             <div class="max-w-[1200px] mx-auto p-8">
                 {% block content %}{% endblock %}
             </div>
         </main>
     </div>
+    <!-- JavaScript untuk Toggle Sidebar -->
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const sidebar = document.getElementById("sidebar");
+
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("-translate-x-full");
+        });
+    </script>
 </body>
 </html>
