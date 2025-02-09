@@ -1,6 +1,24 @@
 {% extends 'admin_dashboard/base.html' %}
 
 {% block content %}
+    <!-- Flash Messages -->
+    {% if messages %}
+        <div class="fixed top-4 right-4 z-50">
+            {% for message in messages %}
+                <div class="px-4 py-2 mb-2 text-white rounded-lg shadow-lg
+                            {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Auto-hide messages after 3 seconds -->
+        <script>
+            setTimeout(function() {
+                document.querySelectorAll('.fixed.top-4.right-4 .shadow-lg').forEach(el => el.remove());
+            }, 3000);
+        </script>
+    {% endif %}
     <div class="p-6 bg-[#F8F5EE] rounded-lg shadow-md">
         <div class="flex justify-between items-center mb-4">
             <!-- Tombol Tambah Akun Baru -->
@@ -11,6 +29,7 @@
             <!-- Pencarian -->
             <input type="text" id="searchInput" class="px-3 py-2 border rounded-lg" placeholder="Search...">
         </div>
+
 
         <!-- Tabel Pengelolaan Akun -->
         <table class="w-full border-collapse border">
@@ -47,10 +66,21 @@
 
         <!-- Pagination -->
         <div class="flex justify-between items-center mt-4">
-            <button class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md" id="prevPage">Previous</button>
-            <span class="text-lg font-semibold">1</span> <!-- Placeholder for page number -->
-            <button class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md" id="nextPage">Next</button>
+            {% if penghuni.has_previous %}
+                <a href="?page={{ penghuni.previous_page_number }}" class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md">Previous</a>
+            {% else %}
+                <button class="bg-gray-300 text-white px-4 py-2 rounded-lg shadow-md cursor-not-allowed" disabled>Previous</button>
+            {% endif %}
+
+            <span class="text-lg font-semibold">Halaman {{ penghuni.number }} dari {{ paginator.num_pages }}</span>
+
+            {% if penghuni.has_next %}
+                <a href="?page={{ penghuni.next_page_number }}" class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md">Next</a>
+            {% else %}
+                <button class="bg-gray-300 text-white px-4 py-2 rounded-lg shadow-md cursor-not-allowed" disabled>Next</button>
+            {% endif %}
         </div>
+
     </div>
 
     <!-- Modal Tambah Akun -->
@@ -59,9 +89,9 @@
             <h2 class="text-xl font-semibold mb-4">Tambah Akun Baru</h2>
             <form method="POST" action="{% url 'tambah_penghuni' %}">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label class="block">Nama *</label>
-                    <input type="text" name="nama" required class="w-full px-3 py-2 border rounded-lg">
+               <div class="mb-3">
+                    <label class="block">Nama Lengkap *</label>
+                    <input type="text" name="nama_lengkap" required class="w-full px-3 py-2 border rounded-lg">
                 </div>
                 <div class="mb-3">
                     <label class="block">Email *</label>
