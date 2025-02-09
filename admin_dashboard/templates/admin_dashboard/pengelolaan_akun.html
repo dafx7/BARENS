@@ -19,7 +19,7 @@
             }, 3000);
         </script>
     {% endif %}
-    <div class="p-6 bg-[#F8F5EE] rounded-lg shadow-md">
+    <div class="p-6 bg-[#FFF] rounded-lg shadow-md">
         <div class="flex justify-between items-center mb-4">
             <!-- Tombol Tambah Akun Baru -->
             <button id="openModal" class="bg-[#527853] text-white px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
@@ -27,59 +27,89 @@
             </button>
 
             <!-- Pencarian -->
-            <input type="text" id="searchInput" class="px-3 py-2 border rounded-lg" placeholder="Search...">
+            <form method="GET" action="{% url 'kelola_penghuni' %}" class="flex">
+                <input type="text" name="search" id="searchInput" class="px-3 py-2 border rounded-lg"
+                    placeholder="Cari penghuni..." value="{{ query }}">
+                <button type="submit" class="ml-2 bg-[#527853] text-white px-4 py-2 rounded-lg shadow-md">
+                    Cari
+                </button>
+            </form>
+
         </div>
 
 
-        <!-- Tabel Pengelolaan Akun -->
-        <table class="w-full border-collapse border">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="p-3 border">No</th>
-                    <th class="p-3 border">Nama Penghuni</th>
-                    <th class="p-3 border">Email</th>
-                    <th class="p-3 border">No Handphone</th>
-                    <th class="p-3 border">Status Penghuni</th>
-                    <th class="p-3 border">Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="userTable">
-                {% for user in penghuni %}
-                <tr class="bg-white hover:bg-gray-100 transition">
-                    <td class="p-3 border text-center">{{ forloop.counter }}</td>
-                    <td class="p-3 border">{{ user.username }}</td>
-                    <td class="p-3 border">{{ user.email }}</td>
-                    <td class="p-3 border">{{ user.phone_number }}</td>
-                    <td class="p-3 border {% if user.is_penghuni %}text-green-600{% else %}text-gray-500{% endif %}">
-                        {% if user.is_penghuni %} ✔️ Ya {% else %} ❌ Tidak {% endif %}
-                    </td>
-                    <td class="p-3 border text-center">
-                        <a href="{% url 'edit_penghuni' user.id %}" class="text-yellow-500 text-xl"><i class="fas fa-edit"></i></a>
-                        <a href="{% url 'hapus_penghuni' user.id %}" class="text-red-500 text-xl ml-2" onclick="return confirm('Hapus akun ini?')">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <!-- Pagination -->
-        <div class="flex justify-between items-center mt-4">
-            {% if penghuni.has_previous %}
-                <a href="?page={{ penghuni.previous_page_number }}" class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md">Previous</a>
-            {% else %}
-                <button class="bg-gray-300 text-white px-4 py-2 rounded-lg shadow-md cursor-not-allowed" disabled>Previous</button>
-            {% endif %}
-
-            <span class="text-lg font-semibold">Halaman {{ penghuni.number }} dari {{ paginator.num_pages }}</span>
-
-            {% if penghuni.has_next %}
-                <a href="?page={{ penghuni.next_page_number }}" class="bg-[#A3B18A] text-white px-4 py-2 rounded-lg shadow-md">Next</a>
-            {% else %}
-                <button class="bg-gray-300 text-white px-4 py-2 rounded-lg shadow-md cursor-not-allowed" disabled>Next</button>
-            {% endif %}
+       <!-- Tabel Pengelolaan Akun -->
+        <div class="overflow-x-auto mt-6">
+            <table class="w-full border-collapse text-left text-[14px] bg-white shadow-md rounded-lg overflow-hidden">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">No</th>
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Nama Lengkap</th>
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Email</th>
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">No Handphone</th>
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Status Penghuni</th>
+                        <th class="px-4 py-2 border border-gray-300 text-center text-gray-700 font-semibold">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in penghuni %}
+                    <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %} hover:bg-gray-200 transition">
+                        <td class="px-4 py-2 border border-gray-300">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2 border border-gray-300">{{ user.first_name }}</td>
+                        <td class="px-4 py-2 border border-gray-300">{{ user.email }}</td>
+                        <td class="px-4 py-2 border border-gray-300">{{ user.phone_number }}</td>
+                        <td class="px-4 py-2 border border-gray-300 font-bold text-center
+                                   {% if user.is_penghuni %} text-green-600 {% else %} text-red-600 {% endif %}">
+                            {% if user.is_penghuni %} ✔️ Ya {% else %} ❌ Tidak {% endif %}
+                        </td>
+                        <td class="px-4 py-2 border border-gray-300 text-center">
+                            <a href="{% url 'edit_penghuni' user.id %}" class="text-yellow-500 text-xl">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'hapus_penghuni' user.id %}" class="text-red-500 text-xl ml-2"
+                               onclick="return confirm('Hapus akun ini?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-2 border border-gray-300 text-center text-gray-500">
+                            Tidak ada penghuni yang ditemukan.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+
+
+
+        <!-- Pagination (5 rows per page) -->
+        {% if paginator.num_pages > 1 %}
+        <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+            <span class="text-gray-500 text-sm mb-2 md:mb-0">
+                Menampilkan {{ penghuni.start_index }} - {{ penghuni.end_index }} dari {{ paginator.count }} penghuni
+            </span>
+            <div class="flex space-x-2">
+                {% if penghuni.has_previous %}
+                <a href="?page={{ penghuni.previous_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+                {% endif %}
+
+                <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ penghuni.number }}</span>
+
+                {% if penghuni.has_next %}
+                <a href="?page={{ penghuni.next_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
 
     </div>
 

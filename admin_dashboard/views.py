@@ -13,16 +13,29 @@ def is_admin(user):
 @user_passes_test(is_admin)
 def kelola_penghuni(request):
     """
-    Menampilkan daftar penghuni dengan pagination (5 per halaman).
+    Menampilkan daftar penghuni dengan pagination dan fitur pencarian.
     """
-    penghuni_list = CustomUser.objects.all().order_by('-id')  # Menampilkan pengguna terbaru dulu
-    paginator = Paginator(penghuni_list, 5)  # 5 penghuni per halaman
+    query = request.GET.get("search", "").strip()
+
+    # Jika ada pencarian, filter berdasarkan nama lengkap atau email
+    if query:
+        penghuni_list = CustomUser.objects.filter(
+            first_name__icontains=query
+        ) | CustomUser.objects.filter(
+            email__icontains=query
+        )
+    else:
+        penghuni_list = CustomUser.objects.all().order_by('-id')
+
+    # Pagination (5 penghuni per halaman)
+    paginator = Paginator(penghuni_list, 5)
     page_number = request.GET.get("page")
     penghuni = paginator.get_page(page_number)
 
     return render(request, "admin_dashboard/pengelolaan_akun.html", {
         "penghuni": penghuni,
-        "paginator": paginator,  # Tambahkan objek paginator untuk navigasi
+        "paginator": paginator,
+        "query": query,  # Kirim kembali query ke template
     })
 
 
