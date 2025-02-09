@@ -62,9 +62,11 @@ class Pemesanan(models.Model):
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)  # Gunakan email sebagai identifier utama
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+    is_penghuni = models.BooleanField(default=False)  # Tambahkan kolom ini
 
     USERNAME_FIELD = "username"  # Kembali pakai username untuk login
     REQUIRED_FIELDS = ["email", "phone_number", "first_name"]  # Nama lengkap tetap wajib
 
     def __str__(self):
         return self.username  # Tampilkan username sebagai identifier utama
+

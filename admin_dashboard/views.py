@@ -25,28 +25,30 @@ def kelola_penghuni(request):
 @login_required
 @user_passes_test(is_admin)
 def tambah_penghuni(request):
-    """
-    Menambahkan penghuni baru dari form modal.
-    """
     if request.method == "POST":
-        nama = request.POST.get("nama").strip()
-        email = request.POST.get("email").strip()
-        phone_number = request.POST.get("phone_number").strip()
-        status = request.POST.get("status").strip()
+        nama = (request.POST.get("nama") or "").strip()
+        email = (request.POST.get("email") or "").strip()
+        phone_number = (request.POST.get("phone_number") or "").strip()
+        is_penghuni = request.POST.get("is_penghuni") == "on"  # Checkbox handling
 
-        # Validasi apakah email sudah terdaftar
+        # Cek apakah field kosong
+        if not nama or not email or not phone_number:
+            messages.error(request, "Semua field wajib diisi!")
+            return redirect("kelola_penghuni")
+
+        # Validasi apakah email sudah digunakan
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "Email sudah digunakan!")
             return redirect("kelola_penghuni")
 
         # Buat akun penghuni baru
         user = CustomUser.objects.create(
-            username=email.split("@")[0],  # Gunakan bagian awal email sebagai username
+            username=email.split("@")[0],
             email=email,
             phone_number=phone_number,
-            is_active=True if status == "aktif" else False
+            is_penghuni=is_penghuni  # Tambahkan status penghuni
         )
-        user.set_password("password123")  # Atur password default (harus diganti nanti)
+        user.set_password("password123")  # Password default
         user.save()
 
         messages.success(request, "Akun penghuni berhasil ditambahkan!")
@@ -55,26 +57,24 @@ def tambah_penghuni(request):
     return redirect("kelola_penghuni")
 
 
+
 @login_required
 @user_passes_test(is_admin)
 def edit_penghuni(request, user_id):
-    """
-    Mengedit informasi penghuni.
-    """
     user = get_object_or_404(CustomUser, id=user_id)
 
     if request.method == "POST":
         user.username = request.POST.get("nama").strip()
         user.email = request.POST.get("email").strip()
         user.phone_number = request.POST.get("phone_number").strip()
-        status = request.POST.get("status").strip()
-        user.is_active = True if status == "aktif" else False
+        user.is_penghuni = True if request.POST.get("is_penghuni") == "on" else False  # Simpan nilai checkbox
 
         user.save()
         messages.success(request, "Data penghuni berhasil diperbarui!")
         return redirect("kelola_penghuni")
 
     return render(request, "admin_dashboard/edit_penghuni.html", {"user": user})
+
 
 
 @login_required
