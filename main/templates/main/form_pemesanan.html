@@ -46,9 +46,7 @@
                 <div>
                     <label for="tipe_kamar" class="block text-sm font-semibold text-[#073937]">Pilih Tipe Kamar</label>
                     <select id="tipe_kamar" name="tipe_kamar" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
-                        {% if tipe_kamar %}
-                        <option value="{{ tipe_kamar.id }}" selected>{{ tipe_kamar.nama }}</option>
-                        {% endif %}
+                        <option value="">Pilih Kamar</option>
                         {% for kamar in tipe_kamars %}
                         <option value="{{ kamar.id }}">{{ kamar.nama }}</option>
                         {% endfor %}
@@ -58,26 +56,16 @@
                 <!-- Durasi Sewa -->
                 <div class="flex gap-4">
                     <div class="w-1/2">
-                        <label for="durasi" class="block text-sm font-semibold text-[#073937]">Durasi Sewa</label>
-                        <select id="durasi" name="durasi" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
-                            <option value="bulanan">Bulanan</option>
-                            <option value="tahunan">Tahunan</option>
-                        </select>
+                        <label for="durasi_bulan" class="block text-sm font-semibold text-[#073937]">Durasi (Bulan)</label>
+                        <input type="number" id="durasi_bulan" name="durasi_bulan" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" min="1" required>
                     </div>
                 </div>
 
                 <!-- Jumlah Penghuni -->
                 <div>
                     <label class="block text-sm font-semibold text-[#073937]">Jumlah Penghuni</label>
-                    <div class="flex gap-4 mt-2">
-                        <label class="flex items-center gap-2">
-                            <input type="radio" name="jumlah_penghuni" value="1" class="text-[#588157] focus:ring-[#A3B18A]" required>
-                            <span>1 Orang</span>
-                        </label>
-                        <label class="flex items-center gap-2">
-                            <input type="radio" name="jumlah_penghuni" value="2" class="text-[#588157] focus:ring-[#A3B18A]" required>
-                            <span>2 Orang</span>
-                        </label>
+                    <div id="jumlahPenghuniContainer" class="flex gap-4 mt-2">
+                        <p class="text-muted text-sm">Pilih tipe kamar terlebih dahulu.</p>
                     </div>
                 </div>
 
@@ -100,4 +88,47 @@
         </div>
     </div>
 </section>
+
+<script>
+document.getElementById('tipe_kamar').addEventListener('change', function () {
+    let tipeKamarId = this.value; // Mengambil ID kamar yang dipilih
+
+    if (tipeKamarId) {
+        fetch(`/get-jumlah-penghuni/${tipeKamarId}/`)
+        .then(response => response.json())
+        .then(data => {
+            let container = document.getElementById("jumlahPenghuniContainer");
+            container.innerHTML = "";  // Kosongkan opsi sebelumnya
+
+            if (data.jumlah_penghuni.length > 0) {
+                data.jumlah_penghuni.forEach(jumlah => {
+                    let div = document.createElement("div");
+                    div.className = "flex items-center gap-2"; // Gunakan Tailwind CSS untuk styling
+
+                    let radio = document.createElement("input");
+                    radio.type = "radio";
+                    radio.name = "jumlah_penghuni";
+                    radio.value = jumlah;
+                    radio.id = `penghuni_${jumlah}`;
+                    radio.className = "text-[#588157] focus:ring-[#A3B18A]"; // Styling Tailwind
+
+                    let label = document.createElement("label");
+                    label.htmlFor = `penghuni_${jumlah}`;
+                    label.className = "text-sm font-medium text-[#073937]";
+                    label.innerText = `${jumlah} Orang`;
+
+                    div.appendChild(radio);
+                    div.appendChild(label);
+                    container.appendChild(div);
+                });
+            } else {
+                container.innerHTML = "<p class='text-red-500 text-sm'>Tidak ada pilihan jumlah penghuni untuk kamar ini.</p>";
+            }
+        })
+        .catch(error => console.error("Error fetching data:", error));
+    }
+});
+
+</script>
+
 {% endblock %}

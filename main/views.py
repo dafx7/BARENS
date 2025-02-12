@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .models import TipeKamar, Pemesanan
 from django.core.mail import send_mail
@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth import logout
 from .forms import RegistrationForm
 from django.contrib.auth import login
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -61,42 +62,58 @@ def tipe_kamar(request):
     return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
 
 
+
 class PemesananView(View):
     def get(self, request):
-        # Ambil parameter tipe_kamar dari query string
         tipe_kamar_id = request.GET.get('tipe_kamar')
-        tipe_kamar = TipeKamar.objects.filter(id=tipe_kamar_id).first()  # Validasi jika tipe kamar tidak ditemukan
+        tipe_kamar = TipeKamar.objects.filter(id=tipe_kamar_id).first()
 
         return render(request, 'main/form_pemesanan.html', {
-            'tipe_kamar': tipe_kamar,  # Kirim tipe kamar ke template
-            'tipe_kamars': TipeKamar.objects.all()  # Jika ada dropdown untuk pilihan
+            'tipe_kamar': tipe_kamar,
+            'tipe_kamars': TipeKamar.objects.all()
         })
 
     def post(self, request):
         nama = request.POST.get('nama')
         kontak = request.POST.get('kontak')
         tipe_kamar_id = request.POST.get('tipe_kamar')
-        durasi = request.POST.get('durasi')
+        durasi_bulan = request.POST.get('durasi_bulan')  # Get duration in months
         jumlah_penghuni = request.POST.get('jumlah_penghuni')
         tanggal_mulai = request.POST.get('tanggal_mulai')
 
-        # Validasi dan simpan data
         try:
             tipe_kamar = TipeKamar.objects.get(id=tipe_kamar_id)
+            durasi_bulan = int(durasi_bulan)  # Convert input to integer
+            jumlah_penghuni = int(jumlah_penghuni)
+
+            # Validate max_penghuni
+            if jumlah_penghuni > tipe_kamar.max_penghuni:
+                return render(request, 'main/form_pemesanan.html', {
+                    'error': 'Jumlah penghuni melebihi kapasitas kamar!',
+                    'tipe_kamars': TipeKamar.objects.all()
+                })
+
+            # Save booking
             Pemesanan.objects.create(
                 nama=nama,
                 kontak=kontak,
                 tipe_kamar=tipe_kamar,
-                durasi=durasi,
-                jumlah_penghuni=int(jumlah_penghuni),
+                durasi=f"{durasi_bulan} Bulan",
+                jumlah_penghuni=jumlah_penghuni,
                 tanggal_mulai=tanggal_mulai
             )
-            return redirect('success_page')  # Redirect ke halaman sukses (buat route jika belum ada)
+            return redirect('success_page')
+
         except TipeKamar.DoesNotExist:
             return render(request, 'main/form_pemesanan.html', {
                 'error': 'Tipe kamar tidak ditemukan',
                 'tipe_kamars': TipeKamar.objects.all()
             })
+
+# AJAX view to get max penghuni dynamically
+def get_jumlah_penghuni(request, tipe_kamar_id):
+    tipe_kamar = get_object_or_404(TipeKamar, id=tipe_kamar_id)
+    return JsonResponse({"jumlah_penghuni": list(range(1, tipe_kamar.max_penghuni + 1))})
 
 
 

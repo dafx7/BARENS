@@ -50,3 +50,31 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ["username", "first_name", "email", "phone_number", "password1", "password2"]
+
+
+from .models import Pemesanan, TipeKamar
+
+class PemesananForm(forms.ModelForm):
+    durasi_bulan = forms.IntegerField(
+        label="Durasi dalam bulan",
+        min_value=1,
+        required=True,
+        help_text="Masukkan jumlah bulan (misal: 1, 2, 3 ... 12 untuk tahunan)"
+    )
+    jumlah_penghuni = forms.ChoiceField(
+        label="Jumlah Penghuni",
+        widget=forms.RadioSelect
+    )
+
+    class Meta:
+        model = Pemesanan
+        fields = ['nama', 'kontak', 'tipe_kamar', 'durasi_bulan', 'jumlah_penghuni', 'tanggal_mulai']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'tipe_kamar' in self.data:
+            try:
+                tipe_kamar = TipeKamar.objects.get(id=int(self.data.get('tipe_kamar')))
+                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, tipe_kamar.max_penghuni + 1)]
+            except (ValueError, TypeError, TipeKamar.DoesNotExist):
+                pass

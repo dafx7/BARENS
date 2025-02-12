@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.paginator import Paginator
-from main.models import CustomUser
+from main.models import CustomUser, Pemesanan
 
 # Fungsi untuk membatasi akses hanya untuk admin
 def is_admin(user):
@@ -111,3 +111,10 @@ def hapus_penghuni(request, user_id):
     user.delete()
     messages.success(request, "Akun penghuni berhasil dihapus!")
     return redirect("kelola_penghuni")
+
+
+@login_required
+@user_passes_test(is_admin)
+def pemesanan_kamar(request):
+    pemesanan_list = Pemesanan.objects.all().order_by('-tanggal_pemesanan')  # Urutkan dari terbaru
+    return render(request, 'admin_dashboard/pemesanan_kamar.html', {'pemesanan': pemesanan_list})

@@ -1,0 +1,49 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block content %}
+<div class="p-6 bg-[#F8F5EE] rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">DAFTAR PEMESANAN MASUK</h2>
+
+    <!-- Tabel Pemesanan -->
+    <table class="w-full border-collapse border custom-table">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="p-3 border">No</th>
+                <th class="p-3 border">Nama Pemesan</th>
+                <th class="p-3 border">Kontak</th>
+                <th class="p-3 border">Tipe Kamar</th>
+                <th class="p-3 border">Durasi</th>
+                <th class="p-3 border">Penghuni</th>
+                <th class="p-3 border">Tanggal Mulai</th>
+                <th class="p-3 border">Tanggal Pemesanan</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pemesanan in pemesanan %}
+            <tr class="bg-white hover:bg-gray-100 transition">
+                <td class="p-3 border text-center">{{ forloop.counter }}</td>
+                <td class="p-3 border">{{ pemesanan.nama }}</td>
+                <td class="p-3 border">{{ pemesanan.kontak }}</td>
+                <td class="p-3 border">{{ pemesanan.tipe_kamar.nama }}</td>
+                <td class="p-3 border">{{ pemesanan.get_durasi_display }}</td>
+                <td class="p-3 border text-center">{{ pemesanan.jumlah_penghuni }} Orang</td>
+                <td class="p-3 border">{{ pemesanan.tanggal_mulai|date:"j F Y" }}</td>
+                <td class="p-3 border">{{ pemesanan.tanggal_pemesanan|date:"j F Y, H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="p-3 text-center">Tidak ada pemesanan masuk</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .custom-table {
+        border-radius: 12px;
+        background: #FFF;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+    }
+</style>
+{% endblock %}
