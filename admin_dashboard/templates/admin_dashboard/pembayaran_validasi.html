@@ -1,0 +1,46 @@
+{% extends "admin_dashboard/base.html" %}
+{% block content %}
+
+<div class="max-w-[1120px] w-full bg-white shadow-lg rounded-[12px] p-8 mx-auto">
+    <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center">
+        Validasi Pembayaran
+    </h2>
+
+    <div class="overflow-x-auto mt-6">
+        <table class="w-full border-collapse border border-gray-300 text-left text-[14px]">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border px-4 py-2">No</th>
+                    <th class="border px-4 py-2">Nama Penghuni</th>
+                    <th class="border px-4 py-2">Tanggal Bayar</th>
+                    <th class="border px-4 py-2">Durasi</th>
+                    <th class="border px-4 py-2 text-center">Bukti Transfer</th>
+                    <th class="border px-4 py-2 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaksi in transaksi %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
+                    <td class="border px-4 py-2">{{ forloop.counter }}</td>
+                    <td class="border px-4 py-2">{{ transaksi.user.username }}</td>
+                    <td class="border px-4 py-2">{{ transaksi.tanggal_pembayaran|date:"j F Y" }}</td>
+                    <td class="border px-4 py-2">{{ transaksi.durasi_bayar }} Bulan</td>
+                    <td class="border px-4 py-2 text-center">
+                        {% if transaksi.bukti_transfer %}
+                            <a href="{{ transaksi.bukti_transfer.url }}" target="_blank" class="text-blue-500 underline">Lihat Bukti</a>
+                        {% else %}
+                            <span class="text-gray-500">-</span>
+                        {% endif %}
+                    </td>
+                    <td class="border px-4 py-2 text-center flex gap-2 justify-center">
+                        <a href="{% url 'konfirmasi_pembayaran' transaksi.id %}" class="bg-green-500 text-white px-3 py-1 rounded">Validasi</a>
+                        <a href="{% url 'tolak_pembayaran' transaksi.id %}" class="bg-red-500 text-white px-3 py-1 rounded">Tolak</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

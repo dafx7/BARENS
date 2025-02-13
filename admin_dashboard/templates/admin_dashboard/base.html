@@ -51,10 +51,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
-                            <i class="fas fa-money-bill-wave"></i> Pembayaran
+                        <a href="{% url 'validasi_pembayaran' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/admin-dashboard/validasi-pembayaran/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
+                            <i class="fas fa-money-check-alt"></i>
+                            <span class="ml-2">Validasi Pembayaran</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
                             <i class="fas fa-chart-line"></i> Statistik

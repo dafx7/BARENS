@@ -57,8 +57,12 @@ class Pembayaran(models.Model):
 
 
 
+class StatusValidasi(models.TextChoices):
+    MENUNGGU = "menunggu", "Menunggu"
+    DITERIMA = "diterima", "Diterima"
+    DITOLAK = "ditolak", "Ditolak"
+
 class Transaksi(models.Model):
-    """ Log every payment transaction """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transaksi")
     tanggal_pembayaran = models.DateField(verbose_name="Tanggal Pembayaran")
     nominal = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Nominal Pembayaran")
@@ -70,7 +74,7 @@ class Transaksi(models.Model):
     status = models.CharField(
         max_length=20,
         choices=StatusPembayaran.choices,
-        default=StatusPembayaran.LUNAS,
+        default=StatusPembayaran.BELUM_LUNAS,  # Default to Belum Lunas
         verbose_name="Status Pembayaran"
     )
     bukti_transfer = models.ImageField(
@@ -89,9 +93,13 @@ class Transaksi(models.Model):
         verbose_name="Jenis Durasi Pembayaran"
     )
 
-    class Meta:
-        verbose_name = "Riwayat Transaksi"
-        verbose_name_plural = "Riwayat Transaksi"
+    # ✅ New field for validation status
+    status_validasi = models.CharField(
+        max_length=10,
+        choices=StatusValidasi.choices,
+        default=StatusValidasi.MENUNGGU,
+        verbose_name="Status Validasi Pembayaran"
+    )
 
     def __str__(self):
         return f"{self.tanggal_pembayaran} - {self.user.username}"

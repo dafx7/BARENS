@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.paginator import Paginator
 from main.models import CustomUser, Pemesanan
+from dashboard.models import Transaksi, StatusValidasi
 
 # Fungsi untuk membatasi akses hanya untuk admin
 def is_admin(user):
@@ -159,3 +160,39 @@ def tolak_pemesanan(request, pemesanan_id):
         messages.error(request, f"Pemesanan {pemesanan.nama} telah ditolak.")
 
     return redirect('pemesanan_kamar')
+
+
+@login_required
+@user_passes_test(is_admin)
+def validasi_pembayaran(request):
+    # Fetch transactions that are still "Menunggu" validation
+    transaksi_list = Transaksi.objects.filter(status_validasi=StatusValidasi.MENUNGGU).order_by('-tanggal_pembayaran')
+
+    return render(request, 'admin_dashboard/pembayaran_validasi.html', {'transaksi': transaksi_list})
+
+
+@login_required
+@user_passes_test(is_admin)
+def konfirmasi_pembayaran(request, transaksi_id):
+    transaksi = get_object_or_404(Transaksi, id=transaksi_id)
+
+    # ✅ Update transaction status
+    transaksi.status_validasi = StatusValidasi.DITERIMA
+    transaksi.status = "LUNAS"  # Mark as paid
+    transaksi.save()
+
+    messages.success(request, f"Pembayaran {transaksi.user.username} telah divalidasi.")
+    return redirect('validasi_pembayaran')
+
+
+@login_required
+@user_passes_test(is_admin)
+def tolak_pembayaran(request, transaksi_id):
+    transaksi = get_object_or_404(Transaksi, id=transaksi_id)
+
+    # ✅ Update transaction status
+    transaksi.status_validasi = StatusValidasi.DITOLAK
+    transaksi.save()
+
+    messages.warning(request, f"Pembayaran {transaksi.user.username} telah ditolak.")
+    return redirect('validasi_pembayaran')

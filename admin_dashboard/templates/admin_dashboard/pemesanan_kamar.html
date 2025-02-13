@@ -1,6 +1,24 @@
 {% extends "admin_dashboard/base.html" %}
 {% block content %}
 
+ {% if messages %}
+        <div class="fixed top-4 right-4 z-50">
+            {% for message in messages %}
+                <div class="px-4 py-2 mb-2 text-white rounded-lg shadow-lg
+                            {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500 {% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Auto-hide messages after 3 seconds -->
+        <script>
+            setTimeout(function() {
+                document.querySelectorAll('.fixed.top-4.right-4 .shadow-lg').forEach(el => el.remove());
+            }, 3000);
+        </script>
+{% endif %}
+
 <div class="max-w-[1120px] w-full h-auto bg-white shadow-lg rounded-[12px] p-8 mx-auto">
     <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px]">
         DAFTAR PEMESANAN MASUK
