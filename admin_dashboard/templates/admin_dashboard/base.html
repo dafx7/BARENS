@@ -58,6 +58,14 @@
                             <span class="ml-2">Validasi Pembayaran</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{% url 'kelola_kritik_saran' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/admin-dashboard/kelola-kritik-saran/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
+                            <i class="fas fa-money-check-alt"></i>
+                            <span class="ml-2">Kritik dan Saran</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">

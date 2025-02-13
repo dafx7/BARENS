@@ -1,0 +1,65 @@
+{% extends "admin_dashboard/base.html" %}
+{% block content %}
+
+<div class="max-w-[1120px] w-full bg-white shadow-lg rounded-[12px] p-8 mx-auto">
+    <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center">
+        Kelola Kritik & Saran
+    </h2>
+
+    <div class="overflow-x-auto mt-6">
+        <table class="w-full border-collapse border border-gray-300 text-left text-[14px]">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border px-4 py-2">No</th>
+                    <th class="border px-4 py-2">Pengguna</th>
+                    <th class="border px-4 py-2">Tanggal</th>
+                    <th class="border px-4 py-2">Pesan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for kritik in kritik %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
+                    <td class="border px-4 py-2">{{ forloop.counter }}</td>
+                    <td class="border px-4 py-2">{{ kritik.user.username }}</td>
+                    <td class="border px-4 py-2">{{ kritik.tanggal_dikirim|date:"j F Y, H:i" }}</td>
+                    <td class="border px-4 py-2">{{ kritik.pesan }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="border px-4 py-2 text-center text-gray-500">
+                        Belum ada kritik atau saran
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        {% if kritik.paginator.num_pages > 1 %}
+        <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+            <span class="text-gray-500 text-sm mb-2 md:mb-0">
+                Menampilkan {{ kritik.start_index }} - {{ kritik.end_index }} dari {{ kritik.paginator.count }} kritik & saran
+            </span>
+            <div class="flex space-x-2">
+                {% if kritik.has_previous %}
+                <a href="?page={{ kritik.previous_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+                {% endif %}
+
+                <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ kritik.number }}</span>
+
+                {% if kritik.has_next %}
+                <a href="?page={{ kritik.next_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

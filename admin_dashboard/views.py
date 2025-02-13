@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.paginator import Paginator
 from main.models import CustomUser, Pemesanan
-from dashboard.models import Transaksi, StatusValidasi
+from dashboard.models import Transaksi, StatusValidasi, KritikSaran
 
 # Fungsi untuk membatasi akses hanya untuk admin
 def is_admin(user):
@@ -165,23 +165,23 @@ def tolak_pemesanan(request, pemesanan_id):
 @login_required
 @user_passes_test(is_admin)
 def validasi_pembayaran(request):
-    # Fetch transactions that are still "Menunggu" validation
-    transaksi_list = Transaksi.objects.filter(status_validasi=StatusValidasi.MENUNGGU).order_by('-tanggal_pembayaran')
+    transaksi_list = Transaksi.objects.filter(status_validasi="menunggu").order_by("-tanggal_transaksi")
 
-    return render(request, 'admin_dashboard/pembayaran_validasi.html', {'transaksi': transaksi_list})
+    # ✅ Pagination logic (7 rows per page)
+    paginator = Paginator(transaksi_list, 7)
+    page_number = request.GET.get("page")
+    transaksi = paginator.get_page(page_number)
+
+    return render(request, "admin_dashboard/pembayaran_validasi.html", {"transaksi": transaksi})
 
 
 @login_required
 @user_passes_test(is_admin)
 def konfirmasi_pembayaran(request, transaksi_id):
     transaksi = get_object_or_404(Transaksi, id=transaksi_id)
+    transaksi.approve_payment()
 
-    # ✅ Update transaction status
-    transaksi.status_validasi = StatusValidasi.DITERIMA
-    transaksi.status = "LUNAS"  # Mark as paid
-    transaksi.save()
-
-    messages.success(request, f"Pembayaran {transaksi.user.username} telah divalidasi.")
+    messages.success(request, f"Pembayaran {transaksi.user.username} telah divalidasi dan jatuh tempo diperbarui.")
     return redirect('validasi_pembayaran')
 
 
@@ -189,10 +189,21 @@ def konfirmasi_pembayaran(request, transaksi_id):
 @user_passes_test(is_admin)
 def tolak_pembayaran(request, transaksi_id):
     transaksi = get_object_or_404(Transaksi, id=transaksi_id)
-
-    # ✅ Update transaction status
-    transaksi.status_validasi = StatusValidasi.DITOLAK
-    transaksi.save()
+    transaksi.reject_payment()
 
     messages.warning(request, f"Pembayaran {transaksi.user.username} telah ditolak.")
     return redirect('validasi_pembayaran')
+
+
+@login_required
+@user_passes_test(is_admin)
+def kelola_kritik_saran(request):
+    # ✅ Fetch all user feedback
+    kritik_list = KritikSaran.objects.all().order_by("-tanggal_dikirim")
+
+    # ✅ Implement pagination (7 feedback per page)
+    paginator = Paginator(kritik_list, 7)
+    page_number = request.GET.get("page")
+    kritik = paginator.get_page(page_number)
+
+    return render(request, "admin_dashboard/kritik_saran.html", {"kritik": kritik})

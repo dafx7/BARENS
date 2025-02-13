@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (kelola_penghuni, tambah_penghuni, edit_penghuni, hapus_penghuni, pemesanan_kamar,
-                    konfirmasi_pemesanan, tolak_pemesanan, validasi_pembayaran, konfirmasi_pembayaran, tolak_pembayaran)
+                    konfirmasi_pemesanan, tolak_pemesanan, validasi_pembayaran, konfirmasi_pembayaran, tolak_pembayaran,
+                    kelola_kritik_saran)
 
 urlpatterns = [
     path("pengelolaan-akun/", kelola_penghuni, name="kelola_penghuni"),
@@ -13,5 +14,5 @@ urlpatterns = [
     path('validasi-pembayaran/', validasi_pembayaran, name='validasi_pembayaran'),
     path('validasi-pembayaran/konfirmasi/<int:transaksi_id>/', konfirmasi_pembayaran, name='konfirmasi_pembayaran'),
     path('validasi-pembayaran/tolak/<int:transaksi_id>/', tolak_pembayaran, name='tolak_pembayaran'),
-
+    path('kelola-kritik-saran/', kelola_kritik_saran, name='kelola_kritik_saran'),
 ]

@@ -32,13 +32,18 @@
                         {% endif %}
                     </td>
                     <td class="border border-gray-300 px-4 py-2 font-bold text-center
-                               {% if t.status|lower == 'lunas' %} text-[#588157] {% else %} text-[#C63636] {% endif %}">
-                        {% if t.status|lower == 'lunas' %}
-                            Lunas
+                       {% if t.status_validasi == 'diterima' %} text-[#588157]
+                       {% elif t.status_validasi == 'ditolak' %} text-[#C63636]
+                       {% else %} text-[#A3B18A] {% endif %}">
+                        {% if t.status_validasi == 'diterima' %}
+                            Diterima
+                        {% elif t.status_validasi == 'ditolak' %}
+                            Ditolak
                         {% else %}
-                            Belum Lunas
+                            Menunggu
                         {% endif %}
                     </td>
+
 
                     <!-- Redirect to new page for proof of payment -->
                     <td class="border border-gray-300 px-4 py-2 text-center">

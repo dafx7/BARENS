@@ -1,116 +1,129 @@
-{% extends "dashboard/base.html" %}
-{% load static %}
+    {% extends "dashboard/base.html" %}
+    {% load static %}
 
-{% block content %}
+    {% block content %}
 
-<div class="max-w-[600px] w-full bg-white shadow-lg rounded-[12px] p-6 sm:p-8 mx-auto">
-    <!-- Title -->
-    <h2 class="text-[16px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px] mb-6">
-        UPLOAD BUKTI PEMBAYARAN
-    </h2>
+    <div class="max-w-[600px] w-full bg-white shadow-lg rounded-[12px] p-6 sm:p-8 mx-auto">
+        <!-- Title -->
+        <h2 class="text-[16px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px] mb-6">
+            UPLOAD BUKTI PEMBAYARAN
+        </h2>
 
-    {% if messages %}
-        <div class="mb-4">
-            {% for message in messages %}
-                <div class="px-4 py-3 rounded-lg text-white text-center {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-
-    <!-- Upload Form -->
-    <form method="POST" enctype="multipart/form-data" class="space-y-5">
-        {% csrf_token %}
-
-        <!-- Tanggal Pembayaran -->
-        <div>
-            <label for="tanggal_pembayaran" class="block text-[#073937] font-semibold text-[14px]">Tanggal Pembayaran</label>
-            <input type="date" name="tanggal_pembayaran" id="tanggal_pembayaran" required
-                class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
-        </div>
-
-        <!-- Nominal Pembayaran -->
-        <div>
-            <label for="nominal" class="block text-[#073937] font-semibold text-[14px]">Jumlah Pembayaran</label>
-            <input type="number" name="nominal" id="nominal" required placeholder="Masukkan jumlah pembayaran"
-                class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
-        </div>
-
-        <!-- Jenis Pembayaran -->
-        <div>
-            <label for="jenis_pembayaran" class="block text-[#073937] font-semibold text-[14px]">Jenis Pembayaran</label>
-            <select name="jenis_pembayaran" id="jenis_pembayaran" required
-                class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
-                <option value="per_bulan">Per Bulan</option>
-                <option value="per_tahun">Per Tahun</option>
-            </select>
-        </div>
-
-        <!-- Durasi Pembayaran -->
-        <div>
-            <label for="durasi_bayar" class="block text-[#073937] font-semibold text-[14px]">Durasi Pembayaran</label>
-            <select name="durasi_bayar" id="durasi_bayar" required
-                class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
-                {% for i in "123456789101112" %}
-                    <option value="{{ i }}">{{ i }} Bulan</option>
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="px-4 py-3 rounded-lg text-white text-center {% if message.tags == 'success' %} bg-green-500 {% else %} bg-red-500 {% endif %}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
-            </select>
-        </div>
-
-        <!-- Metode Pembayaran -->
-        <div>
-            <label class="block text-[#073937] font-semibold text-[14px]">Metode Pembayaran</label>
-            <div class="flex gap-4 mt-2">
-                <label class="flex items-center gap-2">
-                    <input type="radio" name="metode_pembayaran" value="bank_transfer" required>
-                    <span class="text-[14px]">Transfer Bank</span>
-                </label>
-                <label class="flex items-center gap-2">
-                    <input type="radio" name="metode_pembayaran" value="e_wallet" required>
-                    <span class="text-[14px]">E-Wallet</span>
-                </label>
             </div>
-        </div>
+        {% endif %}
 
-        <!-- Upload Bukti -->
-        <div>
-            <label for="bukti_transfer" class="block text-[#073937] font-semibold text-[14px]">Upload Bukti Transfer</label>
-            <input type="file" name="bukti_transfer" id="bukti_transfer" required
-                class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
-        </div>
 
-        <!-- Submit Button -->
-        <button type="submit"
-            class="w-full px-5 py-2 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F] transition text-[14px]">
-            Upload Bukti
-        </button>
-    </form>
-</div>
+        <!-- Upload Form -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-5">
+            {% csrf_token %}
 
-<!-- Alpine.js Script to Dynamically Change Durasi Options -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const jenisPembayaranSelect = document.getElementById("jenis_pembayaran");
-        const durasiSelect = document.getElementById("durasi_bayar");
+            <!-- Tanggal Pembayaran -->
+            <div>
+                <label for="tanggal_pembayaran" class="block text-[#073937] font-semibold text-[14px]">Tanggal Pembayaran</label>
+                <input type="date" name="tanggal_pembayaran" id="tanggal_pembayaran" required
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+            </div>
 
-        function updateDurasiOptions() {
-            durasiSelect.innerHTML = ""; // Clear options
+            <!-- Pilih Tipe Kamar -->
+            <div>
+                <label for="tipe_kamar" class="block text-[#073937] font-semibold text-[14px]">Tipe Kamar</label>
+                <select name="tipe_kamar" id="tipe_kamar" required
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+                    <option value="">Pilih Tipe Kamar</option>
+                    {% for kamar in tipe_kamars %}
+                        <option value="{{ kamar.id }}">{{ kamar.nama }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-            let maxDurasi = jenisPembayaranSelect.value === "per_tahun" ? 5 : 12;
-            let unit = jenisPembayaranSelect.value === "per_tahun" ? " Tahun" : " Bulan";
 
-            for (let i = 1; i <= maxDurasi; i++) {
-                let option = new Option(i + unit, i);
-                durasiSelect.appendChild(option);
+            <!-- Nominal Pembayaran -->
+            <div>
+                <label for="nominal" class="block text-[#073937] font-semibold text-[14px]">Jumlah Pembayaran</label>
+                <input type="number" name="nominal" id="nominal" required placeholder="Masukkan jumlah pembayaran"
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+            </div>
+
+            <!-- Jenis Pembayaran -->
+            <div>
+                <label for="jenis_pembayaran" class="block text-[#073937] font-semibold text-[14px]">Jenis Pembayaran</label>
+                <select name="jenis_pembayaran" id="jenis_pembayaran" required
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+                    <option value="per_bulan">Per Bulan</option>
+                    <option value="per_tahun">Per Tahun</option>
+                </select>
+            </div>
+
+            <!-- Durasi Pembayaran -->
+            <div>
+                <label for="durasi_bayar" class="block text-[#073937] font-semibold text-[14px]">Durasi Pembayaran</label>
+                <select name="durasi_bayar" id="durasi_bayar" required
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+                    {% for i in "123456789101112" %}
+                        <option value="{{ i }}">{{ i }} Bulan</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div>
+                <label class="block text-[#073937] font-semibold text-[14px]">Metode Pembayaran</label>
+                <div class="flex gap-4 mt-2">
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="metode_pembayaran" value="bank_transfer" required>
+                        <span class="text-[14px]">Transfer Bank</span>
+                    </label>
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="metode_pembayaran" value="e_wallet" required>
+                        <span class="text-[14px]">E-Wallet</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Upload Bukti -->
+            <div>
+                <label for="bukti_transfer" class="block text-[#073937] font-semibold text-[14px]">Upload Bukti Transfer</label>
+                <input type="file" name="bukti_transfer" id="bukti_transfer" required
+                    class="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A] text-[14px]">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full px-5 py-2 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F] transition text-[14px]">
+                Upload Bukti
+            </button>
+        </form>
+    </div>
+
+    <!-- Alpine.js Script to Dynamically Change Durasi Options -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const jenisPembayaranSelect = document.getElementById("jenis_pembayaran");
+            const durasiSelect = document.getElementById("durasi_bayar");
+
+            function updateDurasiOptions() {
+                durasiSelect.innerHTML = ""; // Clear options
+
+                let maxDurasi = jenisPembayaranSelect.value === "per_tahun" ? 5 : 12;
+                let unit = jenisPembayaranSelect.value === "per_tahun" ? " Tahun" : " Bulan";
+
+                for (let i = 1; i <= maxDurasi; i++) {
+                    let option = new Option(i + unit, i);
+                    durasiSelect.appendChild(option);
+                }
             }
-        }
 
-        // Update durasi on change
-        jenisPembayaranSelect.addEventListener("change", updateDurasiOptions);
-        updateDurasiOptions(); // Initialize on load
-    });
-</script>
+            // Update durasi on change
+            jenisPembayaranSelect.addEventListener("change", updateDurasiOptions);
+            updateDurasiOptions(); // Initialize on load
+        });
+    </script>
 
-{% endblock %}
+    {% endblock %}

@@ -27,7 +27,6 @@ class Pembayaran(models.Model):
         Update `jatuh_tempo` based on the latest transaction.
         Ensures correct calculation of due date.
         """
-
         # ✅ Step 1: Determine the Correct Base Date
         if self.jatuh_tempo and self.jatuh_tempo > tanggal_pembayaran:
             base_date = self.jatuh_tempo  # Use the previous due date
@@ -56,14 +55,17 @@ class Pembayaran(models.Model):
         self.save()
 
 
-
 class StatusValidasi(models.TextChoices):
     MENUNGGU = "menunggu", "Menunggu"
     DITERIMA = "diterima", "Diterima"
     DITOLAK = "ditolak", "Ditolak"
 
+
+from main.models import TipeKamar  # ✅ Import TipeKamar
+
 class Transaksi(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transaksi")
+    tipe_kamar = models.ForeignKey(TipeKamar, on_delete=models.SET_NULL, null=True, blank=True, related_name="transaksi")  # ✅ New field
     tanggal_pembayaran = models.DateField(verbose_name="Tanggal Pembayaran")
     nominal = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Nominal Pembayaran")
     metode_pembayaran = models.CharField(
@@ -74,7 +76,7 @@ class Transaksi(models.Model):
     status = models.CharField(
         max_length=20,
         choices=StatusPembayaran.choices,
-        default=StatusPembayaran.BELUM_LUNAS,  # Default to Belum Lunas
+        default=StatusPembayaran.BELUM_LUNAS,
         verbose_name="Status Pembayaran"
     )
     bukti_transfer = models.ImageField(
@@ -85,7 +87,7 @@ class Transaksi(models.Model):
     )
     tanggal_transaksi = models.DateTimeField(auto_now_add=True, verbose_name="Tanggal Transaksi")
 
-    # ✅ Durasi pembayaran field
+    # Durasi pembayaran
     durasi_bayar = models.PositiveIntegerField(verbose_name="Durasi Bayar (Bulan)", default=1)
     jenis_durasi = models.CharField(
         max_length=10,
@@ -93,7 +95,7 @@ class Transaksi(models.Model):
         verbose_name="Jenis Durasi Pembayaran"
     )
 
-    # ✅ New field for validation status
+    # Status validasi
     status_validasi = models.CharField(
         max_length=10,
         choices=StatusValidasi.choices,
@@ -102,19 +104,28 @@ class Transaksi(models.Model):
     )
 
     def __str__(self):
-        return f"{self.tanggal_pembayaran} - {self.user.username}"
+        return f"{self.tanggal_pembayaran} - {self.user.username} - {self.tipe_kamar.nama if self.tipe_kamar else 'Tanpa Kamar'}"
 
-    def save(self, *args, **kwargs):
+    def approve_payment(self):
         """
-        Every time a user uploads a new transaction, update 'Pembayaran.jatuh_tempo'.
+        Approve payment and extend the user's due date.
         """
-        super().save(*args, **kwargs)  # Save the transaction first
+        if self.status_validasi == StatusValidasi.MENUNGGU:
+            self.status_validasi = StatusValidasi.DITERIMA
+            self.status = StatusPembayaran.LUNAS
+            self.save()
 
-        # Ensure user has a 'Pembayaran' record, or create one
-        pembayaran, created = Pembayaran.objects.get_or_create(user=self.user)
+            # Extend due date only when approved
+            pembayaran, created = Pembayaran.objects.get_or_create(user=self.user)
+            pembayaran.update_jatuh_tempo(self.tanggal_pembayaran, self.durasi_bayar, self.jenis_durasi)
 
-        # ✅ Pass `jenis_durasi` explicitly
-        pembayaran.update_jatuh_tempo(self.tanggal_pembayaran, self.durasi_bayar, self.jenis_durasi)
+    def reject_payment(self):
+        """
+        Reject payment without updating the due date.
+        """
+        if self.status_validasi == StatusValidasi.MENUNGGU:
+            self.status_validasi = StatusValidasi.DITOLAK
+            self.save()
 
 
 class KritikSaran(models.Model):

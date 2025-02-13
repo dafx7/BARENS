@@ -3,7 +3,7 @@ from django.http import FileResponse
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Pembayaran, Transaksi, KritikSaran
+from .models import Pembayaran, Transaksi, KritikSaran, StatusPembayaran, StatusValidasi
 from django.utils.timezone import now
 from datetime import datetime
 from .forms import UploadBuktiForm
@@ -45,64 +45,68 @@ def bukti_transfer(request, transaksi_id):
         return FileResponse(open("static/main/images/no-image.png", "rb"), content_type="image/png")
 
 
+from main.models import TipeKamar  # ✅ Import TipeKamar
+
 @login_required
 def upload_bukti(request):
     if request.method == "POST":
-        # ✅ Get form data correctly
         tanggal_pembayaran = request.POST.get("tanggal_pembayaran", "").strip()
         nominal = request.POST.get("nominal", "").strip()
         metode_pembayaran = request.POST.get("metode_pembayaran", "").strip()
-        jenis_pembayaran = request.POST.get("jenis_pembayaran", "").strip()  # ✅ Match form field
+        jenis_pembayaran = request.POST.get("jenis_pembayaran", "").strip()
         bukti_transfer = request.FILES.get("bukti_transfer")
+        tipe_kamar_id = request.POST.get("tipe_kamar")  # ✅ Get selected room
 
-        # ✅ Convert `durasi_bayar` to integer
         try:
             durasi_bayar = int(request.POST.get("durasi_bayar", 1))
         except ValueError:
             messages.error(request, "Durasi pembayaran harus berupa angka!")
             return redirect("upload_bukti")
 
-        # ✅ Ensure all required fields are filled
-        if not all([tanggal_pembayaran, nominal, metode_pembayaran, jenis_pembayaran, durasi_bayar, bukti_transfer]):
+        if not all([tanggal_pembayaran, nominal, metode_pembayaran, jenis_pembayaran, durasi_bayar, bukti_transfer, tipe_kamar_id]):
             messages.error(request, "Semua kolom harus diisi!")
             return redirect("upload_bukti")
 
-        # ✅ Parse `tanggal_pembayaran`
+        # ✅ Parse date
         try:
             tanggal_pembayaran_obj = datetime.strptime(tanggal_pembayaran, "%Y-%m-%d").date()
         except ValueError:
             messages.error(request, "Format tanggal tidak valid!")
             return redirect("upload_bukti")
 
-        # ✅ Convert `nominal` to Decimal (avoid InvalidOperation error)
-        from decimal import Decimal, InvalidOperation
+        # ✅ Convert nominal to Decimal
         try:
             nominal = Decimal(nominal)
         except InvalidOperation:
             messages.error(request, "Nominal pembayaran tidak valid!")
             return redirect("upload_bukti")
 
-        # ✅ Save transaction
+        # ✅ Fetch the selected room
+        tipe_kamar = TipeKamar.objects.filter(id=tipe_kamar_id).first()
+        if not tipe_kamar:
+            messages.error(request, "Tipe kamar tidak ditemukan!")
+            return redirect("upload_bukti")
+
+        # ✅ Save transaction with the selected room
         transaksi = Transaksi.objects.create(
             user=request.user,
+            tipe_kamar=tipe_kamar,  # ✅ Associate transaction with selected room
             tanggal_pembayaran=tanggal_pembayaran_obj,
             nominal=nominal,
             metode_pembayaran=metode_pembayaran,
-            jenis_durasi=jenis_pembayaran,  # ✅ Match form field
+            jenis_durasi=jenis_pembayaran,
             durasi_bayar=durasi_bayar,
-            status="BELUM" if not bukti_transfer else "LUNAS",
+            status=StatusPembayaran.BELUM_LUNAS,
+            status_validasi=StatusValidasi.MENUNGGU,
             bukti_transfer=bukti_transfer,
             tanggal_transaksi=now()
         )
 
-        messages.success(request, "Bukti pembayaran berhasil diupload!")
-        return redirect("upload_bukti")
+        messages.success(request, "Bukti pembayaran berhasil diupload! Menunggu validasi admin.")
+        return redirect("status_pembayaran")
 
-    return render(request, "dashboard/upload_bukti.html")
-
-
-
-
+    tipe_kamars = TipeKamar.objects.all()  # ✅ Fetch all room types
+    return render(request, "dashboard/upload_bukti.html", {"tipe_kamars": tipe_kamars})
 
 
 @login_required

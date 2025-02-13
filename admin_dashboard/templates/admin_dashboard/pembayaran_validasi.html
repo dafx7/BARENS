@@ -1,4 +1,5 @@
 {% extends "admin_dashboard/base.html" %}
+{% load humanize %}
 {% block content %}
 
 <div class="max-w-[1120px] w-full bg-white shadow-lg rounded-[12px] p-8 mx-auto">
@@ -12,8 +13,10 @@
                 <tr class="bg-gray-100">
                     <th class="border px-4 py-2">No</th>
                     <th class="border px-4 py-2">Nama Penghuni</th>
+                    <th class="border px-4 py-2">Tipe Kamar</th> <!-- ✅ New column -->
                     <th class="border px-4 py-2">Tanggal Bayar</th>
                     <th class="border px-4 py-2">Durasi</th>
+                    <th class="border px-4 py-2">Nominal</th>
                     <th class="border px-4 py-2 text-center">Bukti Transfer</th>
                     <th class="border px-4 py-2 text-center">Aksi</th>
                 </tr>
@@ -23,8 +26,26 @@
                 <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
                     <td class="border px-4 py-2">{{ forloop.counter }}</td>
                     <td class="border px-4 py-2">{{ transaksi.user.username }}</td>
+                    <td class="border px-4 py-2">
+                        {% if transaksi.tipe_kamar %}
+                            {{ transaksi.tipe_kamar.nama }}
+                        {% else %}
+                            <span class="text-gray-500">-</span>
+                        {% endif %}
+                    </td>
+
+
+
                     <td class="border px-4 py-2">{{ transaksi.tanggal_pembayaran|date:"j F Y" }}</td>
-                    <td class="border px-4 py-2">{{ transaksi.durasi_bayar }} Bulan</td>
+                    <td class="border px-4 py-2">
+                        {{ transaksi.durasi_bayar }}
+                        {% if transaksi.jenis_durasi == "per_bulan" %}
+                            Bulan
+                        {% else %}
+                            Tahun
+                        {% endif %}
+                    </td>
+                    <td class="border px-4 py-2">Rp {{ transaksi.nominal|floatformat:0|intcomma }}</td>
                     <td class="border px-4 py-2 text-center">
                         {% if transaksi.bukti_transfer %}
                             <a href="{{ transaksi.bukti_transfer.url }}" target="_blank" class="text-blue-500 underline">Lihat Bukti</a>
@@ -33,13 +54,47 @@
                         {% endif %}
                     </td>
                     <td class="border px-4 py-2 text-center flex gap-2 justify-center">
-                        <a href="{% url 'konfirmasi_pembayaran' transaksi.id %}" class="bg-green-500 text-white px-3 py-1 rounded">Validasi</a>
-                        <a href="{% url 'tolak_pembayaran' transaksi.id %}" class="bg-red-500 text-white px-3 py-1 rounded">Tolak</a>
+                        <a href="{% url 'konfirmasi_pembayaran' transaksi.id %}"
+                           class="px-3 py-1 text-white rounded border border-[#588157] bg-[#588157] hover:bg-[#6A965F] transition">
+                            Validasi
+                        </a>
+                        <a href="{% url 'tolak_pembayaran' transaksi.id %}"
+                           class="px-3 py-1 text-white rounded border border-red-800 bg-red-800 hover:bg-red-900 transition">
+                            Tolak
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
+
+
         </table>
+        <!-- Pagination -->
+        {% if transaksi.paginator.num_pages > 1 %}
+        <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+            <span class="text-gray-500 text-sm mb-2 md:mb-0">
+                Menampilkan {{ transaksi.start_index }} - {{ transaksi.end_index }} dari {{ transaksi.paginator.count }} transaksi
+            </span>
+            <div class="flex space-x-2">
+                {% if transaksi.has_previous %}
+                <a href="?page={{ transaksi.previous_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Previous
+                </a>
+                {% endif %}
+
+                <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ transaksi.number }}</span>
+
+                {% if transaksi.has_next %}
+                <a href="?page={{ transaksi.next_page_number }}"
+                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Next
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
     </div>
 </div>
 
