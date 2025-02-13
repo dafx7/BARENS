@@ -97,10 +97,13 @@
                     {% if user.is_authenticated %}
                     <div class="flex space-x-4">
                         <!-- Tombol Dashboard -->
-                        <a href="{% if request.user.is_staff %}{% url 'kelola_penghuni' %}{% else %}{% url 'status_pembayaran' %}{% endif %}"
-                           class="px-4 py-2 rounded-lg bg-[#A3B18A] text-white font-semibold text-sm shadow-md hover:bg-[#8B9E78] transition-all duration-300 flex items-center gap-2">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </a>
+                        {% if request.user.is_staff or request.user.is_penghuni %}
+                            <a href="{% if request.user.is_staff %}{% url 'kelola_penghuni' %}{% else %}{% url 'status_pembayaran' %}{% endif %}"
+                               class="px-4 py-2 rounded-lg bg-[#A3B18A] text-white font-semibold text-sm shadow-md hover:bg-[#8B9E78] transition-all duration-300 flex items-center gap-2">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        {% endif %}
+
                         <!-- Tombol Logout -->
                         <a href="{% url 'logout' %}" class="px-4 py-2 rounded-lg bg-[#588157] text-white font-semibold text-sm shadow-md hover:bg-[#6A965F] transition-all duration-300">
                             Logout
@@ -128,7 +131,15 @@
 
                 {% if user.is_authenticated %}
                 <!-- Jika Sudah Login, Tampilkan Dashboard & Logout -->
-                <li><a href="{% url 'status_pembayaran' %}" class="block px-4 py-2 bg-[#A3B18A] text-white rounded-lg text-center shadow-md hover:bg-[#8B9E78]">Dashboard</a></li>
+                {% if request.user.is_staff or request.user.is_penghuni %}
+                    <li>
+                        <a href="{% if request.user.is_staff %}{% url 'kelola_penghuni' %}{% else %}{% url 'status_pembayaran' %}{% endif %}"
+                           class="block px-4 py-2 bg-[#A3B18A] text-white rounded-lg text-center shadow-md hover:bg-[#8B9E78]">
+                            Dashboard
+                        </a>
+                    </li>
+                {% endif %}
+
                 <li><a href="{% url 'logout' %}" class="block px-4 py-2 bg-red-600 text-white rounded-lg text-center shadow-md hover:bg-red-700">Logout</a></li>
                 {% else %}
                 <!-- Jika Belum Login, Tampilkan Tombol Login -->

@@ -98,7 +98,8 @@ class PemesananView(View):
                 tipe_sewa=tipe_sewa,
                 durasi=durasi,
                 jumlah_penghuni=jumlah_penghuni,
-                tanggal_mulai=tanggal_mulai
+                tanggal_mulai=tanggal_mulai,
+                user=request.user
             )
             return redirect('success_page')
 
