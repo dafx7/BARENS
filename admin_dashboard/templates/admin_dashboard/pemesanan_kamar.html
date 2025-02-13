@@ -43,10 +43,11 @@
                     </td>
 
                     <!-- Tombol Konfirmasi & Tolak -->
-                    <td class="border border-gray-300 px-4 py-2 text-center flex justify-center gap-2">
+                   <td class="border border-gray-300 px-4 py-2 text-center flex justify-center gap-2">
                         {% if pemesanan.status == "menunggu" %}
                             <!-- Tombol Konfirmasi -->
                             <a href="{% url 'konfirmasi_pemesanan' pemesanan.id %}"
+                               onclick="return confirm('Apakah Anda yakin ingin menerima pemesanan ini?')"
                                class="flex w-[30px] h-[30px] justify-center items-center rounded-full bg-yellow-400 hover:bg-yellow-500 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                     <path d="M7.63281 8.42179L10.2039 10.3505C10.3632 10.47 10.5618 10.5248 10.7598 10.504C10.9578 10.4832 11.1406 10.3884 11.2717 10.2384L16.3136 4.47595"
@@ -58,13 +59,15 @@
 
                             <!-- Tombol Tolak -->
                             <a href="{% url 'tolak_pemesanan' pemesanan.id %}"
+                               onclick="return confirm('Apakah Anda yakin ingin menolak pemesanan ini?')"
                                class="flex w-[30px] h-[30px] justify-center items-center rounded-full bg-red-700 hover:bg-red-800 transition">
                                 <i class="fas fa-times text-white text-lg"></i>
                             </a>
                         {% else %}
                             <span class="text-gray-500">Sudah diproses</span>
                         {% endif %}
-                    </td>
+                   </td>
+
                 </tr>
                 {% empty %}
                 <tr>
