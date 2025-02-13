@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from .models import TipeKamar, Pemesanan
 from django.core.mail import send_mail
 from django.contrib import messages

@@ -104,9 +104,18 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-between mt-6">
-                    <button type="submit" class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F]">
-                        Kirim
-                    </button>
+                    {% if user.is_authenticated %}
+                        <button type="submit"
+                            class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F]">
+                            Kirim
+                        </button>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={% url 'form_pemesanan' %}"
+                            class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-blue-600">
+                            Login untuk Memesan
+                        </a>
+                    {% endif %}
+
                     <button type="reset" class="px-6 py-3 border border-[#588157] text-[#588157] font-semibold rounded-lg hover:bg-[#EDE8DA]">
                         Batalkan
                     </button>
