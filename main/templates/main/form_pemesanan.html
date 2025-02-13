@@ -55,11 +55,38 @@
 
                 <!-- Durasi Sewa -->
                 <div class="flex gap-4">
+                    <!-- Pilihan Bulanan/Tahunan -->
                     <div class="w-1/2">
-                        <label for="durasi_bulan" class="block text-sm font-semibold text-[#073937]">Durasi (Bulan)</label>
-                        <input type="number" id="durasi_bulan" name="durasi_bulan" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" min="1" required>
+                        <label for="tipe_sewa" class="block text-sm font-semibold text-[#073937]">Tipe Sewa</label>
+                        <select id="tipe_sewa" name="tipe_sewa" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" required>
+                            <option value="bulanan">Bulanan</option>
+                            <option value="tahunan">Tahunan</option>
+                        </select>
+                    </div>
+
+                    <!-- Input Durasi -->
+                    <div class="w-1/2">
+                        <label for="durasi" id="durasiLabel" class="block text-sm font-semibold text-[#073937]">Durasi (Bulan)</label>
+                        <input type="number" id="durasi" name="durasi" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" min="1" required>
                     </div>
                 </div>
+
+                <script>
+                document.getElementById("tipe_sewa").addEventListener("change", function() {
+                    let durasiLabel = document.getElementById("durasiLabel");
+                    let tipeSewa = this.value;
+                    let durasiInput = document.getElementById("durasi");
+
+                    if (tipeSewa === "bulanan") {
+                        durasiLabel.innerHTML = "Durasi (Bulan)";
+                        durasiInput.placeholder = "Masukkan jumlah bulan";
+                    } else {
+                        durasiLabel.innerHTML = "Durasi (Tahun)";
+                        durasiInput.placeholder = "Masukkan jumlah tahun";
+                    }
+                });
+                </script>
+
 
                 <!-- Jumlah Penghuni -->
                 <div>

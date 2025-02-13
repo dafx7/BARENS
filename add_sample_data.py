@@ -1,57 +1,41 @@
-import os
-import django
 import random
-from datetime import timedelta
-from django.utils.timezone import now
+from datetime import datetime, timedelta
+import django
+import os
 
-# Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'barens.settings')  # Change 'barens' to your project name
+# Set Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")
 django.setup()
 
-from dashboard.models import Transaksi
-from django.contrib.auth import get_user_model
+from main.models import Pemesanan, TipeKamar, CustomUser
 
-User = get_user_model()
+# Get all available room types
+tipe_kamars = list(TipeKamar.objects.all())
 
+# Get a user to assign (or create a dummy user)
+user, created = CustomUser.objects.get_or_create(
+    username="testuser",
+    defaults={"email": "testuser@example.com", "phone_number": "08123456789", "is_penghuni": False}
+)
 
-def create_transactions():
-    """Create 10 sample transactions for the first user."""
+# Generate 10 new dummy bookings
+for i in range(10):
+    tipe_kamar = random.choice(tipe_kamars)  # Pick a random room type
+    durasi = random.choice([3, 6, 12])  # Durasi dalam bulan
+    tipe_sewa = "bulanan" if durasi < 12 else "tahunan"
+    jumlah_penghuni = random.randint(1, tipe_kamar.max_penghuni)
+    tanggal_mulai = datetime.today().date() + timedelta(days=random.randint(1, 30))
 
-    user = User.objects.first()  # Get first user in database
+    Pemesanan.objects.create(
+        nama=f"User {i+1}",
+        kontak=f"0812345678{i}",
+        tipe_kamar=tipe_kamar,
+        tipe_sewa=tipe_sewa,
+        durasi=durasi,
+        jumlah_penghuni=jumlah_penghuni,
+        tanggal_mulai=tanggal_mulai,
+        status="menunggu",
+        user=user
+    )
 
-    if not user:
-        print("❌ No users found. Please create a user first!")
-        return
-
-    # Sample transaction data
-    months = [
-        "JANUARI 2024", "FEBRUARI 2024", "MARET 2024",
-        "APRIL 2024", "MEI 2024", "JUNI 2024",
-        "JULI 2024", "AGUSTUS 2024", "SEPTEMBER 2024",
-        "OKTOBER 2024"
-    ]
-    payment_methods = ["bank_transfer", "e_wallet"]
-    statuses = ["lunas", "belum_lunas"]
-
-    transactions = []
-
-    for i in range(10):
-        transaksi = Transaksi(
-            user=user,
-            bulan=months[i],  # Assign month sequentially
-            nominal=random.randint(800000, 3000000),  # Random nominal between 800k - 3M
-            metode_pembayaran=random.choice(payment_methods),
-            status=random.choice(statuses),
-            bukti_transfer=None,  # Change if you want to add real images
-            tanggal_transaksi=now() - timedelta(days=random.randint(1, 365))  # Random past date
-        )
-        transactions.append(transaksi)
-
-    # Bulk create for efficiency
-    Transaksi.objects.bulk_create(transactions)
-
-    print("✅ 10 transactions successfully added!")
-
-
-if __name__ == "__main__":
-    create_transactions()
+print("✅ 10 Pemesanan baru berhasil ditambahkan!")

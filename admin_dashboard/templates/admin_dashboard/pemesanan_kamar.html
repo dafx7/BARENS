@@ -1,49 +1,107 @@
-{% extends 'admin_dashboard/base.html' %}
-
+{% extends "admin_dashboard/base.html" %}
 {% block content %}
-<div class="p-6 bg-[#F8F5EE] rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4">DAFTAR PEMESANAN MASUK</h2>
 
-    <!-- Tabel Pemesanan -->
-    <table class="w-full border-collapse border custom-table">
-        <thead>
-            <tr class="bg-gray-200">
-                <th class="p-3 border">No</th>
-                <th class="p-3 border">Nama Pemesan</th>
-                <th class="p-3 border">Kontak</th>
-                <th class="p-3 border">Tipe Kamar</th>
-                <th class="p-3 border">Durasi</th>
-                <th class="p-3 border">Penghuni</th>
-                <th class="p-3 border">Tanggal Mulai</th>
-                <th class="p-3 border">Tanggal Pemesanan</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for pemesanan in pemesanan %}
-            <tr class="bg-white hover:bg-gray-100 transition">
-                <td class="p-3 border text-center">{{ forloop.counter }}</td>
-                <td class="p-3 border">{{ pemesanan.nama }}</td>
-                <td class="p-3 border">{{ pemesanan.kontak }}</td>
-                <td class="p-3 border">{{ pemesanan.tipe_kamar.nama }}</td>
-                <td class="p-3 border">{{ pemesanan.get_durasi_display }}</td>
-                <td class="p-3 border text-center">{{ pemesanan.jumlah_penghuni }} Orang</td>
-                <td class="p-3 border">{{ pemesanan.tanggal_mulai|date:"j F Y" }}</td>
-                <td class="p-3 border">{{ pemesanan.tanggal_pemesanan|date:"j F Y, H:i" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="8" class="p-3 text-center">Tidak ada pemesanan masuk</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="max-w-[1120px] w-full h-auto bg-white shadow-lg rounded-[12px] p-8 mx-auto">
+    <h2 class="text-[14px] font-semibold text-[#6B6B6B] uppercase text-center leading-[20px]">
+        DAFTAR PEMESANAN MASUK
+    </h2>
+
+    <div class="overflow-x-auto mt-6">
+        <table class="w-full border-collapse border border-gray-300 text-left text-[14px]">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border border-gray-300 px-4 py-2">No</th>
+                    <th class="border border-gray-300 px-4 py-2">Nama Pemesan</th>
+                    <th class="border border-gray-300 px-4 py-2">Kontak</th>
+                    <th class="border border-gray-300 px-4 py-2">Tipe Kamar</th>
+                    <th class="border border-gray-300 px-4 py-2">Durasi</th>
+                    <th class="border border-gray-300 px-4 py-2">Penghuni</th>
+                    <th class="border border-gray-300 px-4 py-2">Tanggal Mulai</th>
+                    <th class="border border-gray-300 px-4 py-2 text-center">Status</th>
+                    <th class="border border-gray-300 px-4 py-2 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pemesanan in pemesanan %}
+                <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
+                    <td class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.nama }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.kontak }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.tipe_kamar.nama }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.durasi }}
+                        {% if pemesanan.tipe_sewa == "bulanan" %} Bulan {% else %} Tahun {% endif %}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2 text-center">{{ pemesanan.jumlah_penghuni }} Orang</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.tanggal_mulai|date:"j F Y" }}</td>
+
+                    <!-- Status Pemesanan -->
+                    <td class="border border-gray-300 px-4 py-2 text-center font-bold
+                               {% if pemesanan.status == 'menunggu' %} text-[#588157]
+                               {% elif pemesanan.status == 'diterima' %} text-green-400
+                               {% else %} text-red-700 {% endif %}">
+                        {{ pemesanan.get_status_display }}
+                    </td>
+
+                    <!-- Tombol Konfirmasi & Tolak -->
+                    <td class="border border-gray-300 px-4 py-2 text-center flex justify-center gap-2">
+                        {% if pemesanan.status == "menunggu" %}
+                            <!-- Tombol Konfirmasi -->
+                            <a href="{% url 'konfirmasi_pemesanan' pemesanan.id %}"
+                               class="flex w-[30px] h-[30px] justify-center items-center rounded-full bg-yellow-400 hover:bg-yellow-500 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7.63281 8.42179L10.2039 10.3505C10.3632 10.47 10.5618 10.5248 10.7598 10.504C10.9578 10.4832 11.1406 10.3884 11.2717 10.2384L16.3136 4.47595"
+                                          stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M17.1025 10.0001C17.1025 11.4841 16.6377 12.9309 15.7732 14.1372C14.9088 15.3435 13.6882 16.2488 12.283 16.7258C10.8777 17.2028 9.35825 17.2277 7.93811 16.7968C6.51797 16.366 5.26845 15.5012 4.36505 14.3238C3.46165 13.1464 2.94976 11.7156 2.90126 10.2323C2.85276 8.74907 3.27009 7.28788 4.09465 6.05398C4.9192 4.82008 6.10955 3.87545 7.49851 3.35278C8.88747 2.83011 10.4053 2.75565 11.8387 3.13985"
+                                          stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </a>
+
+                            <!-- Tombol Tolak -->
+                            <a href="{% url 'tolak_pemesanan' pemesanan.id %}"
+                               class="flex w-[30px] h-[30px] justify-center items-center rounded-full bg-red-700 hover:bg-red-800 transition">
+                                <i class="fas fa-times text-white text-lg"></i>
+                            </a>
+                        {% else %}
+                            <span class="text-gray-500">Sudah diproses</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="border border-gray-300 px-4 py-2 text-center text-gray-500">
+                        Belum ada pemesanan masuk
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination (7 rows per page) -->
+    {% if pemesanan.paginator.num_pages > 1 %}
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+        <span class="text-gray-500 text-sm mb-2 md:mb-0">
+            Menampilkan {{ pemesanan.start_index }} - {{ pemesanan.end_index }} dari {{ pemesanan.paginator.count }} pemesanan
+        </span>
+        <div class="flex space-x-2">
+            {% if pemesanan.has_previous %}
+            <a href="?page={{ pemesanan.previous_page_number }}"
+                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ pemesanan.number }}</span>
+
+            {% if pemesanan.has_next %}
+            <a href="?page={{ pemesanan.next_page_number }}"
+                class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                Next
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 
-<style>
-    .custom-table {
-        border-radius: 12px;
-        background: #FFF;
-        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
-    }
-</style>
 {% endblock %}

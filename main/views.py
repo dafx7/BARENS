@@ -62,28 +62,23 @@ def tipe_kamar(request):
     return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
 
 
-
 class PemesananView(View):
     def get(self, request):
-        tipe_kamar_id = request.GET.get('tipe_kamar')
-        tipe_kamar = TipeKamar.objects.filter(id=tipe_kamar_id).first()
-
-        return render(request, 'main/form_pemesanan.html', {
-            'tipe_kamar': tipe_kamar,
-            'tipe_kamars': TipeKamar.objects.all()
-        })
+        tipe_kamars = TipeKamar.objects.all()
+        return render(request, 'main/form_pemesanan.html', {'tipe_kamars': tipe_kamars})
 
     def post(self, request):
         nama = request.POST.get('nama')
         kontak = request.POST.get('kontak')
         tipe_kamar_id = request.POST.get('tipe_kamar')
-        durasi_bulan = request.POST.get('durasi_bulan')  # Get duration in months
+        tipe_sewa = request.POST.get('tipe_sewa')
+        durasi = request.POST.get('durasi')
         jumlah_penghuni = request.POST.get('jumlah_penghuni')
         tanggal_mulai = request.POST.get('tanggal_mulai')
 
         try:
             tipe_kamar = TipeKamar.objects.get(id=tipe_kamar_id)
-            durasi_bulan = int(durasi_bulan)  # Convert input to integer
+            durasi = int(durasi)
             jumlah_penghuni = int(jumlah_penghuni)
 
             # Validate max_penghuni
@@ -98,7 +93,8 @@ class PemesananView(View):
                 nama=nama,
                 kontak=kontak,
                 tipe_kamar=tipe_kamar,
-                durasi=f"{durasi_bulan} Bulan",
+                tipe_sewa=tipe_sewa,
+                durasi=durasi,
                 jumlah_penghuni=jumlah_penghuni,
                 tanggal_mulai=tanggal_mulai
             )
@@ -109,6 +105,7 @@ class PemesananView(View):
                 'error': 'Tipe kamar tidak ditemukan',
                 'tipe_kamars': TipeKamar.objects.all()
             })
+
 
 # AJAX view to get max penghuni dynamically
 def get_jumlah_penghuni(request, tipe_kamar_id):

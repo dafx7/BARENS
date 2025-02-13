@@ -100,7 +100,6 @@ def edit_penghuni(request, user_id):
     return render(request, "admin_dashboard/edit_penghuni.html", {"user": user})
 
 
-
 @login_required
 @user_passes_test(is_admin)
 def hapus_penghuni(request, user_id):
@@ -116,5 +115,47 @@ def hapus_penghuni(request, user_id):
 @login_required
 @user_passes_test(is_admin)
 def pemesanan_kamar(request):
-    pemesanan_list = Pemesanan.objects.all().order_by('-tanggal_pemesanan')  # Urutkan dari terbaru
-    return render(request, 'admin_dashboard/pemesanan_kamar.html', {'pemesanan': pemesanan_list})
+    # Filter hanya pemesanan yang belum diproses (status "menunggu") dan urutkan dari yang paling lama
+    pemesanan_list = Pemesanan.objects.filter(status="menunggu").order_by('tanggal_pemesanan')
+
+    # Tambahkan juga pemesanan yang sudah diproses di bawah daftar yang masih menunggu
+    pemesanan_diproses = Pemesanan.objects.exclude(status="menunggu").order_by('-tanggal_pemesanan')
+
+    # Gabungkan hasil query
+    pemesanan_list = list(pemesanan_list) + list(pemesanan_diproses)
+
+    # PAGINATION: Batasi 7 pemesanan per halaman
+    paginator = Paginator(pemesanan_list, 7)
+    page_number = request.GET.get('page')
+    pemesanan_page = paginator.get_page(page_number)
+
+    return render(request, 'admin_dashboard/pemesanan_kamar.html', {'pemesanan': pemesanan_page})
+
+
+@login_required
+@user_passes_test(is_admin)
+def konfirmasi_pemesanan(request, pemesanan_id):
+    pemesanan = get_object_or_404(Pemesanan, id=pemesanan_id)
+
+    if pemesanan.status == 'menunggu':
+        pemesanan.status = 'diterima'
+        if pemesanan.user:  # Jika pemesanan memiliki akun user yang terhubung
+            pemesanan.user.is_penghuni = True
+            pemesanan.user.save()
+        pemesanan.save()
+        messages.success(request, f"Pemesanan {pemesanan.nama} telah dikonfirmasi.")
+
+    return redirect('pemesanan_kamar')
+
+
+@login_required
+@user_passes_test(is_admin)
+def tolak_pemesanan(request, pemesanan_id):
+    pemesanan = get_object_or_404(Pemesanan, id=pemesanan_id)
+
+    if pemesanan.status == 'menunggu':
+        pemesanan.status = 'ditolak'
+        pemesanan.save()
+        messages.error(request, f"Pemesanan {pemesanan.nama} telah ditolak.")
+
+    return redirect('pemesanan_kamar')

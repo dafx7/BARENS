@@ -47,16 +47,30 @@ class KamarImage(models.Model):
 
 
 class Pemesanan(models.Model):
+    DURASI_CHOICES = [
+        ('bulanan', 'Bulanan'),
+        ('tahunan', 'Tahunan')
+    ]
+
+    STATUS_CHOICES = [
+        ('menunggu', 'Menunggu'),
+        ('diterima', 'Diterima'),
+        ('ditolak', 'Ditolak')
+    ]
+
     nama = models.CharField(max_length=255)
     kontak = models.CharField(max_length=255)
     tipe_kamar = models.ForeignKey('TipeKamar', on_delete=models.CASCADE, related_name='pemesanan')
-    durasi = models.CharField(max_length=50, choices=[('bulanan', 'Bulanan'), ('tahunan', 'Tahunan')])
+    tipe_sewa = models.CharField(max_length=10, choices=DURASI_CHOICES, default='bulanan')
+    durasi = models.PositiveIntegerField(help_text="Durasi dalam jumlah bulan atau tahun")
     jumlah_penghuni = models.PositiveIntegerField()
     tanggal_mulai = models.DateField()
     tanggal_pemesanan = models.DateTimeField(default=now)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='menunggu')  # NEW FIELD
+    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, related_name='pemesanan', null=True, blank=True)
 
     def __str__(self):
-        return f"Pemesanan oleh {self.nama} untuk {self.tipe_kamar.nama}"
+        return f"Pemesanan oleh {self.nama} ({self.get_tipe_sewa_display()}: {self.durasi}) untuk {self.tipe_kamar.nama}"
 
 
 class CustomUser(AbstractUser):

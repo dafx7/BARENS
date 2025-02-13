@@ -55,11 +55,17 @@ class RegistrationForm(UserCreationForm):
 from .models import Pemesanan, TipeKamar
 
 class PemesananForm(forms.ModelForm):
-    durasi_bulan = forms.IntegerField(
-        label="Durasi dalam bulan",
+    tipe_sewa = forms.ChoiceField(
+        label="Tipe Sewa",
+        choices=[('bulanan', 'Bulanan'), ('tahunan', 'Tahunan')],
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    durasi = forms.IntegerField(
+        label="Durasi",
         min_value=1,
         required=True,
-        help_text="Masukkan jumlah bulan (misal: 1, 2, 3 ... 12 untuk tahunan)"
+        help_text="Masukkan jumlah bulan atau tahun sesuai tipe sewa",
+        widget=forms.NumberInput(attrs={"class": "form-control"})
     )
     jumlah_penghuni = forms.ChoiceField(
         label="Jumlah Penghuni",
@@ -68,7 +74,7 @@ class PemesananForm(forms.ModelForm):
 
     class Meta:
         model = Pemesanan
-        fields = ['nama', 'kontak', 'tipe_kamar', 'durasi_bulan', 'jumlah_penghuni', 'tanggal_mulai']
+        fields = ['nama', 'kontak', 'tipe_kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -78,3 +84,4 @@ class PemesananForm(forms.ModelForm):
                 self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, tipe_kamar.max_penghuni + 1)]
             except (ValueError, TypeError, TipeKamar.DoesNotExist):
                 pass
+
