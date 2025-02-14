@@ -7,35 +7,45 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")
 django.setup()
 
-from main.models import Pemesanan, TipeKamar, CustomUser
+from dashboard.models import KritikSaran
+from django.contrib.auth import get_user_model
 
-# Get all available room types
-tipe_kamars = list(TipeKamar.objects.all())
+User = get_user_model()
 
-# Get a user to assign (or create a dummy user)
-user, created = CustomUser.objects.get_or_create(
-    username="testuser",
-    defaults={"email": "testuser@example.com", "phone_number": "08123456789", "is_penghuni": False}
-)
+# Get all users (or create a dummy user if none exists)
+users = list(User.objects.all())
 
-# Generate 10 new dummy bookings
+if not users:
+    user, created = User.objects.get_or_create(
+        username="testuser",
+        defaults={"email": "testuser@example.com", "phone_number": "08123456789", "is_penghuni": False}
+    )
+    users = [user]
+
+# List of random Kritik & Saran messages
+kritik_messages = [
+    "Pelayanan sangat baik! Terima kasih.",
+    "Harap lebih meningkatkan kebersihan kamar.",
+    "WiFi kadang lambat, bisa diperbaiki?",
+    "Fasilitas sudah cukup bagus, tapi bisa lebih baik lagi.",
+    "Mohon ada lebih banyak opsi pembayaran.",
+    "Staf sangat ramah dan membantu! 👍",
+    "Mohon ada lebih banyak event komunitas penghuni.",
+    "Keamanan gedung perlu ditingkatkan lagi.",
+    "Saran: bisa ada aplikasi mobile untuk penghuni?",
+    "Tolong perbaiki AC di beberapa kamar."
+]
+
+# Generate 10 random Kritik & Saran
 for i in range(10):
-    tipe_kamar = random.choice(tipe_kamars)  # Pick a random room type
-    durasi = random.choice([3, 6, 12])  # Durasi dalam bulan
-    tipe_sewa = "bulanan" if durasi < 12 else "tahunan"
-    jumlah_penghuni = random.randint(1, tipe_kamar.max_penghuni)
-    tanggal_mulai = datetime.today().date() + timedelta(days=random.randint(1, 30))
+    user = random.choice(users)  # Pick a random user
+    pesan = random.choice(kritik_messages)  # Pick a random message
+    tanggal_dikirim = datetime.today() - timedelta(days=random.randint(1, 30))  # Random past date
 
-    Pemesanan.objects.create(
-        nama=f"User {i+1}",
-        kontak=f"0812345678{i}",
-        tipe_kamar=tipe_kamar,
-        tipe_sewa=tipe_sewa,
-        durasi=durasi,
-        jumlah_penghuni=jumlah_penghuni,
-        tanggal_mulai=tanggal_mulai,
-        status="menunggu",
-        user=user
+    KritikSaran.objects.create(
+        user=user,
+        pesan=pesan,
+        tanggal_dikirim=tanggal_dikirim
     )
 
-print("✅ 10 Pemesanan baru berhasil ditambahkan!")
+print("✅ 10 Kritik & Saran berhasil ditambahkan!")

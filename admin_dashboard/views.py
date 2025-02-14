@@ -4,6 +4,11 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from main.models import CustomUser, Pemesanan
 from dashboard.models import Transaksi, StatusValidasi, KritikSaran
+from django.http import JsonResponse
+from django.db.models import Count, Sum
+from django.http import JsonResponse
+from django.utils.timezone import now
+
 
 # Fungsi untuk membatasi akses hanya untuk admin
 def is_admin(user):
@@ -207,3 +212,34 @@ def kelola_kritik_saran(request):
     kritik = paginator.get_page(page_number)
 
     return render(request, "admin_dashboard/kritik_saran.html", {"kritik": kritik})
+
+
+# Fungsi untuk menampilkan halaman Statistik
+@login_required
+@user_passes_test(is_admin)
+def statistik_page(request):
+    return render(request, "admin_dashboard/statistik.html")
+
+
+@login_required
+@user_passes_test(is_admin)
+def statistik_penghuni(request):
+    # Hitung total penghuni aktif (yang belum memiliki tanggal_keluar)
+    total_penghuni_aktif = CustomUser.objects.filter(is_penghuni=True, tanggal_keluar__isnull=True).count()
+
+    # Hitung total penghuni baru bulan ini
+    bulan_ini = now().month
+    tahun_ini = now().year
+    total_penghuni_baru = CustomUser.objects.filter(tanggal_bergabung__month=bulan_ini, tanggal_bergabung__year=tahun_ini).count()
+
+    # Hitung total penghuni keluar bulan ini
+    total_penghuni_keluar = CustomUser.objects.filter(tanggal_keluar__month=bulan_ini, tanggal_keluar__year=tahun_ini).count()
+
+    data = {
+        "total_penghuni_aktif": total_penghuni_aktif,
+        "total_penghuni_baru": total_penghuni_baru,
+        "total_penghuni_keluar": total_penghuni_keluar
+    }
+
+    return JsonResponse(data)
+

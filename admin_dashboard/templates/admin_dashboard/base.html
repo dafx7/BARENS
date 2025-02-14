@@ -62,16 +62,20 @@
                         <a href="{% url 'kelola_kritik_saran' %}"
                             class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
                                    {% if request.path == '/admin-dashboard/kelola-kritik-saran/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
-                            <i class="fas fa-money-check-alt"></i>
+                            <i class="fas fa-comment-dots"></i>
+
                             <span class="ml-2">Kritik dan Saran</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px] hover:bg-[#A3B18A]">
+                        <a href="{% url 'statistik_page' %}"
+                            class="flex items-center gap-3 text-white px-4 py-3 rounded-md text-[16px] font-normal leading-[20px]
+                                   {% if request.path == '/admin-dashboard/statistik/' %} bg-[#A3B18A] {% else %} hover:bg-[#A3B18A] {% endif %}">
                             <i class="fas fa-chart-line"></i> Statistik
                         </a>
                     </li>
+
                     <li>
                         <a href="{% url 'index' %}" class="flex items-center gap-3 text-white px-4 py-3 hover:bg-red-600 rounded-md text-[16px] font-normal leading-[20px]">
                             <i class="fas fa-sign-out-alt"></i> Keluar

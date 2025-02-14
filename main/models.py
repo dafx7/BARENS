@@ -74,13 +74,15 @@ class Pemesanan(models.Model):
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)  # Gunakan email sebagai identifier utama
+    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    is_penghuni = models.BooleanField(default=False)  # Tambahkan kolom ini
+    is_penghuni = models.BooleanField(default=False)
+    tanggal_bergabung = models.DateField(null=True, blank=True)  # Untuk melacak kapan penghuni bergabung
+    tanggal_keluar = models.DateField(null=True, blank=True)  # Untuk melacak kapan penghuni keluar
 
-    USERNAME_FIELD = "username"  # Kembali pakai username untuk login
-    REQUIRED_FIELDS = ["email", "phone_number", "first_name"]  # Nama lengkap tetap wajib
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email", "phone_number", "first_name"]
 
     def __str__(self):
-        return self.username  # Tampilkan username sebagai identifier utama
+        return self.username
 
