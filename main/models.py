@@ -108,5 +108,14 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email", "phone_number", "first_name"]
 
+    def save(self, *args, **kwargs):
+        """Auto-set tanggal_keluar when is_penghuni changes to False."""
+        if not self.is_penghuni:
+            self.tanggal_keluar = now().date()  # ✅ Always update the exit date
+        elif self.is_penghuni:
+            self.tanggal_keluar = None  # ✅ Reset if user becomes penghuni again
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username

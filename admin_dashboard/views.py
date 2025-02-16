@@ -72,7 +72,8 @@ def tambah_penghuni(request):
             email=email,
             phone_number=phone_number,
             first_name=nama_lengkap,  # Simpan Nama Lengkap di field first_name
-            is_penghuni=is_penghuni
+            is_penghuni=is_penghuni,
+            tanggal_bergabung=now().date() if is_penghuni else None,
         )
         user.set_password("password123")  # Password default
         user.save()
@@ -112,12 +113,24 @@ def edit_penghuni(request, user_id):
 @user_passes_test(is_admin)
 def hapus_penghuni(request, user_id):
     """
-    Menghapus akun penghuni.
+    Menghapus akun penghuni dengan mencatat tanggal keluar.
     """
     user = get_object_or_404(CustomUser, id=user_id)
+
+    # ✅ Set tanggal_keluar sebelum menghapus
+    user.tanggal_keluar = now().date()
+    user.save()
+
+    # ✅ Remove is_penghuni status
+    user.is_penghuni = False
+    user.save()
+
+    # ✅ OPTIONAL: Delete user after recording exit (if required)
     user.delete()
+
     messages.success(request, "Akun penghuni berhasil dihapus!")
     return redirect("kelola_penghuni")
+
 
 
 @login_required
@@ -149,6 +162,8 @@ def konfirmasi_pemesanan(request, pemesanan_id):
         pemesanan.status = 'diterima'
         if pemesanan.user:  # Jika pemesanan memiliki akun user yang terhubung
             pemesanan.user.is_penghuni = True
+            if not pemesanan.user.tanggal_bergabung:  # ✅ Only set if not already set
+                pemesanan.user.tanggal_bergabung = now().date()
             pemesanan.user.save()
         pemesanan.save()
         messages.success(request, f"Pemesanan {pemesanan.nama} telah dikonfirmasi.")
@@ -228,7 +243,6 @@ def statistik_page(request):
 def statistik_penghuni(request):
     tipe_kamar_id = request.GET.get("tipe_kamar")  # Retrieve filter parameter
 
-    # ✅ Apply filtering if a specific TipeKamar is selected
     penghuni_query = CustomUser.objects.filter(is_penghuni=True)
     if tipe_kamar_id:
         penghuni_query = penghuni_query.filter(
@@ -244,11 +258,18 @@ def statistik_penghuni(request):
         tanggal_bergabung__month=bulan_ini, tanggal_bergabung__year=tahun_ini
     ).count()
 
-    total_penghuni_keluar = penghuni_query.filter(
-        tanggal_keluar__month=bulan_ini, tanggal_keluar__year=tahun_ini
+    total_penghuni_keluar = CustomUser.objects.filter(
+        tanggal_keluar__isnull=False,  # ✅ Only count users who have exited
+        tanggal_keluar__month=bulan_ini,
+        tanggal_keluar__year=tahun_ini
     ).count()
 
-    # ✅ Do not filter donut chart data
+    # ✅ Debugging print (Check if users have the correct exit date)
+    print("📊 Users who exited this month:", CustomUser.objects.filter(
+        tanggal_keluar__month=bulan_ini, tanggal_keluar__year=tahun_ini
+    ).values("username", "tanggal_keluar"))
+
+    # ✅ Continue with the rest of your logic
     total_kamar = TipeKamar.objects.aggregate(total=Sum("jumlah_kamar"))["total"] or 0
     kamar_terisi = Kamar.objects.filter(penghuni_sekarang__gt=0).count()
     kamar_kosong = max(0, total_kamar - kamar_terisi)
@@ -259,10 +280,9 @@ def statistik_penghuni(request):
     metode_transfer = Transaksi.objects.filter(metode_pembayaran="bank_transfer").count()
     metode_ewallet = Transaksi.objects.filter(metode_pembayaran="e_wallet").count()
 
-    # ✅ Fix: Return English month names
     pendapatan_bulanan = {}
     for month in range(1, 13):
-        month_name = calendar.month_name[month]  # ✅ Keep English names for Chart.js
+        month_name = calendar.month_name[month]
         revenue = Transaksi.objects.filter(
             tanggal_pembayaran__month=month, tanggal_pembayaran__year=tahun_ini
         ).aggregate(total=Sum("nominal"))["total"] or 0
