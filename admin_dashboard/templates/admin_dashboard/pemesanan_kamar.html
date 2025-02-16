@@ -45,7 +45,7 @@
                     <td class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ pemesanan.nama }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ pemesanan.kontak }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.tipe_kamar.nama }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ pemesanan.kamar.tipe_kamar.nama }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ pemesanan.durasi }}
                         {% if pemesanan.tipe_sewa == "bulanan" %} Bulan {% else %} Tahun {% endif %}
                     </td>

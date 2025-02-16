@@ -72,13 +72,13 @@ class PemesananForm(forms.ModelForm):
 
     class Meta:
         model = Pemesanan
-        fields = ['nama', 'kontak', 'kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']  # ✅ FIXED: Changed 'tipe_kamar' to 'kamar'
+        fields = ['nama', 'kontak', 'kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']  # ✅ FIXED
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if 'kamar' in self.data:  # ✅ FIXED: Changed 'tipe_kamar' to 'kamar'
+        if 'kamar' in self.data:
             try:
-                kamar = Kamar.objects.get(id=int(self.data.get('kamar')))  # ✅ FIXED: Query 'Kamar' instead of 'TipeKamar'
-                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, kamar.kapasitas + 1)]  # ✅ FIXED: Use 'kapasitas'
+                kamar = Kamar.objects.get(id=int(self.data.get('kamar')))  # ✅ FIXED: Query ke 'Kamar' bukan 'TipeKamar'
+                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, kamar.kapasitas + 1)]  # ✅ Sesuaikan dengan kapasitas kamar
             except (ValueError, TypeError, Kamar.DoesNotExist):
                 pass

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from .models import TipeKamar, Pemesanan
+from django.db.models import F
+from .models import TipeKamar, Pemesanan, Kamar
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.db.models import Q
@@ -83,24 +84,36 @@ class PemesananView(View):
             durasi = int(durasi)
             jumlah_penghuni = int(jumlah_penghuni)
 
-            # Validate max_penghuni
+            # Validasi jumlah penghuni
             if jumlah_penghuni > tipe_kamar.max_penghuni:
                 return render(request, 'main/form_pemesanan.html', {
                     'error': 'Jumlah penghuni melebihi kapasitas kamar!',
                     'tipe_kamars': TipeKamar.objects.all()
                 })
 
-            # Save booking
+            # ✅ Cari kamar kosong berdasarkan tipe_kamar
+            kamar_tersedia = Kamar.objects.filter(tipe_kamar=tipe_kamar, penghuni_sekarang__lt=F("kapasitas")).first()
+            if not kamar_tersedia:
+                return render(request, 'main/form_pemesanan.html', {
+                    'error': 'Tidak ada kamar yang tersedia!',
+                    'tipe_kamars': TipeKamar.objects.all()
+                })
+
+            # ✅ Simpan pemesanan dengan kamar yang ditemukan
             Pemesanan.objects.create(
                 nama=nama,
                 kontak=kontak,
-                tipe_kamar=tipe_kamar,
+                kamar=kamar_tersedia,  # ✅ Menggunakan kamar, bukan tipe_kamar
                 tipe_sewa=tipe_sewa,
                 durasi=durasi,
                 jumlah_penghuni=jumlah_penghuni,
                 tanggal_mulai=tanggal_mulai,
                 user=request.user
             )
+
+            # ✅ Tambah penghuni ke dalam kamar setelah pemesanan sukses
+            kamar_tersedia.tambah_penghuni()
+
             return redirect('success_page')
 
         except TipeKamar.DoesNotExist:
