@@ -1,5 +1,4 @@
 from textwrap import indent
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
@@ -10,6 +9,7 @@ from django.http import JsonResponse
 from django.db.models import Count, Sum
 from django.http import JsonResponse
 from django.utils.timezone import now
+import calendar
 
 
 # Fungsi untuk membatasi akses hanya untuk admin
@@ -226,8 +226,6 @@ def statistik_page(request):
 @login_required
 @user_passes_test(is_admin)
 def statistik_penghuni(request):
-    from django.db.models import Q
-
     tipe_kamar_id = request.GET.get("tipe_kamar")  # Retrieve filter parameter
 
     # ✅ Apply filtering if a specific TipeKamar is selected
@@ -261,6 +259,15 @@ def statistik_penghuni(request):
     metode_transfer = Transaksi.objects.filter(metode_pembayaran="bank_transfer").count()
     metode_ewallet = Transaksi.objects.filter(metode_pembayaran="e_wallet").count()
 
+    # ✅ Fix: Return English month names
+    pendapatan_bulanan = {}
+    for month in range(1, 13):
+        month_name = calendar.month_name[month]  # ✅ Keep English names for Chart.js
+        revenue = Transaksi.objects.filter(
+            tanggal_pembayaran__month=month, tanggal_pembayaran__year=tahun_ini
+        ).aggregate(total=Sum("nominal"))["total"] or 0
+        pendapatan_bulanan[month_name] = int(revenue)
+
     data = {
         "total_penghuni_aktif": total_penghuni_aktif,
         "total_penghuni_baru": total_penghuni_baru,
@@ -268,6 +275,7 @@ def statistik_penghuni(request):
         "pemesanan_kamar": {"terisi": kamar_terisi, "kosong": kamar_kosong},
         "pembayaran": {"lunas": lunas, "belum_lunas": belum_lunas},
         "metode_pembayaran": {"bank_transfer": metode_transfer, "e_wallet": metode_ewallet},
+        "pendapatan": pendapatan_bulanan,
     }
 
     return JsonResponse(data)

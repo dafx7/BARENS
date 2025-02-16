@@ -55,83 +55,122 @@
             <canvas id="chartMetodePembayaran"></canvas>
         </div>
     </div>
+
+    <div class="p-4 bg-white shadow-md rounded-md text-center mt-6">
+        <h3 class="text-lg font-semibold">Statistik Pendapatan</h3>
+        <canvas id="chartPendapatan"></canvas>
+    </div>
+
 </div>
 
 <!-- Chart.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-let chartPemesanan, chartPembayaran, chartMetodePembayaran; // Track chart instances
+    let chartPemesanan, chartPembayaran, chartMetodePembayaran, chartPendapatan; // Track chart instances
 
-function fetchData(url) {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // ✅ Update only the numerical stats (penghuni)
-            document.getElementById("total-penghuni-aktif").innerText = data.total_penghuni_aktif + " orang";
-            document.getElementById("total-penghuni-baru").innerText = data.total_penghuni_baru + " orang";
-            document.getElementById("total-penghuni-keluar").innerText = data.total_penghuni_keluar + " orang";
+    function fetchData(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log("📊 API Revenue Data:", data.pendapatan); // ✅ Debug API Response
 
-            // ✅ Destroy existing charts before updating them
-            if (chartPemesanan) chartPemesanan.destroy();
-            if (chartPembayaran) chartPembayaran.destroy();
-            if (chartMetodePembayaran) chartMetodePembayaran.destroy();
+                // ✅ Update only the numerical stats (penghuni)
+                document.getElementById("total-penghuni-aktif").innerText = data.total_penghuni_aktif + " orang";
+                document.getElementById("total-penghuni-baru").innerText = data.total_penghuni_baru + " orang";
+                document.getElementById("total-penghuni-keluar").innerText = data.total_penghuni_keluar + " orang";
 
-            // ✅ Statistik Pemesanan Kamar (Donut Chart)
-            chartPemesanan = new Chart(document.getElementById("chartPemesanan"), {
-                type: 'doughnut',
-                data: {
-                    labels: ["Kamar Terisi", "Kamar Kosong"],
-                    datasets: [{
-                        data: [data.pemesanan_kamar.terisi, data.pemesanan_kamar.kosong],
-                        backgroundColor: ["#EBA83A", "#FFD699"],
-                    }]
+                // ✅ Destroy existing charts before updating them
+                if (chartPemesanan) chartPemesanan.destroy();
+                if (chartPembayaran) chartPembayaran.destroy();
+                if (chartMetodePembayaran) chartMetodePembayaran.destroy();
+                if (chartPendapatan) chartPendapatan.destroy();
+
+                // ✅ Statistik Pemesanan Kamar (Donut Chart)
+                chartPemesanan = new Chart(document.getElementById("chartPemesanan"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Kamar Terisi", "Kamar Kosong"],
+                        datasets: [{
+                            data: [data.pemesanan_kamar.terisi, data.pemesanan_kamar.kosong],
+                            backgroundColor: ["#EBA83A", "#FFD699"],
+                        }]
+                    }
+                });
+
+                // ✅ Statistik Pembayaran (Donut Chart)
+                chartPembayaran = new Chart(document.getElementById("chartPembayaran"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Lunas", "Belum Lunas"],
+                        datasets: [{
+                            data: [data.pembayaran.lunas, data.pembayaran.belum_lunas],
+                            backgroundColor: ["#EBA83A", "#FFD699"],
+                        }]
+                    }
+                });
+
+                // ✅ Statistik Metode Pembayaran (Donut Chart)
+                chartMetodePembayaran = new Chart(document.getElementById("chartMetodePembayaran"), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Bank Transfer", "E-Wallet"],
+                        datasets: [{
+                            data: [data.metode_pembayaran.bank_transfer, data.metode_pembayaran.e_wallet],
+                            backgroundColor: ["#EBA83A", "#FFD699"],
+                        }]
+                    }
+                });
+
+                // ✅ Revenue Data for the Bar Chart (Statistik Pendapatan)
+                const monthLabels = Object.keys(data.pendapatan);  // Get month names
+                const revenueValues = Object.values(data.pendapatan); // Get earnings
+
+                console.log("📊 Labels:", monthLabels);
+                console.log("📊 Values:", revenueValues);
+
+                if (monthLabels.length === 0) {
+                    console.error("❌ No revenue data found. Check API!");
+                    return;
                 }
-            });
 
-            // ✅ Statistik Pembayaran (Donut Chart)
-            chartPembayaran = new Chart(document.getElementById("chartPembayaran"), {
-                type: 'doughnut',
-                data: {
-                    labels: ["Lunas", "Belum Lunas"],
-                    datasets: [{
-                        data: [data.pembayaran.lunas, data.pembayaran.belum_lunas],
-                        backgroundColor: ["#EBA83A", "#FFD699"],
-                    }]
-                }
-            });
-
-            // ✅ Statistik Metode Pembayaran (Donut Chart)
-            chartMetodePembayaran = new Chart(document.getElementById("chartMetodePembayaran"), {
-                type: 'doughnut',
-                data: {
-                    labels: ["Bank Transfer", "E-Wallet"],
-                    datasets: [{
-                        data: [data.metode_pembayaran.bank_transfer, data.metode_pembayaran.e_wallet],
-                        backgroundColor: ["#EBA83A", "#FFD699"],
-                    }]
-                }
-            });
-        })
-        .catch(error => console.error("Error fetching data:", error));
-}
-
-// ✅ Filter Function to Fetch Data Based on Selected Tipe Kamar
-document.getElementById("btn-filter").addEventListener("click", function () {
-    const tipeKamar = document.getElementById("filter-kamar").value;
-    let url = "{% url 'statistik_penghuni' %}";
-
-    if (tipeKamar) {
-        url += `?tipe_kamar=${tipeKamar}`;
+                chartPendapatan = new Chart(document.getElementById("chartPendapatan"), {
+                    type: 'bar',
+                    data: {
+                        labels: monthLabels,
+                        datasets: [{
+                            label: 'Pendapatan (Rp)',
+                            data: revenueValues,
+                            backgroundColor: "#E9C46A"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        },
+                        elements: { bar: { borderRadius: 20.327 } }
+                    }
+                });
+            })
+            .catch(error => console.error("❌ Error fetching data:", error));
     }
 
-    fetchData(url); // ✅ Fetch data based on filter
-});
+    // ✅ Filter Function to Fetch Data Based on Selected Tipe Kamar
+    document.getElementById("btn-filter").addEventListener("click", function () {
+        const tipeKamar = document.getElementById("filter-kamar").value;
+        let url = "{% url 'statistik_penghuni' %}";
 
-// ✅ Auto-fetch data when page loads
-fetchData("{% url 'statistik_penghuni' %}");
+        if (tipeKamar) {
+            url += `?tipe_kamar=${tipeKamar}`;
+        }
 
+        fetchData(url); // ✅ Fetch data based on filter
+    });
 
+    // ✅ Auto-fetch data when page loads
+    fetchData("{% url 'statistik_penghuni' %}");
 </script>
+
 
 {% endblock %}

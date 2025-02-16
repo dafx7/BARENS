@@ -1,164 +1,120 @@
 import os
 import django
-
-# ✅ Set the settings module BEFORE running django.setup()
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")
-django.setup()  # Ensure Django initializes correctly
-
-# ✅ Import Django models AFTER django.setup()
-from main.models import CustomUser, Kamar, Pemesanan, TipeKamar
-from dashboard.models import Transaksi, StatusPembayaran, MetodePembayaran, Pembayaran
 from django.utils.timezone import now
-from django.db.models import Sum
-from django.test import RequestFactory
-from admin_dashboard.views import statistik_penghuni
+import calendar
 import json
 
-print("✅ Django environment initialized successfully.")
+# ✅ Initialize Django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")
+django.setup()
 
-# ✅ STEP 1: CLEAR ALL OLD DATA (Except TipeKamar)
-print("🗑️ Deleting old data...")
+from main.models import CustomUser, Kamar, Pemesanan, TipeKamar
+from dashboard.models import Transaksi, StatusPembayaran, MetodePembayaran
+from django.test import RequestFactory
+from admin_dashboard.views import statistik_penghuni
 
-CustomUser.objects.all().delete()
-Kamar.objects.all().delete()
-Pemesanan.objects.all().delete()
+# ✅ STEP 1: CLEAR OLD TRANSACTION DATA
+print("🗑️ Deleting old transactions...")
 Transaksi.objects.all().delete()
 
-print("✅ All user, booking, room, and transaction data deleted.")
-print("⚠️ Keeping all TipeKamar data intact.")
-
-# ✅ STEP 2: RETRIEVE EXISTING ROOM TYPES
-tipe_kamars = list(TipeKamar.objects.all())
-if not tipe_kamars:
-    raise Exception("⚠️ No TipeKamar found! Please add room types first.")
-
-# ✅ STEP 3: CREATE TEST USERS
+# ✅ STEP 2: CREATE TEST USERS (if needed)
 print("👤 Creating test users...")
-user1 = CustomUser.objects.create(username="user1", email="user1@example.com", first_name="Alice", is_penghuni=True)
-user2 = CustomUser.objects.create(username="user2", email="user2@example.com", first_name="Bob", is_penghuni=True)
+user1, _ = CustomUser.objects.get_or_create(username="user1", email="user1@example.com", first_name="Alice")
+user2, _ = CustomUser.objects.get_or_create(username="user2", email="user2@example.com", first_name="Bob")
 
-# ✅ STEP 4: CREATE KAMAR FROM TIPE_KAMAR DATA
-print("🏠 Creating rooms from available TipeKamar...")
-existing_numbers = set()  # Track used room numbers
-
-for tipe in tipe_kamars:
-    for i in range(1, tipe.jumlah_kamar + 1):
-        # Generate a unique room number
-        base_name = tipe.nama.replace(" ", "").upper()[:5]  # Take first 5 characters of name
-        nomor_kamar = f"{base_name}-{i}"
-
-        # Ensure unique room number
-        while nomor_kamar in existing_numbers:
-            i += 1
-            nomor_kamar = f"{base_name}-{i}"
-
-        # Create the room
-        Kamar.objects.create(
-            tipe_kamar=tipe,
-            nomor_kamar=nomor_kamar,
-            kapasitas=tipe.max_penghuni
-        )
-        existing_numbers.add(nomor_kamar)
-
-print("✅ All rooms created successfully.")
-
-# ✅ STEP 5: ASSIGN USERS TO KAMAR
-print("🛏️ Assigning users to rooms...")
-kamar_list = list(Kamar.objects.all())  # ✅ Fetch created rooms
-kamar_1 = kamar_list[0]
-kamar_2 = kamar_list[1]
-
-pemesanan_1 = Pemesanan.objects.create(
-    nama=user1.first_name,
-    kontak=user1.email,
-    kamar=kamar_1,
-    tipe_sewa="bulanan",
-    durasi=1,
-    jumlah_penghuni=1,
-    tanggal_mulai=now().date(),
-    status="diterima",
-    user=user1,
+# ✅ STEP 3: CREATE TEST ROOMS
+print("🏠 Creating test rooms...")
+tipe_kamar, _ = TipeKamar.objects.get_or_create(
+    nama="Standard Single",
+    deskripsi="1 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, kamar token, TV, meja dan kursi belajar",
+    fasilitas="1 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, TV, meja dan kursi belajar",
+    harga_per_bulan_1_orang=1400000,  # ✅ Required field
+    max_penghuni=1,
+    jumlah_kamar=10
 )
-kamar_1.penghuni_sekarang = 1
-kamar_1.save()
+kamar1, _ = Kamar.objects.get_or_create(tipe_kamar=tipe_kamar, nomor_kamar="STD-001", kapasitas=1)
+kamar2, _ = Kamar.objects.get_or_create(tipe_kamar=tipe_kamar, nomor_kamar="STD-002", kapasitas=1)
 
-pemesanan_2 = Pemesanan.objects.create(
-    nama=user2.first_name,
-    kontak=user2.email,
-    kamar=kamar_2,
-    tipe_sewa="bulanan",
-    durasi=1,
-    jumlah_penghuni=1,
-    tanggal_mulai=now().date(),
-    status="diterima",
-    user=user2,
-)
-kamar_2.penghuni_sekarang = 1
-kamar_2.save()
-
-print("✅ Users assigned to rooms.")
-
-# ✅ STEP 6: ADD PAYMENT RECORDS
+# ✅ STEP 4: ADD SAMPLE TRANSACTIONS FOR MULTIPLE MONTHS
 print("💰 Creating test transactions...")
+sample_revenue = {
+    "Januari": 25000000,
+    "Februari": 22000000,
+    "Maret": 25000000,
+    "April": 25000000,
+    "Mei": 22000000,
+    "Juni": 24000000,
+    "Juli": 23000000,
+    "Agustus": 20000000,
+    "September": 25000000,
+    "Oktober": 24000000,
+    "November": 24000000,
+    "Desember": 24000000,
+}
 
-transaksi_1 = Transaksi.objects.create(
-    user=user1,
-    tipe_kamar=kamar_1.tipe_kamar,
-    tanggal_pembayaran=now().date(),
-    nominal=1500000,
-    metode_pembayaran=MetodePembayaran.BANK_TRANSFER,
-    status=StatusPembayaran.LUNAS,
-    durasi_bayar=1,
-    jenis_durasi="per_bulan",
-)
+tahun_ini = now().year
 
-transaksi_2 = Transaksi.objects.create(
-    user=user2,
-    tipe_kamar=kamar_2.tipe_kamar,
-    tanggal_pembayaran=now().date(),
-    nominal=1400000,
-    metode_pembayaran=MetodePembayaran.E_WALLET,
-    status=StatusPembayaran.BELUM_LUNAS,
-    durasi_bayar=1,
-    jenis_durasi="per_bulan",
-)
+for month, revenue in sample_revenue.items():
+    # ✅ Map Indonesian month names to English
+    month_mapping = {
+        "Januari": "January", "Februari": "February", "Maret": "March",
+        "April": "April", "Mei": "May", "Juni": "June",
+        "Juli": "July", "Agustus": "August", "September": "September",
+        "Oktober": "October", "November": "November", "Desember": "December"
+    }
 
-# ✅ Ensure payment records update due dates
-pembayaran_1, _ = Pembayaran.objects.get_or_create(user=user1)
-pembayaran_1.update_jatuh_tempo(transaksi_1.tanggal_pembayaran, transaksi_1.durasi_bayar, transaksi_1.jenis_durasi)
+    # ✅ Convert Indonesian month to English before indexing
+    english_month = month_mapping.get(month, None)
+    if not english_month:
+        raise ValueError(f"Invalid month name: {month}")
 
-pembayaran_2, _ = Pembayaran.objects.get_or_create(user=user2)
-pembayaran_2.update_jatuh_tempo(transaksi_2.tanggal_pembayaran, transaksi_2.durasi_bayar, transaksi_2.jenis_durasi)
+    month_number = list(calendar.month_name).index(english_month)  # Convert to number (1-12)
 
-print("✅ Transactions added.")
+    Transaksi.objects.create(
+        user=user1,
+        tipe_kamar=kamar1.tipe_kamar,
+        tanggal_pembayaran=f"{tahun_ini}-{month_number:02d}-10",  # Format: YYYY-MM-DD
+        nominal=revenue,
+        metode_pembayaran=MetodePembayaran.BANK_TRANSFER,
+        status=StatusPembayaran.LUNAS,
+        durasi_bayar=1,
+        jenis_durasi="per_bulan",
+    )
 
-# ✅ STEP 7: VALIDATE FINAL STATISTICS
-from django.test import RequestFactory
-from django.contrib.auth import get_user_model
+print("✅ Transactions created successfully.")
 
+# ✅ STEP 5: CALL API & TEST STATISTIK PENDAPATAN
 print("📊 Running statistik_penghuni test...")
 
 factory = RequestFactory()
 request = factory.get("/admin/statistik/")
+from django.test import RequestFactory
+from django.contrib.auth.models import AnonymousUser
 
-# ✅ Create or retrieve a test admin user
-User = get_user_model()
-admin_user, created = User.objects.get_or_create(username="admin", is_staff=True, is_superuser=True)
-request.user = admin_user  # ✅ Assign authenticated user
+factory = RequestFactory()
+request = factory.get("/admin/statistik/")
 
-# ✅ Call the statistik_penghuni view
+# ✅ Simulate an admin user
+admin_user, created = CustomUser.objects.get_or_create(
+    username="admin",
+    defaults={"email": "admin@example.com", "is_staff": True, "is_superuser": True}
+)
+request.user = admin_user  # Attach user to request
+
+# ✅ Call the view function with the simulated request
 response = statistik_penghuni(request)
 
-# ✅ Print JSON response
-import json
 data = json.loads(response.content)
-
 print("\n📝 FINAL TEST DATA")
-print(json.dumps(data, indent=4))
+import json
 
-# ✅ Validate Expected Output
-assert data["total_penghuni_aktif"] == 2, "❌ Penghuni aktif count is incorrect!"
-assert data["pemesanan_kamar"]["terisi"] == 2, "❌ Room occupancy count is incorrect!"
-assert data["pemesanan_kamar"]["kosong"] == (sum(t.jumlah_kamar for t in tipe_kamars) - 2), "❌ Room availability count is incorrect!"
+print("\n🔍 Expected Revenue Data:")
+print(json.dumps(sample_revenue, indent=4))
 
-print("\n✅ TEST PASSED: Statistics correctly reflect room assignments!")
+print("\n📝 Actual Revenue Data from API:")
+print(json.dumps(data["pendapatan"], indent=4))
+
+# ✅ STEP 6: ASSERT EXPECTED RESULTS
+assert data["pendapatan"] == sample_revenue, "❌ Revenue statistics are incorrect!"
+print("\n✅ TEST PASSED: Statistik Pendapatan correctly reflects revenue!")
+
