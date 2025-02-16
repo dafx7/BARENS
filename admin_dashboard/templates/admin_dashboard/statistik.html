@@ -8,51 +8,130 @@
 
     <!-- Filter Dropdown -->
     <div class="flex gap-4 mt-4">
-        <select class="border border-gray-300 rounded-md p-2 w-[200px]">
-            <option>Rentang Waktu</option>
+        <select id="filter-kamar" class="border border-gray-300 rounded-md p-2 w-[200px]">
+            <option value="">Semua Jenis Kamar</option>
+            {% for kamar in tipe_kamar_list %}
+                <option value="{{ kamar.id }}">{{ kamar.nama }}</option>
+            {% endfor %}
         </select>
-        <select class="border border-gray-300 rounded-md p-2 w-[200px]">
-            <option>Jenis Kamar</option>
-        </select>
-        <button class="bg-[#588157] text-white px-4 py-2 rounded-md">Filter</button>
+        <button id="btn-filter" class="bg-[#588157] text-white px-4 py-2 rounded-md">Filter</button>
     </div>
 
     <!-- Kotak Statistik -->
     <div class="flex gap-4 mt-6">
         <!-- Total Penghuni Aktif -->
-        <div id="penghuni-aktif" class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#588157] to-[#9CC59C]">
-            <p class="text-[14px] font-semibold uppercase text-white leading-[20px] font-[Open Sans] text-center">TOTAL PENGHUNI AKTIF</p>
-            <p class="text-[24px] font-semibold text-white leading-[20px] font-[Open Sans] text-center mt-2" id="total-penghuni-aktif">-</p>
+        <div class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#588157] to-[#9CC59C]">
+            <p class="text-[14px] font-semibold uppercase text-white text-center">TOTAL PENGHUNI AKTIF</p>
+            <p class="text-[24px] font-semibold text-white text-center mt-2" id="total-penghuni-aktif">-</p>
         </div>
 
         <!-- Total Penghuni Baru Bulan Ini -->
-        <div id="penghuni-baru" class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#2A9D8F] to-[#5BCDBF]">
-            <p class="text-[14px] font-semibold uppercase text-white leading-[20px] font-[Open Sans] text-center">TOTAL PENGHUNI BARU BULAN INI</p>
-            <p class="text-[24px] font-semibold text-white leading-[20px] font-[Open Sans] text-center mt-2" id="total-penghuni-baru">-</p>
+        <div class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#2A9D8F] to-[#5BCDBF]">
+            <p class="text-[14px] font-semibold uppercase text-white text-center">TOTAL PENGHUNI BARU BULAN INI</p>
+            <p class="text-[24px] font-semibold text-white text-center mt-2" id="total-penghuni-baru">-</p>
         </div>
 
         <!-- Total Penghuni Keluar Bulan Ini -->
-        <div id="penghuni-keluar" class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#63A3F8] to-[#80ABE4]">
-            <p class="text-[14px] font-semibold uppercase text-white leading-[20px] font-[Open Sans] text-center">TOTAL PENGHUNI KELUAR BULAN INI</p>
-            <p class="text-[24px] font-semibold text-white leading-[20px] font-[Open Sans] text-center mt-2" id="total-penghuni-keluar">-</p>
+        <div class="flex flex-col justify-center items-center w-[333px] h-[120px] p-[14px] rounded-[12px] shadow-md bg-gradient-to-r from-[#63A3F8] to-[#80ABE4]">
+            <p class="text-[14px] font-semibold uppercase text-white text-center">TOTAL PENGHUNI KELUAR BULAN INI</p>
+            <p class="text-[24px] font-semibold text-white text-center mt-2" id="total-penghuni-keluar">-</p>
         </div>
     </div>
 
-    <!-- Chart Container -->
-    <div class="mt-6">
-        <canvas id="statistikChart"></canvas>
+    <!-- Donut Charts -->
+    <div class="grid grid-cols-3 gap-6 mt-6">
+        <div class="p-4 bg-white shadow-md rounded-md text-center">
+            <h3 class="text-lg font-semibold">Statistik Pemesanan Kamar</h3>
+            <canvas id="chartPemesanan"></canvas>
+        </div>
+
+        <div class="p-4 bg-white shadow-md rounded-md text-center">
+            <h3 class="text-lg font-semibold">Statistik Pembayaran</h3>
+            <canvas id="chartPembayaran"></canvas>
+        </div>
+
+        <div class="p-4 bg-white shadow-md rounded-md text-center">
+            <h3 class="text-lg font-semibold">Metode Pembayaran yang Paling Digunakan</h3>
+            <canvas id="chartMetodePembayaran"></canvas>
+        </div>
     </div>
 </div>
 
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    fetch("{% url 'statistik_penghuni' %}")
+let chartPemesanan, chartPembayaran, chartMetodePembayaran; // Track chart instances
+
+function fetchData(url) {
+    fetch(url)
         .then(response => response.json())
         .then(data => {
+            // ✅ Update only the numerical stats (penghuni)
             document.getElementById("total-penghuni-aktif").innerText = data.total_penghuni_aktif + " orang";
             document.getElementById("total-penghuni-baru").innerText = data.total_penghuni_baru + " orang";
             document.getElementById("total-penghuni-keluar").innerText = data.total_penghuni_keluar + " orang";
+
+            // ✅ Destroy existing charts before updating them
+            if (chartPemesanan) chartPemesanan.destroy();
+            if (chartPembayaran) chartPembayaran.destroy();
+            if (chartMetodePembayaran) chartMetodePembayaran.destroy();
+
+            // ✅ Statistik Pemesanan Kamar (Donut Chart)
+            chartPemesanan = new Chart(document.getElementById("chartPemesanan"), {
+                type: 'doughnut',
+                data: {
+                    labels: ["Kamar Terisi", "Kamar Kosong"],
+                    datasets: [{
+                        data: [data.pemesanan_kamar.terisi, data.pemesanan_kamar.kosong],
+                        backgroundColor: ["#EBA83A", "#FFD699"],
+                    }]
+                }
+            });
+
+            // ✅ Statistik Pembayaran (Donut Chart)
+            chartPembayaran = new Chart(document.getElementById("chartPembayaran"), {
+                type: 'doughnut',
+                data: {
+                    labels: ["Lunas", "Belum Lunas"],
+                    datasets: [{
+                        data: [data.pembayaran.lunas, data.pembayaran.belum_lunas],
+                        backgroundColor: ["#EBA83A", "#FFD699"],
+                    }]
+                }
+            });
+
+            // ✅ Statistik Metode Pembayaran (Donut Chart)
+            chartMetodePembayaran = new Chart(document.getElementById("chartMetodePembayaran"), {
+                type: 'doughnut',
+                data: {
+                    labels: ["Bank Transfer", "E-Wallet"],
+                    datasets: [{
+                        data: [data.metode_pembayaran.bank_transfer, data.metode_pembayaran.e_wallet],
+                        backgroundColor: ["#EBA83A", "#FFD699"],
+                    }]
+                }
+            });
         })
         .catch(error => console.error("Error fetching data:", error));
+}
+
+// ✅ Filter Function to Fetch Data Based on Selected Tipe Kamar
+document.getElementById("btn-filter").addEventListener("click", function () {
+    const tipeKamar = document.getElementById("filter-kamar").value;
+    let url = "{% url 'statistik_penghuni' %}";
+
+    if (tipeKamar) {
+        url += `?tipe_kamar=${tipeKamar}`;
+    }
+
+    fetchData(url); // ✅ Fetch data based on filter
+});
+
+// ✅ Auto-fetch data when page loads
+fetchData("{% url 'statistik_penghuni' %}");
+
+
 </script>
 
 {% endblock %}

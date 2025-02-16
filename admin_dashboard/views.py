@@ -1,9 +1,11 @@
+from textwrap import indent
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.paginator import Paginator
-from main.models import CustomUser, Pemesanan
-from dashboard.models import Transaksi, StatusValidasi, KritikSaran
+from main.models import CustomUser, Pemesanan, TipeKamar, Kamar
+from dashboard.models import Transaksi, StatusValidasi, KritikSaran, StatusPembayaran
 from django.http import JsonResponse
 from django.db.models import Count, Sum
 from django.http import JsonResponse
@@ -214,32 +216,58 @@ def kelola_kritik_saran(request):
     return render(request, "admin_dashboard/kritik_saran.html", {"kritik": kritik})
 
 
-# Fungsi untuk menampilkan halaman Statistik
 @login_required
 @user_passes_test(is_admin)
 def statistik_page(request):
-    return render(request, "admin_dashboard/statistik.html")
+    tipe_kamar_list = TipeKamar.objects.all()
+    return render(request, "admin_dashboard/statistik.html", {"tipe_kamar_list": tipe_kamar_list})
 
 
 @login_required
 @user_passes_test(is_admin)
 def statistik_penghuni(request):
-    # Hitung total penghuni aktif (yang belum memiliki tanggal_keluar)
-    total_penghuni_aktif = CustomUser.objects.filter(is_penghuni=True, tanggal_keluar__isnull=True).count()
+    from django.db.models import Q
 
-    # Hitung total penghuni baru bulan ini
+    tipe_kamar_id = request.GET.get("tipe_kamar")  # Retrieve filter parameter
+
+    # ✅ Apply filtering if a specific TipeKamar is selected
+    penghuni_query = CustomUser.objects.filter(is_penghuni=True)
+    if tipe_kamar_id:
+        penghuni_query = penghuni_query.filter(
+            pemesanan__kamar__tipe_kamar_id=tipe_kamar_id
+        )
+
+    total_penghuni_aktif = penghuni_query.count()
+
     bulan_ini = now().month
     tahun_ini = now().year
-    total_penghuni_baru = CustomUser.objects.filter(tanggal_bergabung__month=bulan_ini, tanggal_bergabung__year=tahun_ini).count()
 
-    # Hitung total penghuni keluar bulan ini
-    total_penghuni_keluar = CustomUser.objects.filter(tanggal_keluar__month=bulan_ini, tanggal_keluar__year=tahun_ini).count()
+    total_penghuni_baru = penghuni_query.filter(
+        tanggal_bergabung__month=bulan_ini, tanggal_bergabung__year=tahun_ini
+    ).count()
+
+    total_penghuni_keluar = penghuni_query.filter(
+        tanggal_keluar__month=bulan_ini, tanggal_keluar__year=tahun_ini
+    ).count()
+
+    # ✅ Do not filter donut chart data
+    total_kamar = TipeKamar.objects.aggregate(total=Sum("jumlah_kamar"))["total"] or 0
+    kamar_terisi = Kamar.objects.filter(penghuni_sekarang__gt=0).count()
+    kamar_kosong = max(0, total_kamar - kamar_terisi)
+
+    lunas = Transaksi.objects.filter(status=StatusPembayaran.LUNAS).count()
+    belum_lunas = Transaksi.objects.filter(status=StatusPembayaran.BELUM_LUNAS).count()
+
+    metode_transfer = Transaksi.objects.filter(metode_pembayaran="bank_transfer").count()
+    metode_ewallet = Transaksi.objects.filter(metode_pembayaran="e_wallet").count()
 
     data = {
         "total_penghuni_aktif": total_penghuni_aktif,
         "total_penghuni_baru": total_penghuni_baru,
-        "total_penghuni_keluar": total_penghuni_keluar
+        "total_penghuni_keluar": total_penghuni_keluar,
+        "pemesanan_kamar": {"terisi": kamar_terisi, "kosong": kamar_kosong},
+        "pembayaran": {"lunas": lunas, "belum_lunas": belum_lunas},
+        "metode_pembayaran": {"bank_transfer": metode_transfer, "e_wallet": metode_ewallet},
     }
 
     return JsonResponse(data)
-

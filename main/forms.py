@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Pemesanan, Kamar
 
 class RegistrationForm(UserCreationForm):
     username = forms.CharField(
@@ -52,8 +52,6 @@ class RegistrationForm(UserCreationForm):
         fields = ["username", "first_name", "email", "phone_number", "password1", "password2"]
 
 
-from .models import Pemesanan, TipeKamar
-
 class PemesananForm(forms.ModelForm):
     tipe_sewa = forms.ChoiceField(
         label="Tipe Sewa",
@@ -74,14 +72,13 @@ class PemesananForm(forms.ModelForm):
 
     class Meta:
         model = Pemesanan
-        fields = ['nama', 'kontak', 'tipe_kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']
+        fields = ['nama', 'kontak', 'kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']  # ✅ FIXED: Changed 'tipe_kamar' to 'kamar'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if 'tipe_kamar' in self.data:
+        if 'kamar' in self.data:  # ✅ FIXED: Changed 'tipe_kamar' to 'kamar'
             try:
-                tipe_kamar = TipeKamar.objects.get(id=int(self.data.get('tipe_kamar')))
-                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, tipe_kamar.max_penghuni + 1)]
-            except (ValueError, TypeError, TipeKamar.DoesNotExist):
+                kamar = Kamar.objects.get(id=int(self.data.get('kamar')))  # ✅ FIXED: Query 'Kamar' instead of 'TipeKamar'
+                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, kamar.kapasitas + 1)]  # ✅ FIXED: Use 'kapasitas'
+            except (ValueError, TypeError, Kamar.DoesNotExist):
                 pass
-
