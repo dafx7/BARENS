@@ -25,7 +25,7 @@ def kelola_penghuni(request):
     """
     query = request.GET.get("search", "").strip()
 
-    # Jika ada pencarian, filter berdasarkan nama lengkap atau email
+    # Filter penghuni berdasarkan pencarian
     if query:
         penghuni_list = CustomUser.objects.filter(
             first_name__icontains=query
@@ -43,8 +43,9 @@ def kelola_penghuni(request):
     return render(request, "admin_dashboard/pengelolaan_akun.html", {
         "penghuni": penghuni,
         "paginator": paginator,
-        "query": query,  # Kirim kembali query ke template
+        "query": query,
     })
+
 
 
 @login_required
@@ -89,24 +90,57 @@ def tambah_penghuni(request):
 def edit_penghuni(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
 
+    # Ambil daftar semua kamar yang tersedia
+    kamar_list = Kamar.objects.all()
+
+    # Cek apakah user sudah memiliki pemesanan aktif
+    pemesanan_aktif = user.pemesanan.filter(status="diterima").first()
+    kamar_terpilih = pemesanan_aktif.kamar.id if pemesanan_aktif else None
+
     if request.method == "POST":
         user.username = (request.POST.get("nama") or "").strip()
         user.email = (request.POST.get("email") or "").strip()
         user.phone_number = (request.POST.get("phone_number") or "").strip()
-        user.is_penghuni = request.POST.get("is_penghuni") == "on"  # Handle checkbox safely
+        user.is_penghuni = request.POST.get("is_penghuni") == "on"
 
         if not user.username or not user.email or not user.phone_number:
-            messages.error(request, "All fields are required!")
+            messages.error(request, "Semua field wajib diisi!")
             return redirect("edit_penghuni", user_id=user.id)
 
-        user.save()
+        # Update kamar penghuni jika ada perubahan
+        nomor_kamar_baru = request.POST.get("nomor_kamar")
+        if nomor_kamar_baru:
+            kamar_baru = get_object_or_404(Kamar, id=nomor_kamar_baru)
 
-        # Success Message
+            # Jika ada pemesanan sebelumnya, update pemesanan
+            if pemesanan_aktif:
+                pemesanan_aktif.kamar = kamar_baru
+                pemesanan_aktif.save()
+            else:
+                # Buat pemesanan baru jika sebelumnya tidak ada
+                Pemesanan.objects.create(
+                    user=user,
+                    kamar=kamar_baru,
+                    status="diterima",
+                    nama=user.username,
+                    kontak=user.phone_number,
+                    tipe_sewa="bulanan",
+                    durasi=1,  # Default 1 bulan
+                    jumlah_penghuni=1,
+                    tanggal_mulai=now().date(),
+                )
+
+        user.save()
         messages.success(request, "Data penghuni berhasil diperbarui!")
 
-        return redirect("kelola_penghuni")  # Redirect back to the list
+        return redirect("kelola_penghuni")
 
-    return render(request, "admin_dashboard/edit_penghuni.html", {"user": user})
+    return render(request, "admin_dashboard/edit_penghuni.html", {
+        "user": user,
+        "kamar_list": kamar_list,
+        "kamar_terpilih": kamar_terpilih
+    })
+
 
 
 @login_required

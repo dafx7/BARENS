@@ -108,6 +108,14 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email", "phone_number", "first_name"]
 
+
+    @property
+    def nomor_kamar(self):
+        """Mengembalikan nomor kamar dari pemesanan aktif (status diterima)."""
+        pemesanan_aktif = self.pemesanan.filter(status="diterima").first()
+        return pemesanan_aktif.kamar.nomor_kamar if pemesanan_aktif else "Belum Menempati Kamar"
+
+
     def save(self, *args, **kwargs):
         """Auto-set tanggal_keluar when is_penghuni changes to False."""
         if not self.is_penghuni:

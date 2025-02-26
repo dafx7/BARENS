@@ -58,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'barens.urls'
@@ -87,10 +89,21 @@ WSGI_APPLICATION = 'barens.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        # MySQL settings use the name of the db not the path
+        'NAME': 'baratres_mydb_barens',
+        # Name of MySQL user in CPanel
+        'USER': 'baratres_barens',
+        # MySQL password
+        'PASSWORD': 'Daffa210978!',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

@@ -23,6 +23,19 @@
                 <input type="checkbox" name="is_penghuni" {% if user.is_penghuni %}checked{% endif %}>
             </div>
 
+            <!-- Dropdown Pilihan Nomor Kamar -->
+            <div class="mb-3">
+                <label class="block">Nomor Kamar</label>
+                <select name="nomor_kamar" class="w-full px-3 py-2 border rounded-lg">
+                    <option value="">Pilih Kamar</option>
+                    {% for kamar in kamar_list %}
+                        <option value="{{ kamar.id }}" {% if kamar.id == kamar_terpilih %}selected{% endif %}>
+                            {{ kamar.nomor_kamar }} (Kapasitas: {{ kamar.kapasitas }} | Penghuni: {{ kamar.penghuni_sekarang }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <div class="flex justify-end gap-2">
                 <a href="{% url 'kelola_penghuni' %}" class="px-4 py-2 bg-gray-400 text-white rounded-lg">Batal</a>
                 <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg">Simpan</button>

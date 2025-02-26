@@ -47,6 +47,7 @@
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Nama Lengkap</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Email</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">No Handphone</th>
+                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Nomor Kamar</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Status Penghuni</th>
                         <th class="px-4 py-2 border border-gray-300 text-center text-gray-700 font-semibold">Aksi</th>
                     </tr>
@@ -58,6 +59,9 @@
                         <td class="px-4 py-2 border border-gray-300">{{ user.first_name }}</td>
                         <td class="px-4 py-2 border border-gray-300">{{ user.email }}</td>
                         <td class="px-4 py-2 border border-gray-300">{{ user.phone_number }}</td>
+                        <td class="px-4 py-2 border border-gray-300 text-center">
+                            {{ user.nomor_kamar }}
+                        </td>
                         <td class="px-4 py-2 border border-gray-300 font-bold text-center
                                    {% if user.is_penghuni %} text-green-600 {% else %} text-red-600 {% endif %}">
                             {% if user.is_penghuni %} ✔️ Ya {% else %} ❌ Tidak {% endif %}
@@ -74,12 +78,13 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" class="px-4 py-2 border border-gray-300 text-center text-gray-500">
+                        <td colspan="7" class="px-4 py-2 border border-gray-300 text-center text-gray-500">
                             Tidak ada penghuni yang ditemukan.
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
+
             </table>
         </div>
 

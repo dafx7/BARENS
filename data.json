@@ -1,0 +1,2352 @@
+[
+    {
+        "model": "admin.logentry",
+        "pk": 1,
+        "fields": {
+            "action_time": "2025-02-16T18:08:33.343Z",
+            "user": 19,
+            "content_type": 9,
+            "object_id": "7",
+            "object_repr": "Pemesanan test tester untuk Kamar SUITE-1 (Suite Triple)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 2,
+        "fields": {
+            "action_time": "2025-02-18T14:21:33.897Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "1",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 3,
+        "fields": {
+            "action_time": "2025-02-18T14:22:23.341Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "2",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 4,
+        "fields": {
+            "action_time": "2025-02-18T14:23:02.286Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "3",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 5,
+        "fields": {
+            "action_time": "2025-02-18T14:23:28.549Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "4",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 6,
+        "fields": {
+            "action_time": "2025-02-18T14:24:29.106Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "5",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 7,
+        "fields": {
+            "action_time": "2025-02-18T14:24:51.655Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "5",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 8,
+        "fields": {
+            "action_time": "2025-02-18T14:24:51.655Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "4",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 9,
+        "fields": {
+            "action_time": "2025-02-18T14:24:51.655Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "3",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 10,
+        "fields": {
+            "action_time": "2025-02-18T14:24:51.655Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "2",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 11,
+        "fields": {
+            "action_time": "2025-02-18T14:24:51.655Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "1",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 12,
+        "fields": {
+            "action_time": "2025-02-18T14:25:18.770Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "6",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 13,
+        "fields": {
+            "action_time": "2025-02-18T14:25:25.507Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "7",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 14,
+        "fields": {
+            "action_time": "2025-02-18T14:25:31.974Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "8",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 15,
+        "fields": {
+            "action_time": "2025-02-18T14:25:39.996Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "9",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 16,
+        "fields": {
+            "action_time": "2025-02-18T14:25:48.606Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "10",
+            "object_repr": "Gambar untuk Suite Triple",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 17,
+        "fields": {
+            "action_time": "2025-02-18T14:28:32.135Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "11",
+            "object_repr": "Gambar untuk Standard A",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 18,
+        "fields": {
+            "action_time": "2025-02-18T14:28:36.907Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "12",
+            "object_repr": "Gambar untuk Standard A",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 19,
+        "fields": {
+            "action_time": "2025-02-18T14:28:43.791Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "13",
+            "object_repr": "Gambar untuk Standard A",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 20,
+        "fields": {
+            "action_time": "2025-02-18T14:30:27.180Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "14",
+            "object_repr": "Gambar untuk Standard B",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 21,
+        "fields": {
+            "action_time": "2025-02-18T14:30:37.112Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "15",
+            "object_repr": "Gambar untuk Standard B",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 22,
+        "fields": {
+            "action_time": "2025-02-18T14:30:44.837Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "16",
+            "object_repr": "Gambar untuk Standard B",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 23,
+        "fields": {
+            "action_time": "2025-02-18T14:30:59.592Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "17",
+            "object_repr": "Gambar untuk Standard B",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 24,
+        "fields": {
+            "action_time": "2025-02-18T14:31:05.568Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "18",
+            "object_repr": "Gambar untuk Standard B",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 25,
+        "fields": {
+            "action_time": "2025-02-18T14:40:16.625Z",
+            "user": 19,
+            "content_type": 7,
+            "object_id": "10",
+            "object_repr": "Standard Double",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Nama\", \"Deskripsi\", \"Fasilitas\", \"Harga per bulan 1 orang\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 26,
+        "fields": {
+            "action_time": "2025-02-18T14:49:05.669Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "19",
+            "object_repr": "Gambar untuk Standard Double",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 27,
+        "fields": {
+            "action_time": "2025-02-18T14:49:28.865Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "20",
+            "object_repr": "Gambar untuk Standard Double",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 28,
+        "fields": {
+            "action_time": "2025-02-18T14:49:32.370Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "21",
+            "object_repr": "Gambar untuk Standard Double",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 29,
+        "fields": {
+            "action_time": "2025-02-18T14:49:36.461Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "22",
+            "object_repr": "Gambar untuk Standard Double",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 30,
+        "fields": {
+            "action_time": "2025-02-18T14:49:39.898Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "23",
+            "object_repr": "Gambar untuk Standard Double",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 31,
+        "fields": {
+            "action_time": "2025-02-18T14:50:34.411Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "24",
+            "object_repr": "Gambar untuk Standard Twin",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 32,
+        "fields": {
+            "action_time": "2025-02-18T14:52:33.719Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "25",
+            "object_repr": "Gambar untuk Standard Twin",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 33,
+        "fields": {
+            "action_time": "2025-02-18T14:52:37.487Z",
+            "user": 19,
+            "content_type": 10,
+            "object_id": "26",
+            "object_repr": "Gambar untuk Standard Twin",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 1,
+        "fields": {
+            "name": "Can add log entry",
+            "content_type": 1,
+            "codename": "add_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 2,
+        "fields": {
+            "name": "Can change log entry",
+            "content_type": 1,
+            "codename": "change_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 3,
+        "fields": {
+            "name": "Can delete log entry",
+            "content_type": 1,
+            "codename": "delete_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 4,
+        "fields": {
+            "name": "Can view log entry",
+            "content_type": 1,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 2,
+            "codename": "add_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 2,
+            "codename": "change_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 2,
+            "codename": "delete_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 2,
+            "codename": "view_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Can add group",
+            "content_type": 3,
+            "codename": "add_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Can change group",
+            "content_type": 3,
+            "codename": "change_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Can delete group",
+            "content_type": 3,
+            "codename": "delete_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Can view group",
+            "content_type": 3,
+            "codename": "view_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Can add content type",
+            "content_type": 4,
+            "codename": "add_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Can change content type",
+            "content_type": 4,
+            "codename": "change_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Can delete content type",
+            "content_type": 4,
+            "codename": "delete_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Can view content type",
+            "content_type": 4,
+            "codename": "view_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Can add session",
+            "content_type": 5,
+            "codename": "add_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Can change session",
+            "content_type": 5,
+            "codename": "change_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Can delete session",
+            "content_type": 5,
+            "codename": "delete_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Can view session",
+            "content_type": 5,
+            "codename": "view_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Can add kamar",
+            "content_type": 6,
+            "codename": "add_kamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Can change kamar",
+            "content_type": 6,
+            "codename": "change_kamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Can delete kamar",
+            "content_type": 6,
+            "codename": "delete_kamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view kamar",
+            "content_type": 6,
+            "codename": "view_kamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 25,
+        "fields": {
+            "name": "Can add tipe kamar",
+            "content_type": 7,
+            "codename": "add_tipekamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 26,
+        "fields": {
+            "name": "Can change tipe kamar",
+            "content_type": 7,
+            "codename": "change_tipekamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 27,
+        "fields": {
+            "name": "Can delete tipe kamar",
+            "content_type": 7,
+            "codename": "delete_tipekamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 28,
+        "fields": {
+            "name": "Can view tipe kamar",
+            "content_type": 7,
+            "codename": "view_tipekamar"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 29,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 8,
+            "codename": "add_customuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 30,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 8,
+            "codename": "change_customuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 31,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 8,
+            "codename": "delete_customuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 32,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 8,
+            "codename": "view_customuser"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Can add pemesanan",
+            "content_type": 9,
+            "codename": "add_pemesanan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Can change pemesanan",
+            "content_type": 9,
+            "codename": "change_pemesanan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Can delete pemesanan",
+            "content_type": 9,
+            "codename": "delete_pemesanan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Can view pemesanan",
+            "content_type": 9,
+            "codename": "view_pemesanan"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Can add kamar image",
+            "content_type": 10,
+            "codename": "add_kamarimage"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 38,
+        "fields": {
+            "name": "Can change kamar image",
+            "content_type": 10,
+            "codename": "change_kamarimage"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 39,
+        "fields": {
+            "name": "Can delete kamar image",
+            "content_type": 10,
+            "codename": "delete_kamarimage"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 40,
+        "fields": {
+            "name": "Can view kamar image",
+            "content_type": 10,
+            "codename": "view_kamarimage"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 41,
+        "fields": {
+            "name": "Can add kritik saran",
+            "content_type": 11,
+            "codename": "add_kritiksaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 42,
+        "fields": {
+            "name": "Can change kritik saran",
+            "content_type": 11,
+            "codename": "change_kritiksaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 43,
+        "fields": {
+            "name": "Can delete kritik saran",
+            "content_type": 11,
+            "codename": "delete_kritiksaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 44,
+        "fields": {
+            "name": "Can view kritik saran",
+            "content_type": 11,
+            "codename": "view_kritiksaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 45,
+        "fields": {
+            "name": "Can add pembayaran",
+            "content_type": 12,
+            "codename": "add_pembayaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 46,
+        "fields": {
+            "name": "Can change pembayaran",
+            "content_type": 12,
+            "codename": "change_pembayaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 47,
+        "fields": {
+            "name": "Can delete pembayaran",
+            "content_type": 12,
+            "codename": "delete_pembayaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 48,
+        "fields": {
+            "name": "Can view pembayaran",
+            "content_type": 12,
+            "codename": "view_pembayaran"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 49,
+        "fields": {
+            "name": "Can add transaksi",
+            "content_type": 13,
+            "codename": "add_transaksi"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 50,
+        "fields": {
+            "name": "Can change transaksi",
+            "content_type": 13,
+            "codename": "change_transaksi"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 51,
+        "fields": {
+            "name": "Can delete transaksi",
+            "content_type": 13,
+            "codename": "delete_transaksi"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 52,
+        "fields": {
+            "name": "Can view transaksi",
+            "content_type": 13,
+            "codename": "view_transaksi"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 1,
+        "fields": {
+            "app_label": "admin",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 2,
+        "fields": {
+            "app_label": "auth",
+            "model": "permission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 3,
+        "fields": {
+            "app_label": "auth",
+            "model": "group"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 4,
+        "fields": {
+            "app_label": "contenttypes",
+            "model": "contenttype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 5,
+        "fields": {
+            "app_label": "sessions",
+            "model": "session"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 6,
+        "fields": {
+            "app_label": "main",
+            "model": "kamar"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 7,
+        "fields": {
+            "app_label": "main",
+            "model": "tipekamar"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 8,
+        "fields": {
+            "app_label": "main",
+            "model": "customuser"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 9,
+        "fields": {
+            "app_label": "main",
+            "model": "pemesanan"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 10,
+        "fields": {
+            "app_label": "main",
+            "model": "kamarimage"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 11,
+        "fields": {
+            "app_label": "dashboard",
+            "model": "kritiksaran"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 12,
+        "fields": {
+            "app_label": "dashboard",
+            "model": "pembayaran"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 13,
+        "fields": {
+            "app_label": "dashboard",
+            "model": "transaksi"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "9x57w8lmrvm375ywadusj9m1o1l1usvj",
+        "fields": {
+            "session_data": ".eJxVjDsOwjAQBe_iGlmOWfyhpM8ZrPV6FwdQIsVJhbg7spQC2jcz760S7ltNe-M1TUVd1RDV6XfMSE-eOykPnO-LpmXe1inrruiDNj0uhV-3w_07qNhqr8UHInS-GDQygLBzUIgiA6AlAI7BuGLPF8k-W4FoxAUM3iKwCaI-Xy8QOKo:1tjc0F:2qY2wkoJMBWgJfynlV2Ci7NitH-G-R56ST2hMBFgKgk",
+            "expire_date": "2025-03-02T10:35:59.528Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "nf16cz3xffttamky78mt08xynvlec95v",
+        "fields": {
+            "session_data": ".eJxVjEEOwiAQRe_C2pABZBCX7j0DYZhRqoYmpV0Z726bdKHb_977b5XyMte0dJnSwOqsLKjD70i5PKVthB-53UddxjZPA-lN0Tvt-jqyvC67-3dQc69r7UGAwIcTI4KL4rMjCPloxBN6EoQAziGGEgOyuQk4a1cnRh8cG1KfL-ACNwk:1tjieQ:l4MtXbZgbCBwDIAibAq4YYOBkVUaiJKv2e468UqoJN0",
+            "expire_date": "2025-03-02T17:41:54.918Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "y5cqxecf93gjvelg611n6n6hu9nvivbg",
+        "fields": {
+            "session_data": ".eJxVjDsOwjAQBe_iGln-b5aSnjNYu_GGBFAsxUmFuDtESgHtm5n3Upm2dcxbkyVPRZ2VVaffjal_yLyDcqf5VnVf53WZWO-KPmjT11rkeTncv4OR2vitI7kOg4PQ-SAYLSfp0eFAEMl4SSEhexYwDL5jKwaidwXIIKTgcVDvD7soNss:1tjEKh:ewKpQ7zF9sE9EX98oerYiWlu2pkUNom8wNfHYn2FpYQ",
+            "expire_date": "2025-03-01T09:19:31.561Z"
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 9,
+        "fields": {
+            "nama": "Suite Triple",
+            "deskripsi": "2 bed (6 kaki dan 3 kaki), toilet duduk, lemari rak, AC, shower+water heater, kamar non-token, TV, meja dan kursi belajar",
+            "fasilitas": "2 bed (6 kaki dan 3 kaki), toilet duduk, lemari rak, AC, shower+water heater, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "2500000.00",
+            "harga_per_bulan_2_orang": "2700000.00",
+            "harga_per_bulan_3_orang": "2900000.00",
+            "harga_non_token_1_orang": null,
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 3,
+            "jumlah_kamar": 3
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 10,
+        "fields": {
+            "nama": "Standard Double",
+            "deskripsi": "1 bed (6 kaki), toilet duduk, lemari rak, AC, shower+water heater, kamar token, TV, meja dan kursi belajar",
+            "fasilitas": "1 bed (6 kaki), toilet duduk, lemari rak, AC, shower+water heater, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "1500000.00",
+            "harga_per_bulan_2_orang": null,
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": null,
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 1,
+            "jumlah_kamar": 18
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 11,
+        "fields": {
+            "nama": "Suite Double",
+            "deskripsi": "1 bed (6 kaki), toilet duduk, shower+water heater, lemari rak, AC, kamar token dan non-token, TV, meja dan kursi belajar",
+            "fasilitas": "1 bed (6 kaki), toilet duduk, shower+water heater, lemari rak, AC, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "1800000.00",
+            "harga_per_bulan_2_orang": "2000000.00",
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": "2000000.00",
+            "harga_non_token_2_orang": "2200000.00",
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 2,
+            "jumlah_kamar": 2
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 12,
+        "fields": {
+            "nama": "Standard Twin",
+            "deskripsi": "2 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, kamar token, TV, meja dan kursi belajar",
+            "fasilitas": "2 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "1700000.00",
+            "harga_per_bulan_2_orang": "1900000.00",
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": null,
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 2,
+            "jumlah_kamar": 1
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 13,
+        "fields": {
+            "nama": "Standard A",
+            "deskripsi": "1 bed (3 kaki), lemari kayu, toilet jongkok, AC, ember+gayung, kamar token, TV, meja dan kursi belajar",
+            "fasilitas": "1 bed (3 kaki), lemari kayu, toilet jongkok, AC, ember+gayung, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "1300000.00",
+            "harga_per_bulan_2_orang": null,
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": null,
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 1,
+            "jumlah_kamar": 11
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 14,
+        "fields": {
+            "nama": "Standard B",
+            "deskripsi": "1 bed (2,5 kaki), kipas angin, lemari kayu, meja belajar, kamar token dan non-token",
+            "fasilitas": "1 bed (2,5 kaki), kipas angin, lemari kayu, meja belajar, kamar token dan non-token",
+            "harga_per_bulan_1_orang": "800000.00",
+            "harga_per_bulan_2_orang": null,
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": "900000.00",
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 1,
+            "jumlah_kamar": 28
+        }
+    },
+    {
+        "model": "main.tipekamar",
+        "pk": 15,
+        "fields": {
+            "nama": "Standard Single",
+            "deskripsi": "1 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, kamar token, TV, meja dan kursi belajar",
+            "fasilitas": "1 bed (3 kaki), toilet duduk, lemari rak, AC, shower+water heater, TV, meja dan kursi belajar",
+            "harga_per_bulan_1_orang": "1400000.00",
+            "harga_per_bulan_2_orang": null,
+            "harga_per_bulan_3_orang": null,
+            "harga_non_token_1_orang": null,
+            "harga_non_token_2_orang": null,
+            "harga_non_token_3_orang": null,
+            "max_penghuni": 1,
+            "jumlah_kamar": 10
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 213,
+        "fields": {
+            "tipe_kamar": 9,
+            "nomor_kamar": "SUITE-1",
+            "kapasitas": 3,
+            "penghuni_sekarang": 3
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 214,
+        "fields": {
+            "tipe_kamar": 9,
+            "nomor_kamar": "SUITE-2",
+            "kapasitas": 3,
+            "penghuni_sekarang": 1
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 215,
+        "fields": {
+            "tipe_kamar": 9,
+            "nomor_kamar": "SUITE-3",
+            "kapasitas": 3,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 216,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-1",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 217,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-2",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 218,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-3",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 219,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-4",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 220,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-5",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 221,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-6",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 222,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-7",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 223,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-8",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 224,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-9",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 225,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-10",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 226,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-11",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 227,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-12",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 228,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-13",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 229,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-14",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 230,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-15",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 231,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-16",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 232,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-17",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 233,
+        "fields": {
+            "tipe_kamar": 10,
+            "nomor_kamar": "STAND-18",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 234,
+        "fields": {
+            "tipe_kamar": 11,
+            "nomor_kamar": "SUITE-4",
+            "kapasitas": 2,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 235,
+        "fields": {
+            "tipe_kamar": 11,
+            "nomor_kamar": "SUITE-5",
+            "kapasitas": 2,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 236,
+        "fields": {
+            "tipe_kamar": 12,
+            "nomor_kamar": "STAND-19",
+            "kapasitas": 2,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 237,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-20",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 238,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-21",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 239,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-22",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 240,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-23",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 241,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-24",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 242,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-25",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 243,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-26",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 244,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-27",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 245,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-28",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 246,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-29",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 247,
+        "fields": {
+            "tipe_kamar": 13,
+            "nomor_kamar": "STAND-30",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 248,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-31",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 249,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-32",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 250,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-33",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 251,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-34",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 252,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-35",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 253,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-36",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 254,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-37",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 255,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-38",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 256,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-39",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 257,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-40",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 258,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-41",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 259,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-42",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 260,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-43",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 261,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-44",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 262,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-45",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 263,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-46",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 264,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-47",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 265,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-48",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 266,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-49",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 267,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-50",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 268,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-51",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 269,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-52",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 270,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-53",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 271,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-54",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 272,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-55",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 273,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-56",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 274,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-57",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 275,
+        "fields": {
+            "tipe_kamar": 14,
+            "nomor_kamar": "STAND-58",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 276,
+        "fields": {
+            "tipe_kamar": 15,
+            "nomor_kamar": "STD-001",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamar",
+        "pk": 277,
+        "fields": {
+            "tipe_kamar": 15,
+            "nomor_kamar": "STD-002",
+            "kapasitas": 1,
+            "penghuni_sekarang": 0
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 6,
+        "fields": {
+            "tipe_kamar": 9,
+            "image": "kamar/IMG_2230_wmzPQmi.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 7,
+        "fields": {
+            "tipe_kamar": 9,
+            "image": "kamar/IMG_2233_KnFPeIS.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 8,
+        "fields": {
+            "tipe_kamar": 9,
+            "image": "kamar/IMG_2234_mtsFB1p.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 9,
+        "fields": {
+            "tipe_kamar": 9,
+            "image": "kamar/IMG_2228_nnyqswa.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 10,
+        "fields": {
+            "tipe_kamar": 9,
+            "image": "kamar/IMG_2229_CezJ4Sr.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 11,
+        "fields": {
+            "tipe_kamar": 13,
+            "image": "kamar/IMG_2243_qljukWi.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 12,
+        "fields": {
+            "tipe_kamar": 13,
+            "image": "kamar/IMG_2242_pfZ7CTm.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 13,
+        "fields": {
+            "tipe_kamar": 13,
+            "image": "kamar/IMG_2244_5APnbdg.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 14,
+        "fields": {
+            "tipe_kamar": 14,
+            "image": "kamar/IMG_2246_YokPpJZ.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 15,
+        "fields": {
+            "tipe_kamar": 14,
+            "image": "kamar/IMG_2247_kbzqTUW.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 16,
+        "fields": {
+            "tipe_kamar": 14,
+            "image": "kamar/IMG_2248_q7f1Pig.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 17,
+        "fields": {
+            "tipe_kamar": 14,
+            "image": "kamar/IMG_2249_gJBEEjj.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 18,
+        "fields": {
+            "tipe_kamar": 14,
+            "image": "kamar/IMG_2245_OYfx957.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 19,
+        "fields": {
+            "tipe_kamar": 10,
+            "image": "kamar/IMG_2238_edPMnR1.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 20,
+        "fields": {
+            "tipe_kamar": 10,
+            "image": "kamar/IMG_2239_l4ZcpxZ.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 21,
+        "fields": {
+            "tipe_kamar": 10,
+            "image": "kamar/IMG_2241_7WILFJn.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 22,
+        "fields": {
+            "tipe_kamar": 10,
+            "image": "kamar/IMG_2236_uQBR67J.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 23,
+        "fields": {
+            "tipe_kamar": 10,
+            "image": "kamar/IMG_2237_N0JERN7.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 24,
+        "fields": {
+            "tipe_kamar": 12,
+            "image": "kamar/90ef4afa-7bed-446e-acbf-75d351dab758_WPIgpiH.jpg"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 25,
+        "fields": {
+            "tipe_kamar": 12,
+            "image": "kamar/IMG_2236_1.png"
+        }
+    },
+    {
+        "model": "main.kamarimage",
+        "pk": 26,
+        "fields": {
+            "tipe_kamar": 12,
+            "image": "kamar/IMG_2237_1.png"
+        }
+    },
+    {
+        "model": "main.pemesanan",
+        "pk": 5,
+        "fields": {
+            "nama": "Alice",
+            "kontak": "user1@example.com",
+            "kamar": 213,
+            "tipe_sewa": "bulanan",
+            "durasi": 1,
+            "jumlah_penghuni": 1,
+            "tanggal_mulai": "2025-02-16",
+            "tanggal_pemesanan": "2025-02-16T10:35:09.475Z",
+            "status": "diterima",
+            "user": 16
+        }
+    },
+    {
+        "model": "main.pemesanan",
+        "pk": 7,
+        "fields": {
+            "nama": "test tester",
+            "kontak": "081995383584",
+            "kamar": 213,
+            "tipe_sewa": "tahunan",
+            "durasi": 1,
+            "jumlah_penghuni": 3,
+            "tanggal_mulai": "2025-02-18",
+            "tanggal_pemesanan": "2025-02-16T17:48:53Z",
+            "status": "diterima",
+            "user": 20
+        }
+    },
+    {
+        "model": "main.customuser",
+        "pk": 16,
+        "fields": {
+            "password": "",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "user1",
+            "first_name": "Alice",
+            "last_name": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-02-16T10:35:08.966Z",
+            "email": "user1@example.com",
+            "phone_number": "None",
+            "is_penghuni": true,
+            "tanggal_bergabung": null,
+            "tanggal_keluar": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "main.customuser",
+        "pk": 18,
+        "fields": {
+            "password": "",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-02-16T10:35:09.577Z",
+            "email": "",
+            "phone_number": null,
+            "is_penghuni": false,
+            "tanggal_bergabung": null,
+            "tanggal_keluar": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "main.customuser",
+        "pk": 19,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$Ld0UNP9nqjUknZ42CowJVE$DcVEUeSsYTrX47tZXzqn401pxsLmfI0JUKIu4rmGI9s=",
+            "last_login": "2025-02-16T10:35:59.511Z",
+            "is_superuser": true,
+            "username": "dafnex",
+            "first_name": "dafnex",
+            "last_name": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-02-16T10:35:48.930Z",
+            "email": "dafnex@gmail.com",
+            "phone_number": "0812313123",
+            "is_penghuni": false,
+            "tanggal_bergabung": null,
+            "tanggal_keluar": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "main.customuser",
+        "pk": 20,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$GOTRYNEP9VUFT1ss01izAg$7+tFzyd8j8ldE1mSY/Jho+pOPmcNVI9y4F6v4kOvzco=",
+            "last_login": "2025-02-16T17:41:54.910Z",
+            "is_superuser": false,
+            "username": "tester",
+            "first_name": "tester tester",
+            "last_name": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-02-16T17:41:54.332Z",
+            "email": "tester@gmail.com",
+            "phone_number": "081995383584",
+            "is_penghuni": true,
+            "tanggal_bergabung": "2025-02-16",
+            "tanggal_keluar": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "main.customuser",
+        "pk": 21,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$JoA7BzI89Klu8yefq0nh0N$DMplpnYmHaWcbLxVUCe0aez92hyz9PAB6qXwvjznNpc=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "nicho",
+            "first_name": "nicho",
+            "last_name": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-02-18T14:18:34.966Z",
+            "email": "nicho@gmail.com",
+            "phone_number": "082139183891",
+            "is_penghuni": true,
+            "tanggal_bergabung": "2025-02-18",
+            "tanggal_keluar": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "dashboard.pembayaran",
+        "pk": 5,
+        "fields": {
+            "user": 16,
+            "jatuh_tempo": "2026-01-10"
+        }
+    },
+    {
+        "model": "dashboard.pembayaran",
+        "pk": 7,
+        "fields": {
+            "user": 20,
+            "jatuh_tempo": "2026-02-17"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 67,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-01-10",
+            "nominal": "25000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.437Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 68,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-02-10",
+            "nominal": "22000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.444Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 69,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-03-10",
+            "nominal": "25000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.452Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 70,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-04-10",
+            "nominal": "25000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.459Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 71,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-05-10",
+            "nominal": "22000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.467Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 72,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-06-10",
+            "nominal": "24000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.475Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 73,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-07-10",
+            "nominal": "23000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.483Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 74,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-08-10",
+            "nominal": "20000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.491Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 75,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-09-10",
+            "nominal": "25000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.499Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 76,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-10-10",
+            "nominal": "24000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.507Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 77,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-11-10",
+            "nominal": "24000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.515Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "menunggu"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 78,
+        "fields": {
+            "user": 16,
+            "tipe_kamar": 15,
+            "tanggal_pembayaran": "2025-12-10",
+            "nominal": "24000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "",
+            "tanggal_transaksi": "2025-02-16T11:04:55.523Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_bulan",
+            "status_validasi": "diterima"
+        }
+    },
+    {
+        "model": "dashboard.transaksi",
+        "pk": 79,
+        "fields": {
+            "user": 20,
+            "tipe_kamar": 9,
+            "tanggal_pembayaran": "2025-02-17",
+            "nominal": "240000000.00",
+            "metode_pembayaran": "bank_transfer",
+            "status": "LUNAS",
+            "bukti_transfer": "bukti_transfer/WhatsApp_Image_2025-02-11_at_07.40.59_98eed06c.jpg",
+            "tanggal_transaksi": "2025-02-16T17:54:50.196Z",
+            "durasi_bayar": 1,
+            "jenis_durasi": "per_tahun",
+            "status_validasi": "diterima"
+        }
+    },
+    {
+        "model": "dashboard.kritiksaran",
+        "pk": 1,
+        "fields": {
+            "user": 20,
+            "pesan": "        kritik dan saran.",
+            "tanggal_dikirim": "2025-02-16T17:55:39.181Z"
+        }
+    }
+]
