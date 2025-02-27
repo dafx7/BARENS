@@ -89,21 +89,13 @@ WSGI_APPLICATION = 'barens.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import pymysql
-pymysql.install_as_MySQLdb()
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # MySQL settings use the name of the db not the path
-        'NAME': 'baratres_mydb_barens',
-        # Name of MySQL user in CPanel
-        'USER': 'baratres_barens',
-        # MySQL password
-        'PASSWORD': 'Daffa210978!',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'penyembahkalengb$barens',
+        'USER': 'penyembahkalengb',
+        'PASSWORD': 'daffa210978',
+        'HOST': 'penyembahkalengbiskuit.mysql.pythonanywhere-services.com',
     }
 }
 

@@ -1,6 +1,5 @@
 # Ignore database and environment files
 db.sqlite3
-.env
 
 # Ignore Python bytecode and cache
 __pycache__/
