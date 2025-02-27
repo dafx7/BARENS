@@ -30,6 +30,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '192.168.0.101',
     '192.168.0.111',
+    'baratresidence.com',
+    'www.baratresidence.com',
 ]
 
 USE_L10N = True
