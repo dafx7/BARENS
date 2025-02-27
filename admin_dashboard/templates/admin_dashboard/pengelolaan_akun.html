@@ -45,7 +45,6 @@
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">No</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Nama Lengkap</th>
-                        <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Email</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">No Handphone</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Nomor Kamar</th>
                         <th class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold">Status Penghuni</th>
@@ -57,7 +56,6 @@
                     <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %} hover:bg-gray-200 transition">
                         <td class="px-4 py-2 border border-gray-300">{{ forloop.counter }}</td>
                         <td class="px-4 py-2 border border-gray-300">{{ user.first_name }}</td>
-                        <td class="px-4 py-2 border border-gray-300">{{ user.email }}</td>
                         <td class="px-4 py-2 border border-gray-300">{{ user.phone_number }}</td>
                         <td class="px-4 py-2 border border-gray-300 text-center">
                             {{ user.nomor_kamar }}
@@ -129,10 +127,6 @@
                     <input type="text" name="nama_lengkap" required class="w-full px-3 py-2 border rounded-lg">
                 </div>
                 <div class="mb-3">
-                    <label class="block">Email *</label>
-                    <input type="email" name="email" required class="w-full px-3 py-2 border rounded-lg">
-                </div>
-                <div class="mb-3">
                     <label class="block">No Handphone *</label>
                     <input type="text" name="phone_number" required class="w-full px-3 py-2 border rounded-lg">
                 </div>
@@ -163,8 +157,7 @@
             let rows = document.querySelectorAll("#userTable tr");
             rows.forEach(row => {
                 let name = row.children[1].textContent.toLowerCase();
-                let email = row.children[2].textContent.toLowerCase();
-                row.style.display = name.includes(filter) || email.includes(filter) ? "" : "none";
+                row.style.display = name.includes(filter) ? "" : "none";
             });
         });
     </script>

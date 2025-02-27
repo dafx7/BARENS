@@ -7,13 +7,24 @@
         Validasi Pembayaran
     </h2>
 
+    <div class="flex justify-between items-center mb-4">
+        <!-- Search Form (Aligned to Right) -->
+        <form method="GET" action="{% url 'validasi_pembayaran' %}" class="ml-auto flex">
+            <input type="text" name="search" placeholder="Cari berdasarkan nama..."
+                   class="px-3 py-2 border rounded-lg" value="{{ search_query }}">
+            <button type="submit" class="ml-2 bg-[#527853] text-white px-4 py-2 rounded-lg shadow-md">
+                Cari
+            </button>
+        </form>
+    </div>
+
     <div class="overflow-x-auto mt-6">
         <table class="w-full border-collapse border border-gray-300 text-left text-[14px]">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border px-4 py-2">No</th>
                     <th class="border px-4 py-2">Nama Penghuni</th>
-                    <th class="border px-4 py-2">Tipe Kamar</th> <!-- ✅ New column -->
+                    <th class="border px-4 py-2">Tipe Kamar</th>
                     <th class="border px-4 py-2">Tanggal Bayar</th>
                     <th class="border px-4 py-2">Durasi</th>
                     <th class="border px-4 py-2">Nominal</th>
@@ -25,7 +36,7 @@
                 {% for transaksi in transaksi %}
                 <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-100{% endif %}">
                     <td class="border px-4 py-2">{{ forloop.counter }}</td>
-                    <td class="border px-4 py-2">{{ transaksi.user.username }}</td>
+                    <td class="border px-4 py-2">{{ transaksi.user.first_name }}</td>
                     <td class="border px-4 py-2">
                         {% if transaksi.tipe_kamar %}
                             {{ transaksi.tipe_kamar.nama }}
@@ -33,9 +44,6 @@
                             <span class="text-gray-500">-</span>
                         {% endif %}
                     </td>
-
-
-
                     <td class="border px-4 py-2">{{ transaksi.tanggal_pembayaran|date:"j F Y" }}</td>
                     <td class="border px-4 py-2">
                         {{ transaksi.durasi_bayar }}
@@ -54,21 +62,24 @@
                         {% endif %}
                     </td>
                     <td class="border px-4 py-2 text-center flex gap-2 justify-center">
-                        <a href="{% url 'konfirmasi_pembayaran' transaksi.id %}"
-                           class="px-3 py-1 text-white rounded border border-[#588157] bg-[#588157] hover:bg-[#6A965F] transition">
-                            Validasi
-                        </a>
-                        <a href="{% url 'tolak_pembayaran' transaksi.id %}"
-                           class="px-3 py-1 text-white rounded border border-red-800 bg-red-800 hover:bg-red-900 transition">
-                            Tolak
-                        </a>
+                        {% if transaksi.status_validasi == "menunggu" %}
+                            <a href="{% url 'konfirmasi_pembayaran' transaksi.id %}"
+                               class="px-3 py-1 text-white rounded border border-[#588157] bg-[#588157] hover:bg-[#6A965F] transition">
+                                Validasi
+                            </a>
+                            <a href="{% url 'tolak_pembayaran' transaksi.id %}"
+                               class="px-3 py-1 text-white rounded border border-red-800 bg-red-800 hover:bg-red-900 transition">
+                                Tolak
+                            </a>
+                        {% elif transaksi.status_validasi == "diterima" %}
+                            <span class="text-green-600 font-semibold">Diterima</span>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
-
-
         </table>
+
         <!-- Pagination -->
         {% if transaksi.paginator.num_pages > 1 %}
         <div class="flex flex-col md:flex-row justify-between items-center mt-4">
@@ -77,7 +88,7 @@
             </span>
             <div class="flex space-x-2">
                 {% if transaksi.has_previous %}
-                <a href="?page={{ transaksi.previous_page_number }}"
+                <a href="?page={{ transaksi.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}"
                     class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
                     Previous
                 </a>
@@ -86,7 +97,7 @@
                 <span class="px-3 py-1 bg-gray-400 text-white rounded-md">{{ transaksi.number }}</span>
 
                 {% if transaksi.has_next %}
-                <a href="?page={{ transaksi.next_page_number }}"
+                <a href="?page={{ transaksi.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}"
                     class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
                     Next
                 </a>

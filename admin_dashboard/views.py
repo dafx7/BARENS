@@ -10,6 +10,7 @@ from django.db.models import Count, Sum
 from django.http import JsonResponse
 from django.utils.timezone import now
 import calendar
+from django.db.models import Case, When, Value, IntegerField
 
 
 # Fungsi untuk membatasi akses hanya untuk admin
@@ -221,14 +222,31 @@ def tolak_pemesanan(request, pemesanan_id):
 @login_required
 @user_passes_test(is_admin)
 def validasi_pembayaran(request):
-    transaksi_list = Transaksi.objects.filter(status_validasi="menunggu").order_by("-tanggal_transaksi")
+    search_query = request.GET.get("search", "").strip()
 
-    # ✅ Pagination logic (7 rows per page)
+    # Filter transactions: only MENUNGGU & DITERIMA (excluding DITOLAK)
+    transaksi_list = Transaksi.objects.filter(status_validasi__in=["menunggu", "diterima"]).annotate(
+        status_order=Case(
+            When(status_validasi="menunggu", then=Value(1)),
+            When(status_validasi="diterima", then=Value(2)),  # DITOLAK is removed
+            output_field=IntegerField()
+        )
+    ).order_by("status_order", "-tanggal_transaksi")
+
+    # Apply search filter if an input is provided
+    if search_query:
+        transaksi_list = transaksi_list.filter(user__first_name__icontains=search_query)
+
+    # Pagination (7 transactions per page)
     paginator = Paginator(transaksi_list, 7)
     page_number = request.GET.get("page")
     transaksi = paginator.get_page(page_number)
 
-    return render(request, "admin_dashboard/pembayaran_validasi.html", {"transaksi": transaksi})
+    return render(
+        request,
+        "admin_dashboard/pembayaran_validasi.html",
+        {"transaksi": transaksi, "search_query": search_query}
+    )
 
 
 @login_required
