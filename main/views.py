@@ -173,15 +173,20 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Auto-login setelah registrasi sukses
+            login(request, user)
             messages.success(request, "Akun berhasil dibuat! Anda sekarang masuk.")
-            return redirect("index")  # Redirect ke halaman utama setelah sukses
+            return redirect("index")
         else:
-            messages.error(request, "Registrasi gagal. Periksa kembali data yang Anda masukkan.")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{error}")  # Menampilkan setiap error sebagai pesan
+
     else:
         form = RegistrationForm()
 
     return render(request, "main/registrasi.html", {"form": form})
+
+
 
 
 

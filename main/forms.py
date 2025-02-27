@@ -19,13 +19,6 @@ class RegistrationForm(UserCreationForm):
         }),
         required=True
     )
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={
-            "class": "w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]",
-            "placeholder": "Masukan email"
-        })
-    )
     phone_number = forms.CharField(
         max_length=15,
         widget=forms.TextInput(attrs={
@@ -49,7 +42,13 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ["username", "first_name", "email", "phone_number", "password1", "password2"]
+        fields = ["username", "first_name", "phone_number", "password1", "password2"]
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get("phone_number")
+        if CustomUser.objects.filter(phone_number=phone_number).exists():
+            raise forms.ValidationError("Nomor handphone sudah digunakan. Gunakan nomor lain.")
+        return phone_number
 
 
 class PemesananForm(forms.ModelForm):

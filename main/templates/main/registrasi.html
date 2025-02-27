@@ -21,6 +21,7 @@
         </div>
         {% endif %}
 
+
         <form method="POST" class="space-y-6">
             {% csrf_token %}
 
@@ -34,12 +35,6 @@
             <div>
                 <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-semibold text-[#073937]">Nama Lengkap</label>
                 {{ form.first_name }}
-            </div>
-
-            <!-- Email -->
-            <div>
-                <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold text-[#073937]">Email</label>
-                {{ form.email }}
             </div>
 
             <!-- Nomor Handphone -->

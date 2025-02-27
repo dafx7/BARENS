@@ -99,15 +99,13 @@ class Pemesanan(models.Model):
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     is_penghuni = models.BooleanField(default=False)
     tanggal_bergabung = models.DateField(null=True, blank=True)
     tanggal_keluar = models.DateField(null=True, blank=True)
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email", "phone_number", "first_name"]
-
+    REQUIRED_FIELDS = ["phone_number", "first_name"]  # Hapus "email"
 
     @property
     def nomor_kamar(self):
@@ -115,13 +113,12 @@ class CustomUser(AbstractUser):
         pemesanan_aktif = self.pemesanan.filter(status="diterima").first()
         return pemesanan_aktif.kamar.nomor_kamar if pemesanan_aktif else "Belum Menempati Kamar"
 
-
     def save(self, *args, **kwargs):
         """Auto-set tanggal_keluar when is_penghuni changes to False."""
         if not self.is_penghuni:
-            self.tanggal_keluar = now().date()  # ✅ Always update the exit date
+            self.tanggal_keluar = now().date()
         elif self.is_penghuni:
-            self.tanggal_keluar = None  # ✅ Reset if user becomes penghuni again
+            self.tanggal_keluar = None
 
         super().save(*args, **kwargs)
 
