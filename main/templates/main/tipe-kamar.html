@@ -173,7 +173,7 @@
         {% for kamar in tipe_kamars %}
             <div class="mb-12 flex flex-col lg:flex-row w-full max-w-[1230px] mx-auto p-6 items-center gap-8 bg-white rounded-[20px] shadow-md">
                 <!-- Gambar Kamar -->
-                <div class="w-full lg:w-[511px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
+                <div class="w-full lg:w-[1100px] h-[240px] lg:h-[416px] rounded-lg overflow-hidden cursor-pointer">
                     {% for image in kamar.images.all %}
                     <img src="{{ image.image.url }}" alt="{{ kamar.nama }}" class="w-full h-full object-cover mb-4"
                          data-modal-image data-kamar-id="{{ kamar.id }}" onclick="openModal({{ kamar.id }}, {{ forloop.counter0 }})">
