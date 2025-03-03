@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class TipeKamar(models.Model):
     nama = models.CharField(max_length=100)
-    deskripsi = models.TextField()
     fasilitas = models.TextField()
     harga_per_bulan_1_orang = models.DecimalField(max_digits=10, decimal_places=2)
     harga_per_bulan_2_orang = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

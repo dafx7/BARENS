@@ -185,9 +185,6 @@
                     <h3 class="text-[#073937] font-opensans text-lg lg:text-[24px] font-semibold uppercase leading-[27.9px]">
                         {{ kamar.nama }}
                     </h3>
-                    <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
-                        {{ kamar.deskripsi }}
-                    </p>
                     <div class="flex flex-col gap-2 pt-4 lg:pt-6 border-t border-[#EDE8DA]">
                         <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Fasilitas Kamar</h4>
                         <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal leading-[27.9px]">
@@ -198,24 +195,29 @@
                         <div>
                             <h4 class="text-[#073937] font-opensans text-sm lg:text-[16px] font-semibold">Harga</h4>
 
-                            <!-- Harga 1 Orang -->
+                            <!-- Harga Token -->
                             <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
                                 <span>1 Orang (Token)</span>
                                 <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_1_orang|floatformat:0 }}</span>
                             </p>
-
-                            {% if kamar.harga_non_token_1_orang %}
+                            {% if kamar.harga_per_bulan_2_orang %}
                             <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                                <span>1 Orang (Non-Token)</span>
-                                <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_1_orang|floatformat:0 }}</span>
+                                <span>2 Orang (Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
+                            </p>
+                            {% endif %}
+                            {% if kamar.harga_per_bulan_3_orang %}
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>3 Orang (Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_3_orang|floatformat:0 }}</span>
                             </p>
                             {% endif %}
 
-                            <!-- Harga 2 Orang -->
-                            {% if kamar.max_penghuni > 1 %}
-                            <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                                <span>2 Orang  (Token)</span>
-                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_2_orang|floatformat:0 }}</span>
+                            <!-- Harga Non-Token -->
+                            {% if kamar.harga_non_token_1_orang %}
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-4">
+                                <span>1 Orang (Non-Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_1_orang|floatformat:0 }}</span>
                             </p>
                             {% endif %}
                             {% if kamar.harga_non_token_2_orang %}
@@ -224,11 +226,10 @@
                                 <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_2_orang|floatformat:0 }}</span>
                             </p>
                             {% endif %}
-                            <!-- Harga 3 Orang -->
-                            {% if kamar.max_penghuni > 2 %}
-                            <p class="mt-2 text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
-                                <span>3 Orang  (Token)</span>
-                                <span class="font-bold ml-6">Rp. {{ kamar.harga_per_bulan_3_orang|floatformat:0 }}</span>
+                            {% if kamar.harga_non_token_3_orang %}
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal flex justify-between pt-2">
+                                <span>3 Orang (Non-Token)</span>
+                                <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_3_orang|floatformat:0 }}</span>
                             </p>
                             {% endif %}
                         </div>
