@@ -224,20 +224,20 @@ def tolak_pemesanan(request, pemesanan_id):
 def validasi_pembayaran(request):
     search_query = request.GET.get("search", "").strip()
 
-    # Filter transactions: only MENUNGGU & DITERIMA (excluding DITOLAK)
+    # Filter transaksi: hanya MENUNGGU & DITERIMA (mengecualikan DITOLAK)
     transaksi_list = Transaksi.objects.filter(status_validasi__in=["menunggu", "diterima"]).annotate(
         status_order=Case(
             When(status_validasi="menunggu", then=Value(1)),
-            When(status_validasi="diterima", then=Value(2)),  # DITOLAK is removed
+            When(status_validasi="diterima", then=Value(2)),  # DITOLAK dihapus
             output_field=IntegerField()
         )
     ).order_by("status_order", "-tanggal_transaksi")
 
-    # Apply search filter if an input is provided
+    # Terapkan filter pencarian jika ada input
     if search_query:
         transaksi_list = transaksi_list.filter(user__first_name__icontains=search_query)
 
-    # Pagination (7 transactions per page)
+    # Pagination (7 transaksi per halaman)
     paginator = Paginator(transaksi_list, 7)
     page_number = request.GET.get("page")
     transaksi = paginator.get_page(page_number)
@@ -247,6 +247,7 @@ def validasi_pembayaran(request):
         "admin_dashboard/pembayaran_validasi.html",
         {"transaksi": transaksi, "search_query": search_query}
     )
+
 
 
 @login_required
