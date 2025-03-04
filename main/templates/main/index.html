@@ -204,74 +204,62 @@
 
     <section class="bg-[#344E41] py-16 relative" x-data="{ current: 0, testimonials: [
         {
-            name: 'Patrick Kluivert',
-            role: 'Mahasiswa ABCD',
-            text: '“ Tinggal di Barat Residence benar-benar pengalaman yang luar biasa. Lokasinya sangat strategis, memudahkan saya untuk beraktivitas sehari-hari. Fasilitasnya lengkap dan semuanya dalam kondisi baik. Selain itu, suasananya sangat nyaman dan tenang, cocok untuk saya yang membutuhkan tempat istirahat yang berkualitas. Harga yang ditawarkan juga sangat terjangkau dibandingkan dengan tempat lain. Saya merasa seperti di rumah sendiri! “',
-            image: '{% static 'main/images/testimony-1.png' %}'
+            name: 'Bernando Sianipar',
+            role: 'Mahasiswa USU',
+            text: '“ Tinggal di Barat Residence nyaman. Interior bagus, lokasi cenderung aman, juga strategis karena cukup dekat dengan USU. Yang paling saya sukai adalah sirkulasi udara yang baik karena setiap kamar dilengkapi jendela dan kamar mandi dalam. “'
         },
         {
-            name: 'Sarah Doe',
-            role: 'Karyawan XYZ',
-            text: '“ Kos ini sangat nyaman dan bersih. Fasilitasnya sangat lengkap, mulai dari dapur umum hingga Wi-Fi yang stabil. Saya juga suka lokasinya yang dekat dengan kantor saya, jadi sangat menghemat waktu perjalanan. Highly recommended! “',
-            image: '{% static 'main/images/testimony-2.png' %}'
+            name: 'Azkal Azkia',
+            role: 'Mahasiswa USU',
+            text: '“ Menurut pengalaman saya, ngekos di Barat Residence sangat nyaman dan tempatnya lumayan strategis bagi mahasiswa untuk pergi ke kampus. Selain itu, lingkungan yang selalu dibersihkan setiap pagi dan sore membuat suasananya semakin nyaman. “'
         },
         {
-            name: 'John Smith',
-            role: 'Mahasiswa DEF',
-            text: '“ Suasana yang tenang dan lingkungan yang bersih membuat saya merasa betah di Barat Residence. Stafnya juga sangat ramah dan responsif terhadap kebutuhan penghuni. Jika mencari tempat tinggal strategis dan nyaman, ini pilihan yang tepat! “',
-            image: '{% static 'main/images/testimony-3.png' %}'
+            name: 'Mhd Siddik',
+            role: 'Mahasiswa USU',
+            text: '“ Menurut saya, tinggal di Barat Residence nyaman. Harga kosnya juga ga mahal-mahal kali, kamarnya pun luas lengkap fasilitasnya. Dekat dengan kampus, dan suasana kosnya bersih karena dibersihkan setiap hari. “'
         }
     ] }">
-        <div class="container mx-auto px-6 lg:px-20 flex flex-col gap-10">
-            <!-- Judul Section -->
-            <div class="text-center lg:text-left">
-                <h3 class="text-[#A3B18A] text-sm font-semibold uppercase tracking-widest">
-                    Fasilitas Umum
-                </h3>
-                <h2 class="text-[#F3ECDC] text-2xl md:text-3xl lg:text-4xl font-semibold uppercase mt-2">
-                    Testimoni Penghuni Kos-Kosan Barat Residence
-                </h2>
-            </div>
+    <div class="container mx-auto px-6 lg:px-20 flex flex-col gap-10">
+        <!-- Judul Section -->
+        <div class="text-center">
+            <h3 class="text-[#A3B18A] text-sm font-semibold uppercase tracking-widest">
+                Fasilitas Umum
+            </h3>
+            <h2 class="text-[#F3ECDC] text-2xl md:text-3xl lg:text-4xl font-semibold uppercase mt-2">
+                Testimoni Penghuni Kos-Kosan Barat Residence
+            </h2>
+        </div>
 
-            <!-- Konten Testimoni -->
-            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-                <!-- Foto Testimoni -->
-                <div
-                    class="w-[90%] md:w-[358px] h-[300px] md:h-[393px] flex-shrink-0 rounded-[24px] bg-[#D9D9D9] overflow-hidden mx-auto lg:mx-0">
-                    <img :src="testimonials[current].image" alt="Photo" class="w-full h-full object-cover bg-center">
-                </div>
+        <!-- Konten Testimoni -->
+        <div class="flex flex-col items-center text-center">
+            <!-- Nama Penghuni -->
+            <h3 class="text-white text-2xl md:text-3xl font-semibold capitalize" x-text="testimonials[current].name"></h3>
+            <!-- Peran (jika ada) -->
+            <p class="text-white text-sm md:text-base font-normal capitalize" x-text="testimonials[current].role"></p>
+            <!-- Isi Testimoni -->
+            <p class="text-white text-sm md:text-base italic font-light leading-relaxed max-w-3xl mt-4"
+                x-text="testimonials[current].text">
+            </p>
 
-                <!-- Teks Testimoni -->
-                <div class="flex flex-col gap-4 text-center lg:text-left">
-                    <h3 class="text-white text-2xl md:text-3xl font-semibold capitalize"
-                        x-text="testimonials[current].name">
-                    </h3>
-                    <p class="text-white text-sm md:text-base font-normal capitalize"
-                        x-text="testimonials[current].role">
-                    </p>
-                    <p class="text-white text-sm md:text-base italic font-light leading-relaxed"
-                        x-text="testimonials[current].text">
-                    </p>
-
-                    <!-- Navigasi -->
-                    <div class="mt-6 flex gap-4 justify-center lg:justify-start">
-                        <!-- Tombol Kiri -->
-                        <button
-                            class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
-                            @click="current = (current === 0) ? testimonials.length - 1 : current - 1">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <!-- Tombol Kanan -->
-                        <button
-                            class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
-                            @click="current = (current === testimonials.length - 1) ? 0 : current + 1">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
+            <!-- Navigasi -->
+            <div class="mt-6 flex gap-4">
+                <!-- Tombol Kiri -->
+                <button
+                    class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
+                    @click="current = (current === 0) ? testimonials.length - 1 : current - 1">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <!-- Tombol Kanan -->
+                <button
+                    class="w-[45px] h-[45px] flex items-center justify-center bg-[#588157] text-[#F3ECDC] text-xl rounded-full shadow-lg hover:bg-[#6A965F]"
+                    @click="current = (current === testimonials.length - 1) ? 0 : current + 1">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <section class="py-16 bg-[#F3ECDC]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-20">
