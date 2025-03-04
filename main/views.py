@@ -56,12 +56,6 @@ def tipe_kamar(request):
             # Ambil kamar yang memiliki harga non-token
             tipe_kamars = tipe_kamars.filter(harga_non_token_1_orang__isnull=False)
 
-    # Tambahkan ini sebelum return render
-    print("DEBUG: Filter Harga:", harga_filter)
-    print("DEBUG: Filter Orang:", orang_filter)
-    print("DEBUG: Filter Token:", token_filter)
-    print("DEBUG: Queryset:", tipe_kamars.query)
-
     return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
 
 

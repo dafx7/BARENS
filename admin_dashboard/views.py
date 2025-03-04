@@ -100,11 +100,10 @@ def edit_penghuni(request, user_id):
 
     if request.method == "POST":
         user.username = (request.POST.get("nama") or "").strip()
-        user.email = (request.POST.get("email") or "").strip()
         user.phone_number = (request.POST.get("phone_number") or "").strip()
         user.is_penghuni = request.POST.get("is_penghuni") == "on"
 
-        if not user.username or not user.email or not user.phone_number:
+        if not user.username or not user.phone_number:
             messages.error(request, "Semua field wajib diisi!")
             return redirect("edit_penghuni", user_id=user.id)
 

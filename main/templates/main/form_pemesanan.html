@@ -33,13 +33,13 @@
                 <!-- Nama -->
                 <div>
                     <label for="nama" class="block text-sm font-semibold text-[#073937]">Nama</label>
-                    <input type="text" id="nama" name="nama" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukan nama lengkap" required>
+                    <input type="text" id="nama" name="nama" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukkan nama lengkap" required>
                 </div>
 
                 <!-- Nomor Telp/Email -->
                 <div>
                     <label for="kontak" class="block text-sm font-semibold text-[#073937]">Nomor Telp</label>
-                    <input type="text" id="kontak" name="kontak" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukan Nomor Telp/Email" required>
+                    <input type="text" id="kontak" name="kontak" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" placeholder="Masukkan Nomor Telp/Email" required>
                 </div>
 
                 <!-- Pilih Tipe Kamar -->
@@ -68,13 +68,24 @@
                     <div class="w-1/2">
                         <label for="durasi" id="durasiLabel" class="block text-sm font-semibold text-[#073937]">Durasi (Bulan)</label>
                         <input type="number" id="durasi" name="durasi" class="w-full mt-2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A3B18A]" min="1" required>
+                        <!-- Notes Promo Selalu Tampil (Dua Baris) -->
+                        <p id="promoNote" class="mt-2 text-sm text-gray-600 font-medium">
+                            💡 Promo:
+                            <br>
+                            <span id="promoText1" class="text-[#588157] font-semibold">Bayar 1 tahun gratis 1 bulan</span>
+                            <br>
+                            <span id="promoText2" class="text-[#588157] font-semibold">Bayar 6 bulan gratis 100K</span>
+                        </p>
                     </div>
                 </div>
 
                 <script>
-                document.getElementById("tipe_sewa").addEventListener("change", function() {
+                document.getElementById("tipe_sewa").addEventListener("change", updateDurasiLabel);
+                document.getElementById("durasi").addEventListener("input", highlightPromo);
+
+                function updateDurasiLabel() {
                     let durasiLabel = document.getElementById("durasiLabel");
-                    let tipeSewa = this.value;
+                    let tipeSewa = document.getElementById("tipe_sewa").value;
                     let durasiInput = document.getElementById("durasi");
 
                     if (tipeSewa === "bulanan") {
@@ -84,9 +95,27 @@
                         durasiLabel.innerHTML = "Durasi (Tahun)";
                         durasiInput.placeholder = "Masukkan jumlah tahun";
                     }
-                });
-                </script>
+                }
 
+                function highlightPromo() {
+                    let durasi = parseInt(document.getElementById("durasi").value);
+                    let tipeSewa = document.getElementById("tipe_sewa").value;
+                    let promoText1 = document.getElementById("promoText1");
+                    let promoText2 = document.getElementById("promoText2");
+
+                    if (tipeSewa === "tahunan" && durasi === 1) {
+                        promoText1.classList.add("text-red-600", "font-bold");
+                    } else {
+                        promoText1.classList.remove("text-red-600", "font-bold");
+                    }
+
+                    if (tipeSewa === "bulanan" && durasi === 6) {
+                        promoText2.classList.add("text-red-600", "font-bold");
+                    } else {
+                        promoText2.classList.remove("text-red-600", "font-bold");
+                    }
+                }
+                </script>
 
                 <!-- Jumlah Penghuni -->
                 <div>
@@ -105,8 +134,7 @@
                 <!-- Buttons -->
                 <div class="flex justify-between mt-6">
                     {% if user.is_authenticated %}
-                        <button type="submit"
-                            class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F]">
+                        <button type="submit" class="px-6 py-3 bg-[#588157] text-white font-semibold rounded-lg hover:bg-[#6A965F]">
                             Kirim
                         </button>
                     {% else %}
@@ -124,6 +152,8 @@
         </div>
     </div>
 </section>
+
+
 
 <script>
 document.getElementById('tipe_kamar').addEventListener('change', function () {
