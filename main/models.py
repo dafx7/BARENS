@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class TipeKamar(models.Model):
     nama = models.CharField(max_length=100)
+    deskripsi = models.TextField(blank=True, null=True)
     fasilitas = models.TextField()
     harga_per_bulan_1_orang = models.DecimalField(max_digits=10, decimal_places=2)
     harga_per_bulan_2_orang = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -19,8 +20,14 @@ class TipeKamar(models.Model):
 
 
 class Kamar(models.Model):
-    tipe_kamar = models.ForeignKey(TipeKamar, on_delete=models.CASCADE, related_name="kamar")
-    nomor_kamar = models.CharField(max_length=10, unique=True)
+    LANTAI_CHOICES = [
+        (1, "Lantai 1"),
+        (2, "Lantai 2"),
+        (3, "Lantai 3"),
+    ]
+
+    lantai = models.PositiveIntegerField(choices=LANTAI_CHOICES)
+    nomor_kamar = models.CharField(max_length=10)
     kapasitas = models.PositiveIntegerField()
     penghuni_sekarang = models.PositiveIntegerField(default=0)
 
@@ -29,7 +36,6 @@ class Kamar(models.Model):
         return self.penghuni_sekarang >= self.kapasitas
 
     def tambah_penghuni(self):
-        """Increase occupancy if the room is not full."""
         if not self.is_full:
             self.penghuni_sekarang += 1
             self.save()
@@ -37,13 +43,15 @@ class Kamar(models.Model):
             raise ValueError("Kamar sudah penuh!")
 
     def kurangi_penghuni(self):
-        """Decrease occupancy if there are tenants inside."""
         if self.penghuni_sekarang > 0:
             self.penghuni_sekarang -= 1
             self.save()
 
+    class Meta:
+        unique_together = ('nomor_kamar', 'lantai')  # Tambahkan ini!
+
     def __str__(self):
-        return f"Kamar {self.nomor_kamar} ({self.tipe_kamar.nama})"
+        return f"Kamar {self.nomor_kamar} (Lantai {self.lantai})"
 
 
 class KamarImage(models.Model):
@@ -63,7 +71,7 @@ class Pemesanan(models.Model):
 
     nama = models.CharField(max_length=255)
     kontak = models.CharField(max_length=255)
-    kamar = models.ForeignKey(Kamar, on_delete=models.CASCADE, related_name="pemesanan")
+    tipe_kamar = models.ForeignKey(TipeKamar, on_delete=models.SET_NULL, related_name='pemesanan', null=True)
     tipe_sewa = models.CharField(max_length=10, choices=[('bulanan', 'Bulanan'), ('tahunan', 'Tahunan')], default='bulanan')
     durasi = models.PositiveIntegerField(help_text="Durasi dalam jumlah bulan atau tahun")
     jumlah_penghuni = models.PositiveIntegerField()
@@ -72,29 +80,9 @@ class Pemesanan(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='menunggu')
     user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, related_name='pemesanan', null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        """Auto-update room occupancy when reservation status changes."""
-        is_new = self.pk is None  # Check if it's a new instance
-
-        if not is_new:
-            previous_status = Pemesanan.objects.filter(pk=self.pk).values_list("status", flat=True).first()
-        else:
-            previous_status = None  # No previous status if it's new
-
-        super().save(*args, **kwargs)
-
-        # Only update room occupancy when status changes
-        if self.status == "diterima" and (is_new or previous_status != "diterima"):
-            try:
-                self.kamar.tambah_penghuni()
-            except ValueError as e:
-                print(f"❌ Error: {e}")
-
-        elif self.status == "ditolak" and previous_status == "diterima":
-            self.kamar.kurangi_penghuni()
-
     def __str__(self):
-        return f"Pemesanan {self.nama} untuk {self.kamar}"
+        return f"Pemesanan {self.nama} - {self.tipe_kamar.nama if self.tipe_kamar else 'Belum Dipilih'} - Status: {self.status}"
+
 
 
 class CustomUser(AbstractUser):
@@ -103,23 +91,25 @@ class CustomUser(AbstractUser):
     tanggal_bergabung = models.DateField(null=True, blank=True)
     tanggal_keluar = models.DateField(null=True, blank=True)
 
+    kamar = models.ForeignKey(Kamar, on_delete=models.SET_NULL, null=True, blank=True, related_name='penghuni')
+
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["phone_number", "first_name"]  # Hapus "email"
+    REQUIRED_FIELDS = ["phone_number", "first_name"]
 
     @property
     def nomor_kamar(self):
-        """Mengembalikan nomor kamar dari pemesanan aktif (status diterima)."""
-        pemesanan_aktif = self.pemesanan.filter(status="diterima").first()
-        return pemesanan_aktif.kamar.nomor_kamar if pemesanan_aktif else "Belum Menempati Kamar"
+        return self.kamar.nomor_kamar if self.kamar else "Belum Menempati Kamar"
 
     def save(self, *args, **kwargs):
-        """Auto-set tanggal_keluar when is_penghuni changes to False."""
         if not self.is_penghuni:
             self.tanggal_keluar = now().date()
-        elif self.is_penghuni:
+            self.kamar = None  # Kosongkan kamar jika bukan penghuni
+        elif self.is_penghuni and not self.tanggal_bergabung:
+            self.tanggal_bergabung = now().date()
             self.tanggal_keluar = None
 
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
+

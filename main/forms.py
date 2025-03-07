@@ -66,18 +66,20 @@ class PemesananForm(forms.ModelForm):
     )
     jumlah_penghuni = forms.ChoiceField(
         label="Jumlah Penghuni",
+        choices=[(1, "1 Orang"), (2, "2 Orang"), (3, "3 Orang")],
         widget=forms.RadioSelect
     )
 
     class Meta:
         model = Pemesanan
-        fields = ['nama', 'kontak', 'kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']  # ✅ FIXED
+        fields = ['nama', 'kontak', 'tipe_kamar', 'tipe_sewa', 'durasi', 'jumlah_penghuni', 'tanggal_mulai']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if 'kamar' in self.data:
+        if 'tipe_kamar' in self.data:
             try:
-                kamar = Kamar.objects.get(id=int(self.data.get('kamar')))  # ✅ FIXED: Query ke 'Kamar' bukan 'TipeKamar'
-                self.fields['jumlah_penghuni'].choices = [(i, f"{i} orang") for i in range(1, kamar.kapasitas + 1)]  # ✅ Sesuaikan dengan kapasitas kamar
-            except (ValueError, TypeError, Kamar.DoesNotExist):
+                tipe_kamar = TipeKamar.objects.get(id=int(self.data.get('tipe_kamar')))
+                max_penghuni = tipe_kamar.max_penghuni
+                self.fields['jumlah_penghuni'].choices = [(i, f"{i} Orang") for i in range(1, max_penghuni + 1)]
+            except (ValueError, TypeError, TipeKamar.DoesNotExist):
                 pass

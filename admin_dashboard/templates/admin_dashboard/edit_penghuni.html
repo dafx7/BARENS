@@ -26,7 +26,7 @@
                     <option value="">Pilih Kamar</option>
                     {% for kamar in kamar_list %}
                         <option value="{{ kamar.id }}" {% if kamar.id == kamar_terpilih %}selected{% endif %}>
-                            {{ kamar.nomor_kamar }} (Kapasitas: {{ kamar.kapasitas }} | Penghuni: {{ kamar.penghuni_sekarang }})
+                            {{ kamar.nomor_kamar }} - Lantai {{ kamar.lantai }} (Kapasitas: {{ kamar.kapasitas }} | Penghuni: {{ kamar.penghuni_sekarang }})
                         </option>
                     {% endfor %}
                 </select>

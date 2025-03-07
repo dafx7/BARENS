@@ -94,9 +94,8 @@ def edit_penghuni(request, user_id):
     # Ambil daftar semua kamar yang tersedia
     kamar_list = Kamar.objects.all()
 
-    # Cek apakah user sudah memiliki pemesanan aktif
-    pemesanan_aktif = user.pemesanan.filter(status="diterima").first()
-    kamar_terpilih = pemesanan_aktif.kamar.id if pemesanan_aktif else None
+    # Ambil kamar yang saat ini ditempati user (bukan dari pemesanan)
+    kamar_terpilih = user.kamar.id if user.kamar else None
 
     if request.method == "POST":
         user.username = (request.POST.get("nama") or "").strip()
@@ -112,23 +111,21 @@ def edit_penghuni(request, user_id):
         if nomor_kamar_baru:
             kamar_baru = get_object_or_404(Kamar, id=nomor_kamar_baru)
 
-            # Jika ada pemesanan sebelumnya, update pemesanan
-            if pemesanan_aktif:
-                pemesanan_aktif.kamar = kamar_baru
-                pemesanan_aktif.save()
-            else:
-                # Buat pemesanan baru jika sebelumnya tidak ada
-                Pemesanan.objects.create(
-                    user=user,
-                    kamar=kamar_baru,
-                    status="diterima",
-                    nama=user.username,
-                    kontak=user.phone_number,
-                    tipe_sewa="bulanan",
-                    durasi=1,  # Default 1 bulan
-                    jumlah_penghuni=1,
-                    tanggal_mulai=now().date(),
-                )
+            # ✅ Cek apakah kamar sudah penuh sebelum mengassign
+            if kamar_baru.penghuni_sekarang >= kamar_baru.kapasitas:
+                messages.error(request, "Kamar sudah penuh! Pilih kamar lain.")
+                return redirect("edit_penghuni", user_id=user.id)
+
+            # ✅ Update kamar user langsung
+            if user.kamar and user.kamar != kamar_baru:
+                user.kamar.penghuni_sekarang -= 1  # Kurangi penghuni di kamar lama
+                user.kamar.save()
+
+            user.kamar = kamar_baru  # Assign kamar baru ke user
+
+            # ✅ Tambahkan jumlah penghuni di kamar baru
+            kamar_baru.penghuni_sekarang += 1
+            kamar_baru.save()
 
         user.save()
         messages.success(request, "Data penghuni berhasil diperbarui!")
@@ -140,6 +137,7 @@ def edit_penghuni(request, user_id):
         "kamar_list": kamar_list,
         "kamar_terpilih": kamar_terpilih
     })
+
 
 
 

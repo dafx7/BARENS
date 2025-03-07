@@ -59,6 +59,10 @@ def tipe_kamar(request):
     return render(request, 'main/tipe-kamar.html', {'tipe_kamars': tipe_kamars})
 
 
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import TipeKamar, Pemesanan
+
 class PemesananView(View):
     def get(self, request):
         tipe_kamars = TipeKamar.objects.all()
@@ -78,35 +82,23 @@ class PemesananView(View):
             durasi = int(durasi)
             jumlah_penghuni = int(jumlah_penghuni)
 
-            # Validasi jumlah penghuni
             if jumlah_penghuni > tipe_kamar.max_penghuni:
                 return render(request, 'main/form_pemesanan.html', {
                     'error': 'Jumlah penghuni melebihi kapasitas kamar!',
                     'tipe_kamars': TipeKamar.objects.all()
                 })
 
-            # ✅ Cari kamar kosong berdasarkan tipe_kamar
-            kamar_tersedia = Kamar.objects.filter(tipe_kamar=tipe_kamar, penghuni_sekarang__lt=F("kapasitas")).first()
-            if not kamar_tersedia:
-                return render(request, 'main/form_pemesanan.html', {
-                    'error': 'Tidak ada kamar yang tersedia!',
-                    'tipe_kamars': TipeKamar.objects.all()
-                })
-
-            # ✅ Simpan pemesanan dengan kamar yang ditemukan
+            # Buat pemesanan tanpa kamar terlebih dahulu
             Pemesanan.objects.create(
                 nama=nama,
                 kontak=kontak,
-                kamar=kamar_tersedia,  # ✅ Menggunakan kamar, bukan tipe_kamar
+                tipe_kamar=tipe_kamar,
                 tipe_sewa=tipe_sewa,
                 durasi=durasi,
                 jumlah_penghuni=jumlah_penghuni,
                 tanggal_mulai=tanggal_mulai,
                 user=request.user
             )
-
-            # ✅ Tambah penghuni ke dalam kamar setelah pemesanan sukses
-            kamar_tersedia.tambah_penghuni()
 
             return redirect('success_page')
 

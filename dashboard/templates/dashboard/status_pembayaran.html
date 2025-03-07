@@ -11,6 +11,13 @@
 
     {% if transaksi_terakhir %}
     <div class="mt-4 space-y-4">
+        <!-- ✅ Nomor Kamar -->
+        <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">KAMAR</p>
+            <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] sm:w-1/2 text-left">
+                : {{ transaksi_terakhir.user.kamar }}
+            </p>
+        </div>
         <!-- ✅ Latest Transaction Date -->
         <div class="border-t border-gray-300 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <p class="text-[14px] sm:text-[16px] text-[#6B6B6B] font-semibold sm:w-1/2">PEMBAYARAN TERAKHIR</p>
