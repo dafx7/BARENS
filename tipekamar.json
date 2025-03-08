@@ -1,0 +1,121 @@
+[
+{
+  "model": "main.tipekamar",
+  "pk": 4,
+  "fields": {
+    "nama": "Standard double",
+    "deskripsi": "",
+    "fasilitas": "1 bed (6 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "1500000.00",
+    "harga_per_bulan_2_orang": "1700000.00",
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": null,
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 2,
+    "jumlah_kamar": 15
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 5,
+  "fields": {
+    "nama": "Suite triple",
+    "deskripsi": "",
+    "fasilitas": "2 bed (6 kaki dan 3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar non-token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "2500000.00",
+    "harga_per_bulan_2_orang": "2500000.00",
+    "harga_per_bulan_3_orang": "2500000.00",
+    "harga_non_token_1_orang": null,
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 3,
+    "jumlah_kamar": 3
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 6,
+  "fields": {
+    "nama": "Standard single",
+    "deskripsi": "",
+    "fasilitas": "1 bed (3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "1400000.00",
+    "harga_per_bulan_2_orang": null,
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": null,
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 1,
+    "jumlah_kamar": 18
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 7,
+  "fields": {
+    "nama": "Suite double",
+    "deskripsi": "",
+    "fasilitas": "1 bed (6 kaki) | toilet duduk | shower & water heater (tidak ada ember gayung) | lemari rak | AC | kamar token dan non-token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "1800000.00",
+    "harga_per_bulan_2_orang": "2000000.00",
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": "2000000.00",
+    "harga_non_token_2_orang": "2200000.00",
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 2,
+    "jumlah_kamar": 2
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 8,
+  "fields": {
+    "nama": "Standard twin",
+    "deskripsi": "",
+    "fasilitas": "2 bed (3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "1700000.00",
+    "harga_per_bulan_2_orang": "1900000.00",
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": null,
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 2,
+    "jumlah_kamar": 1
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 9,
+  "fields": {
+    "nama": "Standard A",
+    "deskripsi": "",
+    "fasilitas": "1 bed (3 kaki) | lemari kayu | toilet jongkok | AC | ember & gayung (tidak ada water heater) | kamar token | TV | meja dan kursi belajar",
+    "harga_per_bulan_1_orang": "1300000.00",
+    "harga_per_bulan_2_orang": null,
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": null,
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 1,
+    "jumlah_kamar": 11
+  }
+},
+{
+  "model": "main.tipekamar",
+  "pk": 10,
+  "fields": {
+    "nama": "Standard B",
+    "deskripsi": "",
+    "fasilitas": "1 bed (2,5 kaki) | kipas angin | lemari kayu | meja belajar | meja dan kursi belajar | toilet duduk | kamar token dan non-token",
+    "harga_per_bulan_1_orang": "800000.00",
+    "harga_per_bulan_2_orang": null,
+    "harga_per_bulan_3_orang": null,
+    "harga_non_token_1_orang": "900000.00",
+    "harga_non_token_2_orang": null,
+    "harga_non_token_3_orang": null,
+    "max_penghuni": 1,
+    "jumlah_kamar": 28
+  }
+}
+]

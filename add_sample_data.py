@@ -2,38 +2,91 @@ import os
 import django
 
 # Konfigurasi Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "barens.settings")  # Sesuaikan dengan nama proyek Anda
 django.setup()
 
-from main.models import Kamar
+from main.models import TipeKamar  # Sesuaikan dengan nama aplikasi Django Anda
 
-# Data kamar berdasarkan lantai
-kamar_data = {
-    1: list(range(101, 113)),  # Lantai 1: 101-112
-    2: list(range(1, 12)) + list(range(201, 213)) + list(range(214, 219)),  # Lantai 2
-    3: list(range(1, 13)) + list(range(14, 32)),  # Lantai 3
-}
+# Data tipe kamar dengan harga dan fasilitas
+data_kamar = [
+    {
+        "nama": "Standard double",
+        "fasilitas": "1 bed (6 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+        "harga_per_bulan_1_orang": 1500000,
+        "harga_per_bulan_2_orang": 1500000,
+        "max_penghuni": 2,
+        "jumlah_kamar": 15
+    },
+    {
+        "nama": "Suite triple",
+        "fasilitas": "2 bed (6 kaki dan 3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar non-token | TV | meja dan kursi belajar",
+        "harga_per_bulan_3_orang": 2500000,
+        "max_penghuni": 3,
+        "jumlah_kamar": 3
+    },
+    {
+        "nama": "Standard single",
+        "fasilitas": "1 bed (3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+        "harga_per_bulan_1_orang": 1400000,
+        "max_penghuni": 1,
+        "jumlah_kamar": 18
+    },
+    {
+        "nama": "Suite double",
+        "fasilitas": "1 bed (6 kaki) | toilet duduk | shower & water heater (tidak ada ember gayung) | lemari rak | AC | kamar token dan non-token | TV | meja dan kursi belajar",
+        "harga_per_bulan_2_orang": 1800000,
+        "harga_non_token_2_orang": 2000000,
+        "max_penghuni": 2,
+        "jumlah_kamar": 2
+    },
+    {
+        "nama": "Standard twin",
+        "fasilitas": "2 bed (3 kaki) | toilet duduk | lemari rak | AC | shower & water heater (tidak ada ember gayung) | kamar token | TV | meja dan kursi belajar",
+        "harga_per_bulan_2_orang": 1700000,
+        "max_penghuni": 2,
+        "jumlah_kamar": 1
+    },
+    {
+        "nama": "Standard A",
+        "fasilitas": "1 bed (3 kaki) | lemari kayu | toilet jongkok | AC | ember+gayung (tidak ada water heater) | kamar token | TV | meja dan kursi belajar",
+        "harga_per_bulan_1_orang": 1300000,
+        "max_penghuni": 1,
+        "jumlah_kamar": 11
+    },
+    {
+        "nama": "Standard B",
+        "fasilitas": "1 bed (2,5 kaki) | kipas angin | lemari kayu | meja belajar | meja dan kursi belajar | toilet duduk | kamar token dan non-token",
+        "harga_per_bulan_1_orang": 800000,
+        "harga_non_token_1_orang": 900000,
+        "max_penghuni": 1,
+        "jumlah_kamar": 28
+    },
+]
 
-# Kapasitas default kamar (ubah sesuai kebutuhan)
-DEFAULT_KAPASITAS = 2
+# Masukkan data ke dalam database
+for kamar in data_kamar:
+    # Pastikan harga_per_bulan_1_orang memiliki nilai default jika tidak ada
+    harga_per_bulan_1_orang = kamar.get("harga_per_bulan_1_orang", 0)
+    harga_per_bulan_2_orang = kamar.get("harga_per_bulan_2_orang")
+    harga_per_bulan_3_orang = kamar.get("harga_per_bulan_3_orang")
+    harga_non_token_1_orang = kamar.get("harga_non_token_1_orang")
+    harga_non_token_2_orang = kamar.get("harga_non_token_2_orang")
+    harga_non_token_3_orang = kamar.get("harga_non_token_3_orang")
 
-# Fungsi untuk menambahkan kamar ke database
-def populate_kamar():
-    for lantai, nomor_kamar_list in kamar_data.items():
-        for nomor_kamar in nomor_kamar_list:
-            nomor_kamar_str = str(nomor_kamar)  # Konversi ke string
+    # Buat atau update data kamar
+    TipeKamar.objects.update_or_create(
+        nama=kamar["nama"],
+        defaults={
+            "fasilitas": kamar["fasilitas"],
+            "harga_per_bulan_1_orang": harga_per_bulan_1_orang,
+            "harga_per_bulan_2_orang": harga_per_bulan_2_orang,
+            "harga_per_bulan_3_orang": harga_per_bulan_3_orang,
+            "harga_non_token_1_orang": harga_non_token_1_orang,
+            "harga_non_token_2_orang": harga_non_token_2_orang,
+            "harga_non_token_3_orang": harga_non_token_3_orang,
+            "max_penghuni": kamar["max_penghuni"],
+            "jumlah_kamar": kamar["jumlah_kamar"]
+        }
+    )
 
-            # Cek apakah kamar sudah ada di database
-            if not Kamar.objects.filter(nomor_kamar=nomor_kamar_str, lantai=lantai).exists():
-                Kamar.objects.create(
-                    lantai=lantai,
-                    nomor_kamar=nomor_kamar_str,
-                    kapasitas=DEFAULT_KAPASITAS,
-                    penghuni_sekarang=0
-                )
-                print(f"✅ Kamar {nomor_kamar_str} (Lantai {lantai}) berhasil ditambahkan.")
-            else:
-                print(f"⚠ Kamar {nomor_kamar_str} (Lantai {lantai}) sudah ada, dilewati.")
-
-if __name__ == "__main__":
-    populate_kamar()
+print("✅ Data berhasil dimasukkan atau diperbarui ke dalam database!")
