@@ -15,6 +15,11 @@ class TipeKamar(models.Model):
     max_penghuni = models.PositiveIntegerField()
     jumlah_kamar = models.PositiveIntegerField()
 
+    @property
+    def sisa_kamar(self):
+        total_pemesanan_diterima = self.pemesanan.filter(status='diterima').count()
+        return max(self.jumlah_kamar - total_pemesanan_diterima, 0)
+
     def __str__(self):
         return self.nama
 
@@ -34,6 +39,7 @@ class Kamar(models.Model):
     @property
     def is_full(self):
         return self.penghuni_sekarang >= self.kapasitas
+
 
     def tambah_penghuni(self):
         if not self.is_full:
@@ -68,6 +74,7 @@ class Pemesanan(models.Model):
         ('diterima', 'Diterima'),
         ('ditolak', 'Ditolak')
     ]
+
 
     nama = models.CharField(max_length=255)
     kontak = models.CharField(max_length=255)

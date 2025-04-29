@@ -240,6 +240,10 @@
                                 <span class="font-bold ml-6">Rp. {{ kamar.harga_non_token_3_orang|floatformat:0|intcomma }}</span>
                             </p>
                             {% endif %}
+
+                            <p class="text-[#073937] font-opensans text-sm lg:text-[16px] font-normal pt-4">
+                                <strong>Sisa Kamar Tersedia:</strong> {{ kamar.sisa_kamar }}
+                            </p>
                         </div>
 
                             <a href="{% url 'form_pemesanan' %}?tipe_kamar={{ kamar.id }}" class="flex justify-center w-full lg:w-auto mt-4 px-7 py-4 items-center gap-4 rounded-full border-4 border-[#588157] bg-[#588157] text-white text-sm font-semibold hover:bg-[#6A965F] hover:border-[#6A965F] transition duration-300">
